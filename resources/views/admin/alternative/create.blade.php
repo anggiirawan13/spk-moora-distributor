@@ -16,10 +16,10 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="car_id">Mobil</label>
-                        <select class="form-control" name="car_id" id="car_id" required>
+                        <label for="distributor_id">Mobil</label>
+                        <select class="form-control" name="distributor_id" id="distributor_id" required>
                             <option value="" hidden>Pilih mobil</option>
-                            @foreach ($cars as $car)
+                            @foreach ($distributors as $distributor)
                                 <option value="{{ $car->id }}">{{ $car->name }}</option>
                             @endforeach
                         </select>

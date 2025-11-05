@@ -39,7 +39,7 @@ class LoginController extends Controller
             return '/admin/dashboard';
         }
 
-        return '/car';
+        return '/distributor';
     }
 
     /**

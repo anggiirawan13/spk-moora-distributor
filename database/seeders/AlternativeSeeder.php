@@ -12,11 +12,11 @@ class AlternativeSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $carIds = DB::table('cars')->pluck('id');
+        $distributorIds = DB::table('distributors')->pluck('id');
 
-        foreach ($carIds as $carId) {
+        foreach ($distributorIds as $distributorId) {
             $alternativeId = DB::table('alternatives')->insertGetId([
-                'car_id' => $carId,
+                'distributor_id' => $distributorId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

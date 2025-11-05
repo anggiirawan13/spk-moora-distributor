@@ -12,7 +12,7 @@ class CalculationController extends Controller
     public function calculation(Request $request)
     {
         $criteria = Criteria::with(['subCriteria'])->get();
-        $alternatives = Alternative::with(['values.subCriteria', 'car'])->get();
+        $alternatives = Alternative::with(['values.subCriteria', 'distributor'])->get();
 
         // Normalisasi bobot kriteria
         $totalWeight = $criteria->sum('weight') ?: 1;
@@ -88,7 +88,7 @@ class CalculationController extends Controller
 
         $criteria = Criteria::with('subCriteria')->get();
         $selectedSubCriteria = $request->input('criteria', []);
-        $alternatives = Alternative::with(['values.subCriteria', 'car'])->get();
+        $alternatives = Alternative::with(['values.subCriteria', 'distributor'])->get();
 
         $filteredAlternatives = $alternatives;
         $suggestions = collect();
@@ -188,7 +188,7 @@ class CalculationController extends Controller
     public function downloadPDF()
     {
         $criteria = Criteria::with(['subCriteria'])->get();
-        $alternatives = Alternative::with(['values.subCriteria', 'car'])->get();
+        $alternatives = Alternative::with(['values.subCriteria', 'distributor'])->get();
 
         // Normalisasi bobot kriteria
         $totalWeight = $criteria->sum('weight') ?: 1;
@@ -266,7 +266,7 @@ class CalculationController extends Controller
     {
         $criteria = Criteria::with('subCriteria')->get();
         $selectedSubCriteria = $request->input('criteria', []);
-        $alternatives = Alternative::with(['values.subCriteria', 'car'])->get();
+        $alternatives = Alternative::with(['values.subCriteria', 'distributor'])->get();
 
         $filteredAlternatives = $alternatives;
         $suggestions = collect();

@@ -17,13 +17,13 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Total Transmisi</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->transmissions }}
-                                <sub>transmisi</sub>
+                                Total Skala Bisnis</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->businessScales }}
+                                <sub>skala bisnis</sub>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-cogs fa-2x text-gray-300"></i>
+                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -36,12 +36,12 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Total Bahan Bakar</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->fuels }} <sub>bahan bakar</sub>
+                                Total Metode Pengiriman</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->deliveryMethods }} <sub>metode pengiriman</sub>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-gas-pump fa-2x text-gray-300"></i>
+                            <i class="fas fa-shipping-fast fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -54,12 +54,12 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Total Tipe Jenis Mobil</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->carTypes }} <sub>jenis mobil</sub>
+                                Total Kategori Produk</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->productCategories }} <sub>kategori produk</sub>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-truck-pickup fa-2x text-gray-300"></i>
+                            <i class="fas fa-boxes fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -72,13 +72,12 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Total Merek Mobil</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->carBrands }} <sub>merek
-                                    mobil</sub>
+                                Total Termin Pembayaran</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->paymentTerms }} <sub>termin pembayaran</sub>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
+                            <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -114,12 +113,12 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
-                                Total Mobil</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->car }} <sub>mobil</sub>
+                                Total Distributor</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $data->distributors }} <sub>distributor</sub>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-car-alt fa-2x text-gray-300"></i>
+                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

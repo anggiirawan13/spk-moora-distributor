@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('code', 50)->unique();
             $table->string('name')->index();
             $table->decimal('weight', 5, 2);
-            $table->enum('attribute_type', ['benefit', 'cost']);
+            $table->enum('attribute_type', ['Benefit', 'Cost']);
             $table->timestamps();
         });
     }

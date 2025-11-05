@@ -34,17 +34,17 @@
                 </a>
                 <div id="dataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.transmission_type.index') }}">
-                            <i class="fas fa-cogs"></i> Tipe Transmisi
+                        <a class="collapse-item" href="{{ route('admin.business_scale.index') }}">
+                            <i class="fas fa-chart-line"></i> Skala Bisnis
                         </a>
-                        <a class="collapse-item" href="{{ route('admin.fuel_type.index') }}">
-                            <i class="fas fa-gas-pump"></i> Bahan Bakar
+                        <a class="collapse-item" href="{{ route('admin.delivery_method.index') }}">
+                            <i class="fas fa-shipping-fast"></i> Metode Pengiriman
                         </a>
-                        <a class="collapse-item" href="{{ route('admin.car_type.index') }}">
-                            <i class="fas fa-truck-pickup"></i> Jenis Mobil
+                        <a class="collapse-item" href="{{ route('admin.product_category.index') }}">
+                            <i class="fas fa-boxes"></i> Kategori Produk
                         </a>
-                        <a class="collapse-item" href="{{ route('admin.car_brand.index') }}">
-                            <i class="fas fa-warehouse"></i> Merek Mobil
+                        <a class="collapse-item" href="{{ route('admin.payment_term.index') }}">
+                            <i class="fas fa-money-bill-wave"></i> Termin Pembayaran
                         </a>
                     </div>
                 </div>
@@ -52,19 +52,19 @@
         @endcan
     @endauth
 
-    <!-- Mobil -->
+    <!-- Distributor -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('car.index') }}">
-            <i class="fas fa-car"></i>
-            <span>Mobil Bekas</span>
+        <a class="nav-link" href="{{ route('distributor.index') }}">
+            <i class="fas fa-warehouse"></i>
+            <span>Distributor</span>
         </a>
     </li>
 
-    <!-- Perbandingan Mobil -->
+    <!-- Perbandingan Distributor -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('car.compare.form') }}">
+        <a class="nav-link" href="{{ route('distributor.compare.form') }}">
             <i class="fas fa-balance-scale"></i>
-            <span>Perbandingan Mobil</span>
+            <span>Perbandingan Distributor</span>
         </a>
     </li>
 
@@ -73,18 +73,18 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('calculation.user') }}">
                 <i class="fas fa-bullseye"></i>
-                <span>Rekomendasi Mobil</span>
+                <span>Rekomendasi Distributor</span>
             </a>
         </li>
     @endcannot
 
     @can('admin')
-        <!-- Rekomendasi Mobil (Dropdown) -->
+        <!-- Rekomendasi Distributor (Dropdown) -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPenunjang"
                 aria-expanded="false" aria-controls="dataPenunjang">
                 <i class="fas fa-bullseye"></i>
-                <span>Rekomendasi Mobil</span>
+                <span>Rekomendasi Distributor</span>
             </a>
             <div id="dataPenunjang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -117,14 +117,6 @@
             </a>
         </li>
     @endcan
-
-    <!-- Daftar Booking -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('booking.index') }}">
-            <i class="fas fa-calendar-plus"></i>
-            <span>Daftar Booking</span>
-        </a>
-    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

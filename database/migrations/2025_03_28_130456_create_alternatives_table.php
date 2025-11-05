@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('alternatives', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('car_id')->constrained('cars')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('distributor_id')->constrained('distributors')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

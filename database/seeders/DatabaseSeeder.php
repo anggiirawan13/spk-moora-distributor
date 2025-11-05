@@ -12,13 +12,12 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             CriteriaSeeder::class,
             SubCriteriaSeeder::class,
-            TransmissionTypeSeeder::class,
-            FuelTypeSeeder::class,
-            CarTypeSeeder::class,
-            CarBrandSeeder::class,
-            CarSeeder::class,
+            BusinessScaleSeeder::class,
+            DeliveryMethodSeeder::class,
+            ProductCategorySeeder::class,
+            PaymentTermSeeder::class,
+            DistributorSeeder::class,
             AlternativeSeeder::class,
-            BookingSeeder::class
         ]);
     }
 }

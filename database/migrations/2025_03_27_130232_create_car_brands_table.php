@@ -6,15 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up() {
-        Schema::create('car_brands', function (Blueprint $table) {
+        Schema::create('payment_terms', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
 
     public function down() {
-        Schema::dropIfExists('car_brands');
+        Schema::dropIfExists('payment_terms');
     }
 };
-

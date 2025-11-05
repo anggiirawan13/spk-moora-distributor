@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\Car;
+use App\Models\Distributor;
 
 class HomeController extends Controller
 {
 
     public function index(){
-        $cars = Car::latest()->get();
-        return view('auth.login',compact('cars'));
+        $distributors = Distributor::latest()->get();
+        return view('auth.login',compact('distributors'));
     }
 
     public function login(){
