@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('product_category_id')->constrained('product_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('payment_term_id')->constrained('payment_terms')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('delivery_method_id')->constrained('delivery_methods')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('business_scale_id')->constrained('business_scales')->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('price_score', 8, 2)->comment('Skor untuk kriteria harga');
             $table->decimal('quality_score', 8, 2)->comment('Skor untuk kriteria kualitas');
             $table->decimal('delivery_score', 8, 2)->comment('Skor untuk ketepatan pengiriman');

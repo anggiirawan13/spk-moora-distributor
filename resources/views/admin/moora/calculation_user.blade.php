@@ -51,12 +51,12 @@
                             @php $alt = $alternatives->firstWhere('id', $id); @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ optional($alt->car)->name ?? ($alt->name ?? '—') }}</td>
+                                <td>{{ optional($alt->distributor)->name ?? ($alt->name ?? '—') }}</td>
                                 <td class="font-weight-bold">{{ number_format($yi, 5) }}</td>
                                 <td>
                                     <a href="#" class="btn btn-sm btn-info m-1" data-toggle="modal"
                                         data-target="#bookingModal" data-id="{{ $alt->id }}"
-                                        data-car="{{ optional($alt->car)->name ?? $alt->name }}">
+                                        data-car="{{ optional($alt->distributor)->name ?? $alt->name }}">
                                         <i class="fas fa-calendar-plus"></i> Booking
                                     </a>
                                 </td>

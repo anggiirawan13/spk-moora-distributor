@@ -128,7 +128,7 @@
         <tbody>
             @foreach ($alternatives as $a)
                 <tr>
-                    <td>{{ optional($a->car)->name ?? $a->name }}</td>
+                    <td>{{ optional($a->distributor)->name ?? $a->name }}</td>
                     @foreach ($criteria as $c)
                         @php
                             $val = $getValue($a, $c->id);
@@ -189,7 +189,7 @@
         <tbody>
             @foreach ($alternatives as $a)
                 <tr>
-                    <td>{{ optional($a->car)->name ?? $a->name }}</td>
+                    <td>{{ optional($a->distributor)->name ?? $a->name }}</td>
                     @foreach ($criteria as $c)
                         @php
                             $raw = $getValue($a, $c->id);
@@ -217,7 +217,7 @@
         <tbody>
             @foreach ($alternatives as $a)
                 <tr>
-                    <td>{{ optional($a->car)->name ?? $a->name }}</td>
+                    <td>{{ optional($a->distributor)->name ?? $a->name }}</td>
                     @foreach ($criteria as $c)
                         <td>{{ number_format($normalization[$a->id][$c->id] ?? 0, 5) }}</td>
                     @endforeach
@@ -266,7 +266,7 @@
 
                 <tr>
                     <td>{{ $rank }}</td>
-                    <td>{{ optional($alt->car)->name ?? ($alt->name ?? '—') }}</td>
+                    <td>{{ optional($alt->distributor)->name ?? ($alt->name ?? '—') }}</td>
                     <td>{{ number_format($benefit, 5) }}</td>
                     <td>{{ number_format($cost, 5) }}</td>
                     <td class="font-weight-bold">{{ number_format($yi, 5) }}</td>
