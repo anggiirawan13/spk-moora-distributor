@@ -1,29 +1,70 @@
 @extends('layouts.app')
 
-@section('title', 'User')
+@section('title', 'Ubah Profil')
 
 @section('content')
-
-    <div class="card">
-        <div class="card-header py-3">
-            <h5 class="m-0 font-weight-bold text-primary">Ubah Profil</h5>
-        </div>
-        <div class="card-body">
-            <x-user_form route="profile.update" :imageRequired="false" :isReadOnly="true" method="PUT" :withRole="false"
-                :name="auth()->user()->name" :email="auth()->user()->email" :withBack="false" routeBack="" :image="auth()->user()->image_name" role=""
-                :deletePhotoProfile="true" :passwordRequired="false" />
-        </div>
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-user-circle text-primary mr-2"></i>Profil Pengguna
+        </h1>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
+        </a>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var imgElement = document.getElementById('imagePreview');
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+            <div class="card shadow border-0">
+                <div class="card-header bg-gradient-primary text-white py-3">
+                    <h5 class="mb-0 font-weight-bold">
+                        <i class="fas fa-user-edit mr-2"></i>Ubah Profil
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <x-alert />
+                    
+                    <x-user_form 
+                        route="profile.update" 
+                        :imageRequired="false" 
+                        :isReadOnly="true" 
+                        method="PUT" 
+                        :withRole="false"
+                        :name="auth()->user()->name" 
+                        :email="auth()->user()->email" 
+                        :withBack="false" 
+                        routeBack="" 
+                        :image="auth()->user()->image_name" 
+                        role=""
+                        :deletePhotoProfile="true" 
+                        :passwordRequired="false"
+                        :phone="auth()->user()->phone"
+                        :position="auth()->user()->position"
+                        :address="auth()->user()->address"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            @if (auth()->user()->image_name)
-                imgElement.src = "{{ asset('storage/user/' . auth()->user()->image_name) }}";
-                imgElement.style.display = 'block';
-            @endif
-        });
-    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var imgElement = document.getElementById('imagePreview');
+        var imagePlaceholder = document.getElementById('imagePlaceholder');
 
+        @if (auth()->user()->image_name)
+            imgElement.src = "{{ asset('storage/user/' . auth()->user()->image_name) }}";
+            imgElement.style.display = 'block';
+            imagePlaceholder.style.display = 'none';
+            
+            // Show remove photo button
+            var removePhotoBtn = document.getElementById('removePhotoBtn');
+            if (removePhotoBtn) {
+                removePhotoBtn.style.display = 'block';
+            }
+        @endif
+    });
+</script>
 @endsection
