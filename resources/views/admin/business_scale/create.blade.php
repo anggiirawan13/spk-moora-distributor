@@ -124,7 +124,7 @@
 
 <style>
 .bg-gradient-primary {
-    background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
+    background: linear-gradient(135deg, #047857 0%, #0adf9b 100%) !important;
 }
 
 .card {

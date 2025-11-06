@@ -23,8 +23,8 @@ class DistributorController extends Controller
         $distributors->transform(function ($distributor) {
             return [
                 'id' => $distributor->id,
-                'image' => '<a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage(\'' . $distributor->name . '\', \'' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.png')) . '\')">
-                                <img class="default-img" src="' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.png')) . '" width="60">
+                'image' => '<a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage(\'' . $distributor->name . '\', \'' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '\')">
+                                <img class="default-img" src="' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '" width="60">
                             </a>',
                 'name' => $distributor->name,
                 'company_name' => $distributor->company_name,
@@ -34,7 +34,7 @@ class DistributorController extends Controller
                 'payment_term' => $distributor->paymentTerm?->name ?? 'N/A',
                 'delivery_method' => $distributor->deliveryMethod?->name ?? 'N/A',
                 'business_scale' => $distributor->businessScale?->name ?? 'N/A',
-                'is_active' => $distributor->is_active ? 'Aktif' : 'Tidak Aktif',
+                'is_active' => $distributor->is_active,
             ];
         });
 

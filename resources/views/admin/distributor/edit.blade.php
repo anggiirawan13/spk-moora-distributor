@@ -101,7 +101,7 @@
                     <select required class="form-control" name="is_active" id="is_active">
                         <option hidden>Pilih status</option>
                         <option value="0" {{ $distributor->is_active == 0 ? 'selected' : '' }}>Tidak Aktif</option>
-                        <option value="1" {{ $distributor->is_active == 1 ? 'selected' : '' }}>Aktif</option>
+                        <option value="1" {{ $distributor->is_active ? 'selected' : '' }}>Aktif</option>
                     </select>
                 </div>
                 <div class="form-group">

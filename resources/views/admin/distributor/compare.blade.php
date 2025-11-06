@@ -30,7 +30,7 @@
                     <!-- Logo & Basic Info -->
                     <div class="text-center mb-4">
                         <div class="position-relative d-inline-block">
-                            <img src="{{ $distributor1->image_name ? asset('storage/distributor/' . $distributor1->image_name) : asset('img/default-image.png') }}" 
+                            <img src="{{ $distributor1->image_name ? asset('storage/distributor/' . $distributor1->image_name) : asset('img/default-image.jpg') }}" 
                                  class="img-fluid rounded-circle shadow" 
                                  alt="{{ $distributor1->name }}" 
                                  style="width: 120px; height: 120px; object-fit: cover;">
@@ -92,7 +92,7 @@
                     <!-- Logo & Basic Info -->
                     <div class="text-center mb-4">
                         <div class="position-relative d-inline-block">
-                            <img src="{{ $distributor2->image_name ? asset('storage/distributor/' . $distributor2->image_name) : asset('img/default-image.png') }}" 
+                            <img src="{{ $distributor2->image_name ? asset('storage/distributor/' . $distributor2->image_name) : asset('img/default-image.jpg') }}" 
                                  class="img-fluid rounded-circle shadow" 
                                  alt="{{ $distributor2->name }}" 
                                  style="width: 120px; height: 120px; object-fit: cover;">
@@ -145,7 +145,7 @@
         <div class="col-12">
             <div class="card shadow border-0">
                 <div class="card-header bg-gradient-warning text-dark py-3">
-                    <h5 class="mb-0 font-weight-bold">
+                    <h5 class="mb-0 font-weight-bold text-white">
                         <i class="fas fa-chart-bar mr-2"></i>Ringkasan Perbandingan
                     </h5>
                 </div>
@@ -202,11 +202,11 @@
 }
 
 .bg-gradient-info {
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%) !important;
 }
 
 .bg-gradient-warning {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%) !important;
 }
 
 .card {

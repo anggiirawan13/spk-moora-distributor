@@ -10,7 +10,7 @@
             <i class="fas fa-balance-scale text-primary mr-2"></i>Perbandingan Distributor
         </h1>
         <a href="{{ route('distributor.index') }}" class="btn btn-secondary btn-sm">
-            <i class="fas fa-arrow-left mr-1"></i>Kembali ke Daftar
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
         </a>
     </div>
 

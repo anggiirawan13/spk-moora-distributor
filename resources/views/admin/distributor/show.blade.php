@@ -1,32 +1,104 @@
 @extends('layouts.app')
 
-@section('title', 'Distributor Barang Elektrikal')
+@section('title', 'Detail Distributor Barang Elektrikal')
 
 @section('content')
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-truck-loading text-primary mr-2"></i>Detail Distributor
+        </h1>
+        <a href="{{ route('distributor.index') }}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
+        </a>
+    </div>
 
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="m-0 font-weight-bold text-primary">Detail Distributor: {{ $distributor->name }}</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.png') }}"
-                            class="img-fluid rounded shadow" alt="{{ $distributor->name }}" style="max-height: 300px;">
+    <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12">
+            <div class="card shadow border-0">
+                <div class="card-header bg-gradient-info text-white py-3">
+                    <h5 class="mb-0 font-weight-bold">
+                        <i class="fas fa-eye mr-2"></i>Detail Distributor: {{ $distributor->name }}
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Logo & Basic Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-12 text-center mb-4">
+                            <div class="profile-image-container">
+                                <img src="{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.jpg') }}"
+                                    class="img-thumbnail rounded-circle shadow" 
+                                    alt="{{ $distributor->name }}" 
+                                    style="width: 200px; height: 200px; object-fit: cover;">
+                                <div class="mt-3">
+                                    <h4 class="font-weight-bold text-primary mb-1">{{ $distributor->name }}</h4>
+                                    <p class="text-muted mb-0">{{ $distributor->company_name }}</p>
+                                    <span class="badge {{ $distributor->is_active ? 'badge-success' : 'badge-secondary' }} mt-2">
+                                        {{ $distributor->is_active ? 'Aktif' : 'Nonaktif' }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <x-table_distributor :distributor="$distributor" />
+
+                    <!-- Detail Information -->
+                    <div class="row">
+                        <div class="col-12">
+                            <x-table_distributor :distributor="$distributor" />
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ route('distributor.index') }}" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-arrow-left mr-2"></i>Kembali
+                                </a>
+                                <div>
+                                    @if (auth()->user()->is_admin == 1)
+                                    <a href="{{ route('distributor.edit', $distributor->id) }}" class="btn btn-primary btn-lg mr-2">
+                                        <i class="fas fa-edit mr-2"></i>Edit
+                                    </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <x-button_back route="distributor.index" />
-                @if (auth()->user()->is_admin == 1)
-                    <x-button_edit route="distributor.edit" :id="$distributor->id" />
-                @endif
-            </div>
         </div>
     </div>
+</div>
 
+<style>
+.bg-gradient-info {
+    background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%) !important;
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.btn-lg {
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+}
+
+.profile-image-container {
+    position: relative;
+}
+
+.img-thumbnail {
+    border: 3px solid #e3e6f0;
+    transition: all 0.3s ease;
+}
+
+.img-thumbnail:hover {
+    border-color: #059669;
+    transform: scale(1.05);
+}
+</style>
 @endsection
