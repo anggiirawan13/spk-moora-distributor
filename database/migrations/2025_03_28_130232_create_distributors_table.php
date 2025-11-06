@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('address');
             $table->string('phone');
             $table->string('email');
-            $table->foreignId('product_category_id')->constrained('product_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('payment_term_id')->constrained('payment_terms')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('delivery_method_id')->constrained('delivery_methods')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('business_scale_id')->constrained('business_scales')->onUpdate('cascade')->onDelete('cascade');

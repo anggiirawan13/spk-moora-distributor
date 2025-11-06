@@ -4,55 +4,36 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">
-            <i class="fas fa-warehouse text-primary mr-2"></i>Alternatif
-        </h1>
-        @auth
-            @if (auth()->user()->is_admin == 1)
-                <a href="{{ route('admin.alternative.create') }}" class="btn btn-primary btn-sm">
-                    <i class="fas fa-plus-circle mr-1"></i>Tambah Data
-                </a>
-            @endif
-        @endauth
-    </div>
-
     <x-alert />
 
     <div class="card shadow mb-4 border-0">
-        <div class="card-header bg-gradient-primary text-white py-3">
+        <div class="card-header text-primary text-white py-3">
             <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 font-weight-bold">
-                    <i class="fas fa-list mr-2"></i>Daftar Alternatif
+                <h5 class="text-primary m-0 font-weight-bold">
+                    <i class="fas fa-warehouse mr-2"></i>Daftar Alternatif
                 </h5>
-                <div class="d-flex align-items-center">
-                    <span class="badge badge-light mr-3">
-                        <i class="fas fa-database mr-1"></i>
-                        Total: {{ count($alternatives) }}
-                    </span>
-                    @if(count($alternatives) > 0)
-                    <span class="badge badge-success">
-                        <i class="fas fa-check-circle mr-1"></i>
-                        {{ count($alternatives) }} Data
-                    </span>
-                    @endif
-                </div>
+                <@auth
+                @if (auth()->user()->is_admin == 1)
+                    <a href="{{ route('admin.alternative.create') }}" id="btn-add-data" class="btn btn-primary btn-sm text-white">
+                        <i class="fas fa-plus-circle mr-1"></i>Tambah Data
+                    </a>
+                @endif
+            @endauth
             </div>
         </div>
 
         <div class="card-body shadow mb-4 border-0">
             <div class="table-responsive">
-                <table class="table table-hover mb-0" id="dataTable">
+                <table class="table table-hover table-striped" width="100%" id="dataTable" cellspacing="0">
                     <thead class="bg-light">
                         <tr>
-                            <th class="text-center" width="60px">No</th>
-                            <th>Nama Alternatif</th>
+                            <th class="text-center text-white" width="60px">No</th>
+                            <th class="text-center text-white">Nama Alternatif</th>
                             @foreach ($criterias as $criteria)
-                                <th class="text-center" width="120px">
+                                <th class="text-center text-white" width="120px">
                                     <div class="text-center">
-                                        <div class="font-weight-bold text-dark small">{{ $criteria->name }}</div>
-                                        <div class="text-muted smaller">({{ $criteria->code }})</div>
+                                        <div class="font-weight-bold small">{{ $criteria->name }}</div>
+                                        <div class="text-white smaller">({{ $criteria->code }})</div>
                                         <div class="mt-1">
                                             <span class="badge badge-sm {{ $criteria->attribute_type == 'Benefit' ? 'badge-success' : 'badge-danger' }}">
                                                 {{ $criteria->attribute_type == 'Benefit' ? 'B' : 'C' }}
@@ -64,8 +45,8 @@
                                     </div>
                                 </th>
                             @endforeach
-                            <th class="text-center" width="150px">Skor</th>
-                            <th class="text-center" width="120px">Aksi</th>
+                            <th class="text-center text-white" width="150px">Skor</th>
+                            <th class="text-center text-white" width="120px">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -171,6 +152,11 @@
 .card {
     border-radius: 12px;
     overflow: hidden;
+}
+
+.table thead tr th {
+    border-bottom: 2px solid #059669;
+    background: #059669; 
 }
 
 .badge-circle {

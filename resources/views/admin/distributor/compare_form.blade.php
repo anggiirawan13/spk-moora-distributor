@@ -43,7 +43,7 @@
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}" 
                                                     data-company="{{ $distributor->company_name }}"
-                                                    data-category="{{ $distributor->productCategory?->name ?? 'N/A' }}"
+                                                    data-category="{{ $distributor->product?->name ?? 'N/A' }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
                                                 {{ $distributor->name }} - {{ $distributor->company_name }}
                                             </option>
@@ -66,7 +66,7 @@
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}"
                                                     data-company="{{ $distributor->company_name }}"
-                                                    data-category="{{ $distributor->productCategory?->name ?? 'N/A' }}"
+                                                    data-category="{{ $distributor->product?->name ?? 'N/A' }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
                                                 {{ $distributor->name }} - {{ $distributor->company_name }}
                                             </option>
@@ -137,8 +137,8 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Kategori Produk</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $distributors->groupBy('product_category_id')->count() }}</div>
+                                        Produk</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $distributors->groupBy('product_id')->count() }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-boxes fa-2x text-gray-300"></i>

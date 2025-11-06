@@ -17,6 +17,47 @@
 
     <div class="container-fluid">
 
+        <!-- Form Pemilihan Produk -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-gradient-primary text-white py-3">
+                        <h5 class="mb-0 font-weight-bold">
+                            <i class="fas fa-box mr-2"></i>Pilih Produk untuk Analisis
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('admin.moora.calculation') }}" method="GET" class="form-inline">
+                            <div class="form-group mr-3 flex-grow-1">
+                                <label for="product_id" class="font-weight-bold text-dark mb-2 mr-2">
+                                    <i class="fas fa-box text-primary mr-2"></i>Pilih Produk:
+                                </label>
+                                <select class="form-control form-control-lg" name="product_id" id="product_id" style="min-width: 300px;">
+                                    <option value="">-- Semua Distributor --</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" 
+                                                {{ request('product_id') == $product->id ? 'selected' : '' }}>
+                                            {{ $product->name }}
+                                            @if($product->description)
+                                            - {{ Str::limit($product->description, 50) }}
+                                            @endif
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calculator mr-2"></i>Hitung MOORA
+                            </button>
+                        </form>
+                        <small class="form-text text-muted mt-2">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Pilih produk spesifik atau biarkan kosong untuk menganalisis semua distributor
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Header Section -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">

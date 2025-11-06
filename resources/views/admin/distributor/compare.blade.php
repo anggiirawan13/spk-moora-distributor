@@ -50,7 +50,7 @@
                             <div class="col-4">
                                 <div class="border rounded p-2">
                                     <i class="fas fa-boxes fa-lg text-primary mb-2"></i>
-                                    <h6 class="font-weight-bold mb-1">{{ $distributor1->productCategory?->name ?? '-' }}</h6>
+                                    <h6 class="font-weight-bold mb-1">{{ $distributor1->product?->name ?? '-' }}</h6>
                                     <small class="text-muted">Kategori</small>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                             <div class="col-4">
                                 <div class="border rounded p-2">
                                     <i class="fas fa-boxes fa-lg text-primary mb-2"></i>
-                                    <h6 class="font-weight-bold mb-1">{{ $distributor2->productCategory?->name ?? '-' }}</h6>
+                                    <h6 class="font-weight-bold mb-1">{{ $distributor2->product?->name ?? '-' }}</h6>
                                     <small class="text-muted">Kategori</small>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>
-                                    <strong>Kategori:</strong> {{ $distributor1->productCategory?->name ?? '-' }}
+                                    <strong>Kategori:</strong> {{ $distributor1->product?->name ?? '-' }}
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>
@@ -181,7 +181,7 @@
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>
-                                    <strong>Kategori:</strong> {{ $distributor2->productCategory?->name ?? '-' }}
+                                    <strong>Kategori:</strong> {{ $distributor2->product?->name ?? '-' }}
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>

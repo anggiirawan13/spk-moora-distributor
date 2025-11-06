@@ -7,7 +7,7 @@ use App\Models\Alternative;
 use App\Models\Criteria;
 use App\Models\Distributor;
 use App\Models\BusinessScale;
-use App\Models\ProductCategory;
+use App\Models\Product;
 use App\Models\DeliveryMethod;
 use App\Models\PaymentTerm;
 use App\Models\User;
@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $distributors = Distributor::count();
         $users = User::count();
         $paymentTerms = PaymentTerm::count();
-        $productCategories = ProductCategory::count();
+        $product = Product::count();
         $deliveryMethods = DeliveryMethod::count();
         $businessScales = BusinessScale::count();
         $criteria = Criteria::count();
@@ -29,7 +29,7 @@ class DashboardController extends Controller
         $data = (object) [
             'businessScales' => $businessScales,
             'deliveryMethods' => $deliveryMethods,
-            'productCategories' => $productCategories,
+            'product' => $product,
             'paymentTerms' => $paymentTerms,
             'distributors' => $distributors,
             'users' => $users,

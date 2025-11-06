@@ -71,10 +71,10 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="info-item">
-                                                <strong class="text-dark">Kategori Produk:</strong>
+                                                <strong class="text-dark">Produk:</strong>
                                                 <div class="mt-1">
                                                     <span class="badge badge-info badge-pill">
-                                                        {{ $alternative->distributor?->productCategory?->name ?? 'Tidak ada kategori' }}
+                                                        {{ $alternative->distributor?->product?->name ?? 'Tidak ada kategori' }}
                                                     </span>
                                                 </div>
                                             </div>

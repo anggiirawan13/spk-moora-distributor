@@ -84,8 +84,8 @@
                                                 <div id="previewCompanyName" class="text-dark mt-1">-</div>
                                             </div>
                                             <div class="col-md-4">
-                                                <strong>Kategori Produk:</strong>
-                                                <div id="previewProductCategory" class="text-info mt-1">-</div>
+                                                <strong>Produk:</strong>
+                                                <div id="previewProduct" class="text-info mt-1">-</div>
                                             </div>
                                         </div>
                                     </div>
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const distributorPreview = document.getElementById('distributorPreview');
     const previewDistributorName = document.getElementById('previewDistributorName');
     const previewCompanyName = document.getElementById('previewCompanyName');
-    const previewProductCategory = document.getElementById('previewProductCategory');
+    const previewProduct = document.getElementById('previewProduct');
     
     // Data distributor untuk preview
     const distributorsData = {!! json_encode($distributors->map(function($distributor) {
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'id' => $distributor->id,
             'name' => $distributor->name,
             'company_name' => $distributor->company_name,
-            'product_category' => $distributor->productCategory->name ?? '-'
+            'product' => $distributor->product->name ?? '-'
         ];
     })) !!};
 
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selectedDistributor) {
             previewDistributorName.textContent = selectedDistributor.name;
             previewCompanyName.textContent = selectedDistributor.company_name;
-            previewProductCategory.textContent = selectedDistributor.product_category;
+            previewProduct.textContent = selectedDistributor.product;
             distributorPreview.style.display = 'block';
         } else {
             distributorPreview.style.display = 'none';

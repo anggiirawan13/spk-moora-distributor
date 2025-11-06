@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductCategory extends Model {
+class Product extends Model {
     use HasFactory;
 
-    protected $table = 'product_categories';
+    protected $table = 'products';
     
     protected $fillable = [
         'name',
@@ -17,6 +17,6 @@ class ProductCategory extends Model {
 
     public function distributors()
     {
-        return $this->hasMany(Distributor::class, 'product_category_id');
+        return $this->belongsToMany(Distributor::class, 'distributor_product');
     }
 }

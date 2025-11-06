@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             Swal.fire({
                 icon: 'warning',
-                title: 'Nama Kategori Kosong',
+                title: 'Nama Kosong',
                 text: 'Harap masukkan nama termin pembayaran.',
                 confirmButtonColor: '#059669'
             });

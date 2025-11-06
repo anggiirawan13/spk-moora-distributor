@@ -1,14 +1,14 @@
 <x-alert />
 
-<div class="card shadow mb-4 border-0">
-    <div class="card-header py-3 bg-white border-bottom-0">
-        <div class="d-flex justify-content-between align-items-center">
-            <h5 id="title" class="m-0 font-weight-bold">
+    <div class="card shadow mb-4 border-0">
+        <div class="card-header text-primary text-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="text-primary m-0 font-weight-bold">
                 <i class="fas fa-table mr-2"></i>{{ $title }}
             </h5>
             @auth
                 @if (auth()->user()->is_admin == 1)
-                    <a href="{{ route($createRoute) }}" id="btn-add-data" class="btn btn-sm text-white">
+                    <a href="{{ route($createRoute) }}" id="btn-add-data" class="btn btn-primary btn-sm text-white">
                         <i class="fas fa-plus-circle mr-1"></i>Tambah Data
                     </a>
                 @endif
@@ -176,14 +176,6 @@
 </script>
 
 <style>
-#title {
-    color: #059669;
-}
-
-#btn-add-data {
-    background-color: #059669;
-}
-
 .table thead th {
     border-bottom: 2px solid #059669;
     font-weight: 600;
@@ -229,52 +221,10 @@
 }
 
 .bg-gradient-primary {
-    background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
+    background: #059669 !important;
 }
 
 .transition-all {
     transition: all 0.3s ease;
-}
-
-/* Custom Pagination Styles */
-.pagination .page-item.active .page-link {
-    background-color: #059669 !important;
-    border-color: #059669 !important;
-    color: white !important;
-}
-
-.pagination .page-link {
-    color: #059669;
-    border: 1px solid #dee2e6;
-    padding: 0.5rem 0.75rem;
-}
-
-.pagination .page-link:hover {
-    color: #047857;
-    background-color: #e9ecef;
-    border-color: #dee2e6;
-}
-
-.pagination .page-item.disabled .page-link {
-    color: #6c757d;
-    background-color: #fff;
-    border-color: #dee2e6;
-}
-
-/* Untuk DataTables pagination jika menggunakan */
-.dataTables_paginate .paginate_button.current {
-    background: #059669 !important;
-    border-color: #059669 !important;
-    color: white !important;
-}
-
-.dataTables_paginate .paginate_button {
-    color: #059669 !important;
-}
-
-.dataTables_paginate .paginate_button:hover {
-    background: #047857 !important;
-    border-color: #047857 !important;
-    color: white !important;
 }
 </style>

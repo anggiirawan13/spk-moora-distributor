@@ -14,9 +14,10 @@ class DatabaseSeeder extends Seeder
             SubCriteriaSeeder::class,
             BusinessScaleSeeder::class,
             DeliveryMethodSeeder::class,
-            ProductCategorySeeder::class,
+            ProductSeeder::class,
             PaymentTermSeeder::class,
             DistributorSeeder::class,
+            DistributorProductSeeder::class,
             AlternativeSeeder::class,
         ]);
     }

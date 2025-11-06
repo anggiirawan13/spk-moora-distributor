@@ -19,7 +19,6 @@ class DistributorRequest extends FormRequest
             'address' => 'required|string',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'product_category_id' => 'required|exists:product_categories,id',
             'payment_term_id' => 'required|exists:payment_terms,id',
             'delivery_method_id' => 'required|exists:delivery_methods,id',
             'business_scale_id' => 'required|exists:business_scales,id',
@@ -32,7 +31,7 @@ class DistributorRequest extends FormRequest
     public function messages()
     {
         return [
-            'product_category_id.required' => 'Kategori produk harus dipilih',
+            'product_id.required' => 'produk harus dipilih',
             'payment_term_id.required' => 'Termin pembayaran harus dipilih',
             'delivery_method_id.required' => 'Metode pengiriman harus dipilih',
             'business_scale_id.required' => 'Skala bisnis harus dipilih',

@@ -98,10 +98,10 @@
                             <i class="fas fa-boxes text-primary fa-lg"></i>
                         </div>
                         <div class="flex-grow-1">
-                            <h6 class="font-weight-bold text-dark mb-1">Kategori Produk</h6>
+                            <h6 class="font-weight-bold text-dark mb-1">Produk</h6>
                             <p class="mb-0">
                                 <span class="badge badge-primary badge-pill">
-                                    {{ $distributor->productCategory?->name ?? 'Tidak ada kategori' }}
+                                    {{ $distributor->product?->name ?? 'Tidak ada kategori' }}
                                 </span>
                             </p>
                         </div>

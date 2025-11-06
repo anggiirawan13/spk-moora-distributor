@@ -30,7 +30,6 @@
             ['label' => 'Nama Perusahaan', 'field' => 'company_name'],
             ['label' => 'Telepon', 'field' => 'phone'],
             ['label' => 'Email', 'field' => 'email'],
-            ['label' => 'Kategori Produk', 'field' => 'product_category'],
             ['label' => 'Termin Pembayaran', 'field' => 'payment_term'],
             ['label' => 'Metode Pengiriman', 'field' => 'delivery_method'],
             ['label' => 'Skala Bisnis', 'field' => 'business_scale'],

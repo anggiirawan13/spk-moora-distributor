@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\SubCriteriaController;
 use App\Http\Controllers\Admin\AlternativeController;
 use App\Http\Controllers\Admin\CalculationController;
 use App\Http\Controllers\Admin\PaymentTermController;
-use App\Http\Controllers\Admin\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\DeliveryMethodController;
 use App\Http\Controllers\Admin\BusinessScaleController;
 
@@ -56,12 +56,13 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/calculation', [CalculationController::class, 'calculation'])->name('calculation');
+        Route::get('/calculation', [CalculationController::class, 'calculation'])->name('moora.calculation');
         Route::get('/moora/report', [CalculationController::class, 'downloadPDF'])->name('moora.download_pdf');
 
         Route::resource('/user', UserController::class)->names('user');
         Route::resource('/business_scale', BusinessScaleController::class)->names('business_scale');
         Route::resource('/delivery_method', DeliveryMethodController::class)->names('delivery_method');
-        Route::resource('/product_category', ProductCategoryController::class)->names('product_category');
+        Route::resource('/product', ProductController::class)->names('product');
         Route::resource('/payment_term', PaymentTermController::class)->names('payment_term');
         Route::resource('/criteria', CriteriaController::class)->names('criteria');
         Route::resource('/sub-criteria', SubCriteriaController::class)->names('subcriteria');

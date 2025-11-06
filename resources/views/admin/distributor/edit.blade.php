@@ -48,17 +48,6 @@
                         value="{{ old('email', $distributor->email) }}" />
                 </div>
                 <div class="form-group">
-                    <label for="product_category_id">Kategori Produk</label>
-                    <select required class="form-control" name="product_category_id" id="product_category_id">
-                        <option hidden>Pilih kategori produk</option>
-                        @foreach ($productCategories as $category)
-                            <option value="{{ $category->id }}" {{ $distributor->product_category_id == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
                     <label for="payment_term_id">Termin Pembayaran</label>
                     <select required class="form-control" name="payment_term_id" id="payment_term_id">
                         <option hidden>Pilih termin pembayaran</option>

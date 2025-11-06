@@ -181,28 +181,6 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="product_category_id" class="font-weight-bold text-dark mb-2">
-                                        <i class="fas fa-boxes text-warning mr-2"></i>Kategori Produk <span class="text-danger">*</span>
-                                    </label>
-                                    <select class="form-control @error('product_category_id') is-invalid @enderror" 
-                                            name="product_category_id" 
-                                            id="product_category_id" 
-                                            required>
-                                        <option value="" hidden>Pilih kategori produk</option>
-                                        @foreach ($productCategories as $category)
-                                            <option value="{{ $category->id }}" {{ old('product_category_id') == $category->id ? 'selected' : '' }}>
-                                                {{ $category->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('product_category_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="payment_term_id" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-money-bill-wave text-success mr-2"></i>Termin Pembayaran <span class="text-danger">*</span>
                                     </label>
@@ -410,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(e) {
         const requiredFields = [
             'name', 'company_name', 'email', 'phone', 'address',
-            'product_category_id', 'payment_term_id', 'delivery_method_id', 
+            'payment_term_id', 'delivery_method_id', 
             'business_scale_id', 'is_active'
         ];
         

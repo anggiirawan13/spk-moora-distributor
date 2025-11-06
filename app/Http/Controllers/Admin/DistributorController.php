@@ -6,7 +6,7 @@ use App\Models\Distributor;
 use App\Http\Controllers\Controller;
 use App\Models\BusinessScale;
 use App\Http\Requests\Admin\DistributorRequest;
-use App\Models\ProductCategory;
+use App\Models\Product;
 use App\Models\PaymentTerm;
 use App\Models\DeliveryMethod;
 use Illuminate\Http\RedirectResponse;
@@ -30,7 +30,6 @@ class DistributorController extends Controller
                 'company_name' => $distributor->company_name,
                 'phone' => $distributor->phone,
                 'email' => $distributor->email,
-                'product_category' => $distributor->productCategory?->name ?? 'N/A',
                 'payment_term' => $distributor->paymentTerm?->name ?? 'N/A',
                 'delivery_method' => $distributor->deliveryMethod?->name ?? 'N/A',
                 'business_scale' => $distributor->businessScale?->name ?? 'N/A',
@@ -43,12 +42,11 @@ class DistributorController extends Controller
 
     public function create(): View
     {
-        $productCategories = ProductCategory::all();
         $paymentTerms = PaymentTerm::all();
         $deliveryMethods = DeliveryMethod::all();
         $businessScales = BusinessScale::all();
 
-        return view('admin.distributor.create', compact('productCategories', 'paymentTerms', 'deliveryMethods', 'businessScales'));
+        return view('admin.distributor.create', compact('paymentTerms', 'deliveryMethods', 'businessScales'));
     }
 
     public function store(DistributorRequest $request): RedirectResponse
@@ -68,7 +66,7 @@ class DistributorController extends Controller
 
     public function show($id)
     {
-        $distributor = Distributor::with(['productCategory', 'paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($id);
+        $distributor = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($id);
         return view('admin.distributor.show', compact('distributor'));
     }
 
@@ -94,8 +92,8 @@ class DistributorController extends Controller
             'distributor2' => 'required|exists:distributors,id',
         ]);
 
-        $distributor1 = Distributor::with(['productCategory', 'paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor1);
-        $distributor2 = Distributor::with(['productCategory', 'paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor2);
+        $distributor1 = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor1);
+        $distributor2 = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor2);
 
         return view('admin.distributor.compare', compact('distributor1', 'distributor2'));
     }
@@ -103,12 +101,11 @@ class DistributorController extends Controller
     public function edit($id)
     {
         $distributor = Distributor::findOrFail($id);
-        $productCategories = ProductCategory::all();
         $paymentTerms = PaymentTerm::all();
         $deliveryMethods = DeliveryMethod::all();
         $businessScales = BusinessScale::all();
 
-        return view('admin.distributor.edit', compact('distributor', 'productCategories', 'paymentTerms', 'deliveryMethods', 'businessScales'));
+        return view('admin.distributor.edit', compact('distributor', 'paymentTerms', 'deliveryMethods', 'businessScales'));
     }
 
     public function update(DistributorRequest $request, Distributor $distributor): RedirectResponse

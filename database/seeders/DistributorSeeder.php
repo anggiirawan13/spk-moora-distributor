@@ -20,7 +20,6 @@ class DistributorSeeder extends Seeder
                 'address' => $faker->address(),
                 'phone' => $faker->phoneNumber(),
                 'email' => $faker->companyEmail(),
-                'product_category_id' => $faker->numberBetween(1, 6),
                 'payment_term_id' => $faker->numberBetween(1, 5),
                 'delivery_method_id' => $faker->numberBetween(1, 4),
                 'business_scale_id' => $faker->numberBetween(1, 5),

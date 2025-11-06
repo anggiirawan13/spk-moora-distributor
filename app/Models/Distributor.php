@@ -18,7 +18,6 @@ class Distributor extends Model
         'address',
         'phone',
         'email',
-        'product_category_id',
         'payment_term_id',
         'delivery_method_id',
         'business_scale_id',
@@ -29,11 +28,6 @@ class Distributor extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
-
-    public function productCategory()
-    {
-        return $this->belongsTo(ProductCategory::class, 'product_category_id');
-    }
 
     public function paymentTerm()
     {

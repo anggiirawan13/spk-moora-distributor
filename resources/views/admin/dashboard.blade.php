@@ -148,11 +148,11 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="font-weight-bold text-dark mb-1">
-                                            <i class="fas fa-boxes text-warning mr-2"></i>Kategori Produk
+                                            <i class="fas fa-boxes text-warning mr-2"></i>Produk
                                         </h6>
                                         <p class="text-muted mb-0">Jenis barang elektrikal</p>
                                     </div>
-                                    <span class="h4 font-weight-bold text-warning">{{ $data->productCategories }}</span>
+                                    <span class="h4 font-weight-bold text-warning">{{ $data->product }}</span>
                                 </div>
                             </div>
                         </div>

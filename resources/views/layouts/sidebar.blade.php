@@ -44,8 +44,8 @@
                         <a class="collapse-item text-dark" href="{{ route('admin.delivery_method.index') }}">
                             <i class="fas fa-shipping-fast mr-2"></i>Metode Pengiriman
                         </a>
-                        <a class="collapse-item text-dark" href="{{ route('admin.product_category.index') }}">
-                            <i class="fas fa-boxes mr-2"></i>Kategori Produk
+                        <a class="collapse-item text-dark" href="{{ route('admin.product.index') }}">
+                            <i class="fas fa-boxes mr-2"></i>Produk
                         </a>
                         <a class="collapse-item text-dark" href="{{ route('admin.payment_term.index') }}">
                             <i class="fas fa-money-bill-wave mr-2"></i>Termin Pembayaran
@@ -108,7 +108,7 @@
 
         <!-- Proses Perhitungan -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.calculation') }}">
+            <a class="nav-link" href="{{ route('admin.moora.calculation') }}">
                 <i class="fas fa-calculator"></i>
                 <span>Perhitungan MOORA</span>
             </a>
