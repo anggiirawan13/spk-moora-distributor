@@ -14,105 +14,284 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan MOORA</title>
+    <title>Laporan Perhitungan MOORA</title>
     <style>
-        body {
-            font-family: 'DejaVu Sans', sans-serif;
-            font-size: 11px;
-            color: #222;
+        @page {
             margin: 20px;
         }
 
-        h1 {
-            font-size: 20px;
-            margin-bottom: 10px;
+        body {
+            font-family: 'DejaVu Sans', Arial, sans-serif;
+            font-size: 10px;
+            color: #2d3748;
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
         }
 
-        .meta {
-            font-size: 10px;
+        .header {
+            border-bottom: 2px solid #047857;
+            padding-bottom: 15px;
             margin-bottom: 20px;
         }
 
-        .meta p {
-            margin: 2px 0;
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 18px;
+            color: #047857;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            margin: 5px 0 0 0;
+        }
+
+        .meta-info {
+            background: #f8f9fa;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 9px;
+        }
+
+        .meta-row {
+            display: flex;
+            margin-bottom: 4px;
+        }
+
+        .meta-label {
+            font-weight: bold;
+            color: #374151;
+            min-width: 80px;
+        }
+
+        .meta-value {
+            color: #6b7280;
+        }
+
+        #assessment-criteria {
+            margin-top: 5px;
         }
 
         .section-title {
-            background-color: #3f51b5;
+            background: linear-gradient(135deg, #047857 0%, #059669 100%);
             color: white;
-            padding: 6px 10px;
-            font-size: 12px;
+            padding: 8px 12px;
+            font-size: 11px;
             font-weight: bold;
-            margin-top: 25px;
+            margin: 25px 0 12px 0;
+            border-radius: 4px;
+            page-break-inside: avoid;
+        }
+
+        .formula {
+            background: #f3f4f6;
+            border-left: 3px solid #047857;
+            padding: 6px 10px;
+            margin: 8px 0 15px 0;
+            font-size: 9px;
+            color: #4b5563;
+            page-break-inside: avoid;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0 20px;
-            font-size: 10px;
-        }
-
-        th,
-        td {
-            border: 1px solid #999;
-            padding: 5px;
-            text-align: center;
+            margin: 12px 0 20px;
+            font-size: 9px;
+            page-break-inside: avoid;
         }
 
         th {
-            background-color: #e0e0e0;
+            background: #047857;
+            color: white;
+            font-weight: bold;
+            padding: 6px 4px;
+            border: 1px solid #059669;
         }
 
-        h4 {
-            margin: 12px 0 6px;
-            font-size: 11px;
+        td {
+            border: 1px solid #d1d5db;
+            padding: 5px 4px;
+            text-align: center;
+        }
+
+        tfoot td {
+            background: #f9fafb;
+            font-weight: bold;
+            border-top: 2px solid #9ca3af;
+        }
+
+        .alternatif-name {
+            text-align: left;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .number-cell {
+            font-family: 'DejaVu Sans Mono', monospace;
+            color: #374151;
+        }
+
+        .highlight-row {
+            background: #f0fdf4 !important;
+        }
+
+        .rank-1 {
+            background: #dcfce7 !important;
+            font-weight: bold;
         }
 
         .footer {
-            margin-top: 40px;
-            font-size: 10px;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 8px;
+            color: #6b7280;
             text-align: center;
-            color: #777;
         }
 
-        .small {
+        .criteria-info {
+            background: #f8f9fa;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 8px;
+            margin: 10px 0;
+            font-size: 8px;
+        }
+
+        .criteria-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .badge-benefit {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge-cost {
+            background: #ef4444;
+            color: white;
+        }
+
+        .summary-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 15px 0;
             font-size: 9px;
+        }
+
+        .summary-title {
+            font-weight: bold;
+            color: #047857;
+            margin-bottom: 5px;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* Zebra striping for tables */
+        tbody tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        /* Header for multi-page tables */
+        thead {
+            display: table-header-group;
+        }
+
+        /* Ensure tables break properly across pages */
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Laporan Perhitungan MOORA</h1>
+    <div class="header">
+        <div class="header-main">
+            <div>
+                <h1>LAPORAN PERHITUNGAN METODE MOORA</h1>
+                <p class="subtitle">Sistem Pendukung Keputusan Pemilihan Distributor Barang Elektrikal</p>
+            </div>
+            <div class="meta-info">
+                <div class="meta-row">
+                    <span class="meta-label">Pengguna:</span>
+                    <span class="meta-value">{{ auth()->user()->name }}</span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Tanggal:</span>
+                    <span class="meta-value">{{ \Carbon\Carbon::now()->format('d F Y') }}</span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Waktu:</span>
+                    <span class="meta-value">{{ \Carbon\Carbon::now()->format('H:i:s') }}</span>
+                </div>
+            </div>
+        </div>
 
-    <div class="meta">
-        <p><strong>Pengguna:</strong> {{ auth()->user()->name }}</p>
-        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
-        <p><strong>Waktu:</strong> {{ \Carbon\Carbon::now()->format('H:i:s') }}</p>
+        <!-- Kriteria Information -->
+        <div class="criteria-info">
+            <strong>Kriteria Penilaian:</strong>
+            <div id="assessment-criteria">
+                @foreach ($criteria as $c)
+                    <span class="criteria-badge {{ strtolower($c->attribute_type) === 'benefit' ? 'badge-benefit' : 'badge-cost' }}">
+                        {{ $c->code }}: {{ $c->name }} ({{ $c->weight }})
+                    </span>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Information -->
+    <div class="summary-box">
+        <div class="summary-title">📊 Ringkasan Analisis</div>
+        <div>Total Alternatif: <strong>{{ count($alternatives) }}</strong> | Total Kriteria: <strong>{{ count($criteria) }}</strong></div>
+        <div>Metode: <strong>MOORA (Multi-Objective Optimization by Ratio Analysis)</strong></div>
     </div>
 
     {{-- Step 1: Nilai Alternatif --}}
-    <div class="section-title">Step 1: Nilai Alternatif & Kuadrat</div>
-    <p class="small">Rumus: ∑(x<sub>ij</sub>)² = x<sub>1j</sub>² + x<sub>2j</sub>² + ...</p>
+    <div class="section-title">📈 STEP 1: NILAI ALTERNATIF & KUADRAT</div>
+    <div class="formula">
+        <strong>Rumus:</strong> ∑(x<sub>ij</sub>)² = x<sub>1j</sub>² + x<sub>2j</sub>² + ... + x<sub>nj</sub>²
+    </div>
     <table>
         <thead>
             <tr>
-                <th>Alternatif</th>
+                <th width="20%">Alternatif</th>
                 @foreach ($criteria as $c)
-                    <th>{{ $c->name }}</th>
+                    <th>{{ $c->name }}<br><small>({{ $c->code }})</small></th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
-            @foreach ($alternatives as $a)
-                <tr>
-                    <td>{{ optional($a->distributor)->name ?? $a->name }}</td>
+            @foreach ($alternatives as $index => $a)
+                <tr class="{{ $index % 2 === 0 ? '' : 'highlight-row' }}">
+                    <td class="alternatif-name">{{ optional($a->distributor)->name ?? $a->name }}</td>
                     @foreach ($criteria as $c)
                         @php
                             $val = $getValue($a, $c->id);
                         @endphp
-                        <td>{{ number_format($getValue($a, $c->id), 5) }}</td>
+                        <td class="number-cell">{{ number_format($val, 3) }}</td>
                     @endforeach
                 </tr>
             @endforeach
@@ -127,54 +306,58 @@
                             return pow($v, 2);
                         });
                     @endphp
-                    <td>{{ number_format($sumSquare, 5) }}</td>
+                    <td class="number-cell"><strong>{{ number_format($sumSquare, 5) }}</strong></td>
                 @endforeach
             </tr>
         </tfoot>
     </table>
 
     {{-- Step 2: Akar Normalisasi --}}
-    <div class="section-title">Step 2: Akar Total Tiap Kriteria</div>
-    <p class="small">Rumus: √(∑x<sub>ij</sub>²)</p>
+    <div class="section-title">🧮 STEP 2: AKAR TOTAL TIAP KRITERIA</div>
+    <div class="formula">
+        <strong>Rumus:</strong> √(∑x<sub>ij</sub>²)
+    </div>
     <table>
         <thead>
             <tr>
                 @foreach ($criteria as $c)
-                    <th>{{ $c->name }}</th>
+                    <th>{{ $c->name }}<br><small>({{ $c->code }})</small></th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
             <tr>
                 @foreach ($criteria as $c)
-                    <td>{{ number_format($normDivisor[$c->id], 5) }}</td>
+                    <td class="number-cell"><strong>{{ number_format($normDivisor[$c->id], 5) }}</strong></td>
                 @endforeach
             </tr>
         </tbody>
     </table>
 
     {{-- Step 3: Normalisasi --}}
-    <div class="section-title">Step 3: Normalisasi Nilai Alternatif</div>
-    <p class="small">Rumus: r<sub>ij</sub> = x<sub>ij</sub> / √(∑x<sub>ij</sub>²)</p>
+    <div class="section-title">📊 STEP 3: NORMALISASI NILAI ALTERNATIF</div>
+    <div class="formula">
+        <strong>Rumus:</strong> r<sub>ij</sub> = x<sub>ij</sub> / √(∑x<sub>ij</sub>²)
+    </div>
     <table>
         <thead>
             <tr>
-                <th>Alternatif</th>
+                <th width="20%">Alternatif</th>
                 @foreach ($criteria as $c)
-                    <th>{{ $c->name }}</th>
+                    <th>{{ $c->name }}<br><small>({{ $c->code }})</small></th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
-            @foreach ($alternatives as $a)
-                <tr>
-                    <td>{{ optional($a->distributor)->name ?? $a->name }}</td>
+            @foreach ($alternatives as $index => $a)
+                <tr class="{{ $index % 2 === 0 ? '' : 'highlight-row' }}">
+                    <td class="alternatif-name">{{ optional($a->distributor)->name ?? $a->name }}</td>
                     @foreach ($criteria as $c)
                         @php
                             $raw = $getValue($a, $c->id);
                             $norm = $raw / ($normDivisor[$c->id] ?: 1);
                         @endphp
-                        <td>{{ number_format($norm, 5) }}</td>
+                        <td class="number-cell">{{ number_format($norm, 5) }}</td>
                     @endforeach
                 </tr>
             @endforeach
@@ -182,23 +365,25 @@
     </table>
 
     {{-- Step 4: Dikali Bobot --}}
-    <div class="section-title">Step 4: Nilai Normalisasi × Bobot</div>
-    <p class="small">Rumus: y<sub>ij</sub> = r<sub>ij</sub> × w<sub>j</sub></p>
+    <div class="section-title">⚖️ STEP 4: NILAI NORMALISASI × BOBOT</div>
+    <div class="formula">
+        <strong>Rumus:</strong> y<sub>ij</sub> = r<sub>ij</sub> × w<sub>j</sub>
+    </div>
     <table>
         <thead>
             <tr>
-                <th>Alternatif</th>
+                <th width="20%">Alternatif</th>
                 @foreach ($criteria as $c)
-                    <th>{{ $c->name }}</th>
+                    <th>{{ $c->name }}<br><small>({{ $c->code }}) - {{ $c->weight }}</small></th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
-            @foreach ($alternatives as $a)
-                <tr>
-                    <td>{{ optional($a->distributor)->name ?? $a->name }}</td>
+            @foreach ($alternatives as $index => $a)
+                <tr class="{{ $index % 2 === 0 ? '' : 'highlight-row' }}">
+                    <td class="alternatif-name">{{ optional($a->distributor)->name ?? $a->name }}</td>
                     @foreach ($criteria as $c)
-                        <td>{{ number_format($normalization[$a->id][$c->id] ?? 0, 5) }}</td>
+                        <td class="number-cell">{{ number_format($normalization[$a->id][$c->id] ?? 0, 5) }}</td>
                     @endforeach
                 </tr>
             @endforeach
@@ -206,16 +391,19 @@
     </table>
 
     {{-- Step 5 & 6: MOORA --}}
-    <div class="section-title">Step 5–6: Nilai Akhir Yi dan Peringkat</div>
-    <p class="small">Rumus: Yi = Σ(W<sub>j</sub> × r<sub>ij</sub>) benefit − Σ(W<sub>j</sub> × r<sub>ij</sub>) cost</p>
+    <div class="section-title">🏆 STEP 5–6: NILAI AKHIR Y<sub>i</sub> DAN PERINGKAT</div>
+    <div class="formula">
+        <strong>Rumus:</strong> Y<sub>i</sub> = Σ(W<sub>j</sub> × r<sub>ij</sub>) benefit − Σ(W<sub>j</sub> × r<sub>ij</sub>) cost
+    </div>
     <table>
         <thead>
             <tr>
-                <th>Peringkat</th>
-                <th>Alternatif</th>
-                <th>Total Benefit</th>
-                <th>Total Cost</th>
-                <th>Yi</th>
+                <th width="8%">Peringkat</th>
+                <th width="25%">Alternatif</th>
+                <th width="17%">Total Benefit</th>
+                <th width="17%">Total Cost</th>
+                <th width="17%">Nilai Y<sub>i</sub></th>
+                <th width="16%">Keterangan</th>
             </tr>
         </thead>
         <tbody>
@@ -243,19 +431,42 @@
                     }
                 @endphp
 
-                <tr>
-                    <td>{{ $rank }}</td>
-                    <td>{{ optional($alt->distributor)->name ?? ($alt->name ?? '—') }}</td>
-                    <td>{{ number_format($benefit, 5) }}</td>
-                    <td>{{ number_format($cost, 5) }}</td>
-                    <td class="font-weight-bold">{{ number_format($yi, 5) }}</td>
+                <tr class="{{ $rank === 1 ? 'rank-1' : '' }}">
+                    <td><strong>{{ $rank }}</strong></td>
+                    <td class="alternatif-name">{{ optional($alt->distributor)->name ?? ($alt->name ?? '—') }}</td>
+                    <td class="number-cell">{{ number_format($benefit, 5) }}</td>
+                    <td class="number-cell">{{ number_format($cost, 5) }}</td>
+                    <td class="number-cell"><strong>{{ number_format($yi, 5) }}</strong></td>
+                    <td>
+                        @if($rank === 1)
+                            <strong>REKOMENDASI TERBAIK</strong>
+                        @elseif($rank <= 3)
+                            <span style="color: #059669;">Rekomendasi</span>
+                        @else
+                            <span style="color: #6b7280;">Alternatif</span>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
+    <!-- Final Recommendation -->
+    @php
+        $bestAltId = array_key_first($valueMoora);
+        $bestAlt = $alternatives->firstWhere('id', $bestAltId);
+    @endphp
+    <div class="summary-box" style="background: #dcfce7; border-color: #bbf7d0;">
+        <div class="summary-title">🎯 HASIL REKOMENDASI</div>
+        <div><strong>Alternatif Terbaik:</strong> {{ optional($bestAlt->distributor)->name ?? ($bestAlt->name ?? '—') }}</div>
+        <div><strong>Nilai Akhir (Y<sub>i</sub>):</strong> {{ number_format($valueMoora[$bestAltId], 5) }}</div>
+        <div><strong>Peringkat:</strong> 1 dari {{ count($alternatives) }} alternatif</div>
+    </div>
+
     <div class="footer">
-        Dicetak oleh {{ auth()->user()->name }} pada {{ \Carbon\Carbon::now()->format('d-m-Y H:i:s') }}
+        Laporan ini dibuat secara otomatis oleh Sistem Pendukung Keputusan<br>
+        Dicetak oleh {{ auth()->user()->name }} pada {{ \Carbon\Carbon::now()->format('d F Y H:i:s') }}<br>
+        <em>Halaman 1 dari 1</em>
     </div>
 
 </body>

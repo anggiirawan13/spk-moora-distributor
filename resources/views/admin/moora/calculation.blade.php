@@ -69,7 +69,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    Distributor Terbaik</div>
+                                    Rekomendasi Distributor</div>
                                 <div class="h6 mb-0 font-weight-bold text-gray-800 text-truncate">
                                     @php
                                         $topAlt = $alternatives->firstWhere('id', array_key_first($valueMoora));

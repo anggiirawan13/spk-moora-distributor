@@ -227,7 +227,7 @@
                                     <h3 class="text-info font-weight-bold">
                                         #{{ $distributor->alternatives->min('rank') ?? '-' }}
                                     </h3>
-                                    <p class="text-muted mb-0">Peringkat Terbaik</p>
+                                    <p class="text-muted mb-0">Peringkat</p>
                                 </div>
                             </div>
                         </div>

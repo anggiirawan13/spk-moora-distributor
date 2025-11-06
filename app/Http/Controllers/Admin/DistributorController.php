@@ -23,8 +23,8 @@ class DistributorController extends Controller
         $distributors->transform(function ($distributor) {
             return [
                 'id' => $distributor->id,
-                'image' => '<a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage(\'' . $distributor->name . '\', \'' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '\')">
-                                <img class="default-img" src="' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '" width="60">
+                'image' => '<a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage(\'' . $distributor->name . '\', \'' . asset('img/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '\')">
+                                <img class="default-img" src="' . asset('img/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '" width="60">
                             </a>',
                 'name' => $distributor->name,
                 'company_name' => $distributor->company_name,
