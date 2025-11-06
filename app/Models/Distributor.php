@@ -22,19 +22,11 @@ class Distributor extends Model
         'payment_term_id',
         'delivery_method_id',
         'business_scale_id',
-        'price_score',
-        'quality_score',
-        'delivery_score',
-        'service_score',
         'description',
         'is_active',
     ];
 
     protected $casts = [
-        'price_score' => 'decimal:2',
-        'quality_score' => 'decimal:2',
-        'delivery_score' => 'decimal:2',
-        'service_score' => 'decimal:2',
         'is_active' => 'boolean',
     ];
 

@@ -24,10 +24,6 @@ class DistributorSeeder extends Seeder
                 'payment_term_id' => $faker->numberBetween(1, 5),
                 'delivery_method_id' => $faker->numberBetween(1, 4),
                 'business_scale_id' => $faker->numberBetween(1, 5),
-                'price_score' => $faker->numberBetween(60, 95),
-                'quality_score' => $faker->numberBetween(70, 98),
-                'delivery_score' => $faker->numberBetween(65, 97),
-                'service_score' => $faker->numberBetween(68, 96),
                 'description' => $faker->optional()->paragraph(),
                 'is_active' => $faker->boolean(80), // 80% chance of being active
                 'created_at' => now(),

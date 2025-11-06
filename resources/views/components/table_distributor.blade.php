@@ -36,22 +36,6 @@
         <td>{{ $distributor->businessScale?->name ?? 'N/A' }}</td>
     </tr>
     <tr>
-        <th>Skor Harga</th>
-        <td>{{ $distributor->price_score }}</td>
-    </tr>
-    <tr>
-        <th>Skor Kualitas</th>
-        <td>{{ $distributor->quality_score }}</td>
-    </tr>
-    <tr>
-        <th>Skor Pengiriman</th>
-        <td>{{ $distributor->delivery_score }}</td>
-    </tr>
-    <tr>
-        <th>Skor Layanan</th>
-        <td>{{ $distributor->service_score }}</td>
-    </tr>
-    <tr>
         <th>Deskripsi Perusahaan</th>
         <td>{{ $distributor->description ?? '-' }}</td>
     </tr>

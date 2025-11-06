@@ -34,10 +34,6 @@
             ['label' => 'Termin Pembayaran', 'field' => 'payment_term'],
             ['label' => 'Metode Pengiriman', 'field' => 'delivery_method'],
             ['label' => 'Skala Bisnis', 'field' => 'business_scale'],
-            ['label' => 'Skor Harga', 'field' => 'price_score'],
-            ['label' => 'Skor Kualitas', 'field' => 'quality_score'],
-            ['label' => 'Skor Pengiriman', 'field' => 'delivery_score'],
-            ['label' => 'Skor Layanan', 'field' => 'service_score'],
             ['label' => 'Status', 'field' => 'is_active'],
         ]" />
 

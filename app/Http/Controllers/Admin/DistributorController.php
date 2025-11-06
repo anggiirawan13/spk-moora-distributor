@@ -34,10 +34,6 @@ class DistributorController extends Controller
                 'payment_term' => $distributor->paymentTerm?->name ?? 'N/A',
                 'delivery_method' => $distributor->deliveryMethod?->name ?? 'N/A',
                 'business_scale' => $distributor->businessScale?->name ?? 'N/A',
-                'price_score' => $distributor->price_score,
-                'quality_score' => $distributor->quality_score,
-                'delivery_score' => $distributor->delivery_score,
-                'service_score' => $distributor->service_score,
                 'is_active' => $distributor->is_active ? 'Aktif' : 'Tidak Aktif',
             ];
         });

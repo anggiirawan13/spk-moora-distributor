@@ -82,49 +82,6 @@
                     </select>
                 </div>
                 
-                <!-- Skor Kriteria untuk MOORA -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="price_score">Skor Harga (0-100)</label>
-                            <input type="number" name="price_score" class="form-control" 
-                                placeholder="Masukkan skor harga" value="{{ old('price_score') }}" 
-                                required min="0" max="100" />
-                            <small class="form-text text-muted">Nilai untuk kriteria harga</small>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="quality_score">Skor Kualitas (0-100)</label>
-                            <input type="number" name="quality_score" class="form-control" 
-                                placeholder="Masukkan skor kualitas" value="{{ old('quality_score') }}" 
-                                required min="0" max="100" />
-                            <small class="form-text text-muted">Nilai untuk kriteria kualitas produk</small>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="delivery_score">Skor Pengiriman (0-100)</label>
-                            <input type="number" name="delivery_score" class="form-control" 
-                                placeholder="Masukkan skor pengiriman" value="{{ old('delivery_score') }}" 
-                                required min="0" max="100" />
-                            <small class="form-text text-muted">Nilai untuk ketepatan pengiriman</small>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="service_score">Skor Layanan (0-100)</label>
-                            <input type="number" name="service_score" class="form-control" 
-                                placeholder="Masukkan skor layanan" value="{{ old('service_score') }}" 
-                                required min="0" max="100" />
-                            <small class="form-text text-muted">Nilai untuk layanan purna jual</small>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label for="description">Deskripsi Perusahaan</label>
                     <textarea class="form-control" name="description" placeholder="Masukkan deskripsi perusahaan" id="description">{{ old('description') }}</textarea>
