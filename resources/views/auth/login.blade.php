@@ -130,9 +130,9 @@
                                         <a class="small d-block mb-2" href="{{ route('password.request') }}">
                                             <i class="fas fa-key mr-1"></i>Forgot Password?
                                         </a>
-                                        <a class="small" href="{{ route('register') }}">
-                                            <i class="fas fa-user-plus mr-1"></i>Create an Account
-                                        </a>
+                                        {{-- <a class="small" href="{{ route('register') }}"> --}}
+                                            {{-- <i class="fas fa-user-plus mr-1"></i>Create an Account --}}
+                                        {{-- </a> --}}
                                     </div>
                                 </div>
                             </div>
