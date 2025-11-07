@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Criteria;
 use App\Models\Alternative;
 use App\Models\Product;
-use Str;
 
 class CalculationController extends Controller
 {
@@ -15,6 +14,9 @@ class CalculationController extends Controller
     {
         // Ambil semua produk untuk dropdown
         $products = Product::withCount('distributors')->get();
+
+        $alternatives = null;
+        $productSelected = null;
 
         // Jika form sudah disubmit
         if ($request->has('product_id') || $request->isMethod('post')) {
@@ -25,10 +27,10 @@ class CalculationController extends Controller
                 ]);
 
                 $productId = $request->product_id;
-                $product = Product::findOrFail($productId);
+                $productSelected = Product::findOrFail($productId);
 
                 // Hanya ambil distributor yang menyediakan produk yang dipilih
-                $distributors = $product->distributors;
+                $distributors = $productSelected->distributors;
                 $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
 
                 if ($alternatives->isEmpty()) {
@@ -36,7 +38,6 @@ class CalculationController extends Controller
                 }
             } else {
                 // Jika tidak ada product_id yang dipilih, hitung semua distributor
-                $product = null;
                 $alternatives = Alternative::all();
                 
                 if ($alternatives->isEmpty()) {
@@ -107,7 +108,6 @@ class CalculationController extends Controller
 
             // Urutkan berdasarkan nilai MOORA tertinggi ke terendah
             arsort($valueMoora);
-            
 
             return view('admin.moora.calculation', compact(
                 'alternatives',
@@ -116,7 +116,7 @@ class CalculationController extends Controller
                 'weight',
                 'valueMoora',
                 'normDivisor',
-                'product',
+                'productSelected',
                 'altValues',
                 'products'
             ));
@@ -128,27 +128,35 @@ class CalculationController extends Controller
 
     public function downloadPDF(Request $request)
     {
-        // Jika ada product_id yang dipilih
-        if ($request->has('product_id') && $request->product_id) {
-            $productId = $request->product_id;
-            $product = Product::find($productId);
+        // Ambil semua produk untuk dropdown
+        $products = Product::withCount('distributors')->get();
 
-            if ($product) {
-                // Hanya ambil distributor yang menyediakan produk yang dipilih
-                $distributors = $product->distributors;
-                $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
-            } else {
-                return redirect()->back()->with('error', 'Produk tidak ditemukan.');
+        $alternatives = null;
+        $productSelected = null;
+
+        // Jika ada product_id yang dipilih
+        if ($request->product_id) {
+            $request->validate([
+                'product_id' => 'required|exists:products,id'
+            ]);
+
+            $productId = $request->product_id;
+            $productSelected = Product::findOrFail($productId);
+
+            // Hanya ambil distributor yang menyediakan produk yang dipilih
+            $distributors = $productSelected->distributors;
+            $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
+
+            if ($alternatives->isEmpty()) {
+                return redirect()->back()->with('error', 'Tidak ada data alternatif untuk distributor yang menyediakan produk ini.')->with('products', $products);
             }
         } else {
-            // Jika tidak ada product_id yang dipilih, ambil semua distributor
-            $product = null;
+            // Jika tidak ada product_id yang dipilih, hitung semua distributor
             $alternatives = Alternative::all();
-        }
-
-        // Jika tidak ada alternatif
-        if ($alternatives->isEmpty()) {
-            return redirect()->back()->with('error', 'Tidak ada data alternatif yang tersedia.');
+            
+            if ($alternatives->isEmpty()) {
+                return redirect()->back()->with('error', 'Tidak ada data alternatif yang tersedia.')->with('products', $products);
+            }
         }
 
         $criteria = Criteria::with(['subCriteria'])->get();
@@ -212,12 +220,9 @@ class CalculationController extends Controller
             $valueMoora[$alt->id] = $benefit - $cost;
         }
 
+        // Urutkan berdasarkan nilai MOORA tertinggi ke terendah
         arsort($valueMoora);
-
-        // Generate nama file PDF
-        $filename = 'laporan_moora_semua_distributor.pdf';
-
-        // Generate PDF
+        
         $pdf = app('dompdf.wrapper');
         $pdf->loadView('admin.moora.pdf_report', compact(
             'alternatives',
@@ -226,10 +231,11 @@ class CalculationController extends Controller
             'weight',
             'valueMoora',
             'normDivisor',
-            'product',
-            'altValues'
+            'productSelected',
+            'altValues',
+            'products'
         ));
-
-        return $pdf->download($filename);
+        
+        return $pdf->download('laporan-moora.pdf');
     }
 }
