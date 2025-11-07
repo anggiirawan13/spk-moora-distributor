@@ -70,12 +70,27 @@ class DistributorController extends Controller
         return view('admin.distributor.show', compact('distributor'));
     }
 
-    public function showComparisonForm()
-    {
-        $distributors = Distributor::all();
-
-        return view('admin.distributor.compare_form', compact('distributors'));
+public function showComparisonForm(Request $request)
+{
+    $products = Product::all(); // Get all products for dropdown
+    
+    $selectedProductId = $request->input('product_id');
+    $distributors = collect();
+    
+    if ($selectedProductId) {
+        // Get distributors that have the selected product through pivot table
+        $distributors = Distributor::whereHas('products', function($query) use ($selectedProductId) {
+            $query->where('product_id', $selectedProductId);
+        })->with(['products' => function($query) use ($selectedProductId) {
+            $query->where('product_id', $selectedProductId);
+        }])->get();
+    } else {
+        // Jika tidak ada product yang dipilih, tampilkan semua distributor dengan products mereka
+        $distributors = Distributor::with('products')->get();
     }
+
+    return view('admin.distributor.compare_form', compact('products', 'distributors', 'selectedProductId'));
+}
 
     public function compare(Request $request)
     {

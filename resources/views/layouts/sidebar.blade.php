@@ -39,30 +39,25 @@
                 <div id="dataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item text-dark" href="{{ route('admin.business_scale.index') }}">
-                            <i class="fas fa-chart-line mr-2"></i>Skala Bisnis
+                            <i class="fas fa-chart-line mr-2"></i> Skala Bisnis
                         </a>
                         <a class="collapse-item text-dark" href="{{ route('admin.delivery_method.index') }}">
-                            <i class="fas fa-shipping-fast mr-2"></i>Metode Pengiriman
-                        </a>
-                        <a class="collapse-item text-dark" href="{{ route('admin.product.index') }}">
-                            <i class="fas fa-boxes mr-2"></i>Produk
+                            <i class="fas fa-shipping-fast mr-2"></i> Metode Pengiriman
                         </a>
                         <a class="collapse-item text-dark" href="{{ route('admin.payment_term.index') }}">
-                            <i class="fas fa-money-bill-wave mr-2"></i>Termin Pembayaran
+                            <i class="fas fa-money-bill-wave mr-2"></i> Termin Pembayaran
+                        </a>
+                        <a class="collapse-item text-dark" href="{{ route('distributor.index') }}">
+                            <i class="fas fa-warehouse"></i> Distributor
+                        </a>
+                        <a class="collapse-item text-dark" href="{{ route('admin.product.index') }}">
+                            <i class="fas fa-boxes mr-2"></i> Produk
                         </a>
                     </div>
                 </div>
             </li>
         @endcan
     @endauth
-
-    <!-- Distributor -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('distributor.index') }}">
-            <i class="fas fa-warehouse"></i>
-            <span>Distributor</span>
-        </a>
-    </li>
 
     <!-- Perbandingan Distributor -->
     <li class="nav-item">

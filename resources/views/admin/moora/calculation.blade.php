@@ -17,7 +17,7 @@
 
     <div class="container-fluid">
 
-        <!-- Form Pemilihan Produk - Versi Simpel & Elegan -->
+        <!-- Form Pemilihan Produk -->
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card shadow-sm border-0" style="border-radius: 15px; overflow: hidden;">

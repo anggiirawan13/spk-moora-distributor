@@ -29,6 +29,11 @@ class Distributor extends Model
         'is_active' => 'boolean',
     ];
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'distributor_product');
+    }
+
     public function paymentTerm()
     {
         return $this->belongsTo(PaymentTerm::class, 'payment_term_id');

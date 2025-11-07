@@ -200,7 +200,7 @@
                     </a>
                     @endcannot
                     @can('admin')
-                    <a href="{{ route('admin.calculation') }}" class="btn btn-warning btn-block text-left">
+                    <a href="{{ route('admin.moora.calculation') }}" class="btn btn-warning btn-block text-left">
                         <i class="fas fa-calculator mr-2"></i>Hitung MOORA
                     </a>
                     @endcan
