@@ -241,53 +241,6 @@
     </div>
 </div>
 
-<!-- Recent Activity (Placeholder for future features) -->
-@can('admin')
-<div class="row">
-    <div class="col-12">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
-                    <i class="fas fa-chart-line mr-2"></i>Statistik Sistem
-                </h6>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-md-3 mb-3">
-                        <div class="border rounded p-3">
-                            <i class="fas fa-warehouse fa-2x text-primary mb-2"></i>
-                            <h5 class="font-weight-bold">{{ $data->distributors }}</h5>
-                            <small class="text-muted">Distributor Terdaftar</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="border rounded p-3">
-                            <i class="fas fa-list-alt fa-2x text-success mb-2"></i>
-                            <h5 class="font-weight-bold">{{ $data->criteria }}</h5>
-                            <small class="text-muted">Kriteria Evaluasi</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="border rounded p-3">
-                            <i class="fas fa-th fa-2x text-info mb-2"></i>
-                            <h5 class="font-weight-bold">{{ $data->alternative }}</h5>
-                            <small class="text-muted">Alternatif Data</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="border rounded p-3">
-                            <i class="fas fa-users fa-2x text-warning mb-2"></i>
-                            <h5 class="font-weight-bold">{{ $data->users }}</h5>
-                            <small class="text-muted">Total Pengguna</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endcan
-
 <style>
 .card {
     transition: transform 0.2s ease-in-out;
