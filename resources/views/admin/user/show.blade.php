@@ -10,7 +10,7 @@
             <i class="fas fa-users text-primary mr-2"></i>Pengguna
         </h1>
         <a href="{{ route('admin.user.index') }}" class="btn btn-secondary btn-sm">
-            <i class="fas fa-arrow-left mr-1"></i>Kembali ke Daftar
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
         </a>
     </div>
 

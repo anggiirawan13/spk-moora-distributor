@@ -140,7 +140,7 @@
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">
                                 <a href="{{ route('admin.product.index') }}" class="btn btn-secondary btn-lg">
-                                    <i class="fas fa-arrow-left mr-2"></i>Kembali ke Daftar
+                                    <i class="fas fa-arrow-left mr-2"></i>Kembali
                                 </a>
                                 <div>
                                     @if (auth()->user()->is_admin == 1)
