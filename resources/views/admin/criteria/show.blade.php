@@ -10,7 +10,7 @@
             <i class="fas fa-list-alt text-primary mr-2"></i>Kriteria
         </h1>
         <a href="{{ route('admin.criteria.index') }}" class="btn btn-secondary btn-sm">
-            <i class="fas fa-arrow-left mr-1"></i>Kembali ke Daftar
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
         </a>
     </div>
 
