@@ -11,7 +11,7 @@
         <div class="card-body">
             <x-user_form :id="$user->id" route="admin.user.update" :imageRequired="false" :isReadOnly="true" method="PUT"
                 :withRole="true" :name="$user->name" :email="$user->email" :withBack="true" routeBack="admin.user.index"
-                :image="$user->image_name" :role="$user->is_admin" :passwordRequired="false" :deletePhotoProfile="true" />
+                :image="$user->image_name" :phone="$user->phone" :address="$user->address" :role="$user->is_admin" :passwordRequired="false" :deletePhotoProfile="true" />
         </div>
     </div>
 

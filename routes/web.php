@@ -33,7 +33,6 @@ Route::middleware(['auth'])->group(function () {
     // Profile management
     Route::get('/profile', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
-    Route::post('/profile/delete-image', [UserController::class, 'deleteProfileImage'])->name('profile.delete_image');
 
     // ===================================
     // Shared Resources

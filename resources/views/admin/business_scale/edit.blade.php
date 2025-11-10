@@ -46,7 +46,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted mt-1">
-                                        <i class="fas fa-info-circle mr-1"></i>Contoh: UMKM, Corporate, Enterprise, Startup
+                                        <i class="fas fa-info-circle mr-1"></i>Contoh: Luar Kota, Dalam Kota, Regional
                                     </small>
                                 </div>
                             </div>

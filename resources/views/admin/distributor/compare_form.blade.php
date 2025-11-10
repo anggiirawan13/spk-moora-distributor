@@ -73,7 +73,6 @@
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}" 
                                                     data-company="{{ $distributor->company_name }}"
-                                                    data-category="{{ $distributor->product?->name ?? 'N/A' }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
                                                 {{ $distributor->name }} - {{ $distributor->company_name }}
                                             </option>
@@ -96,7 +95,6 @@
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}"
                                                     data-company="{{ $distributor->company_name }}"
-                                                    data-category="{{ $distributor->product?->name ?? 'N/A' }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
                                                 {{ $distributor->name }} - {{ $distributor->company_name }}
                                             </option>
@@ -210,11 +208,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (selectedOption.val()) {
                 const company = selectedOption.data('company');
-                const category = selectedOption.data('category');
                 const scale = selectedOption.data('scale');
                 
                 nameElement.text(selectedOption.text());
-                detailsElement.text(`${company} • ${category} • ${scale}`);
+                detailsElement.text(`${company} • ${scale}`);
                 preview.show();
             } else {
                 preview.hide();

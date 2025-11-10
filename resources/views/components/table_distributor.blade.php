@@ -67,23 +67,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="info-item">
-                    <div class="d-flex align-items-start">
-                        <div class="icon-container bg-light rounded p-2 mr-3">
-                            <i class="fas fa-toggle-on {{ $distributor->is_active ? 'text-success' : 'text-secondary' }} fa-lg"></i>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="font-weight-bold text-dark mb-1">Status</h6>
-                            <p class="mb-0">
-                                <span class="badge {{ $distributor->is_active ? 'badge-success' : 'badge-secondary' }} badge-pill">
-                                    <i class="fas {{ $distributor->is_active ? 'fa-check' : 'fa-times' }} mr-1"></i>
-                                    {{ $distributor->is_active ? 'Aktif' : 'Tidak Aktif' }}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Informasi Bisnis -->
@@ -91,22 +74,6 @@
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
                     <i class="fas fa-chart-line mr-2"></i>Informasi Bisnis
                 </h6>
-                
-                <div class="info-item mb-3">
-                    <div class="d-flex align-items-start">
-                        <div class="icon-container bg-light rounded p-2 mr-3">
-                            <i class="fas fa-boxes text-primary fa-lg"></i>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="font-weight-bold text-dark mb-1">Produk</h6>
-                            <p class="mb-0">
-                                <span class="badge badge-primary badge-pill">
-                                    {{ $distributor->product?->name ?? 'Tidak ada kategori' }}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="info-item mb-3">
                     <div class="d-flex align-items-start">
@@ -156,6 +123,23 @@
                     </div>
                 </div>
 
+                <div class="info-item">
+                    <div class="d-flex align-items-start">
+                        <div class="icon-container bg-light rounded p-2 mr-3">
+                            <i class="fas fa-toggle-on {{ $distributor->is_active ? 'text-success' : 'text-secondary' }} fa-lg"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="font-weight-bold text-dark mb-1">Status</h6>
+                            <p class="mb-0">
+                                <span class="badge {{ $distributor->is_active ? 'badge-success' : 'badge-secondary' }} badge-pill">
+                                    <i class="fas {{ $distributor->is_active ? 'fa-check' : 'fa-times' }} mr-1"></i>
+                                    {{ $distributor->is_active ? 'Aktif' : 'Tidak Aktif' }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Timestamps -->
                 <div class="info-item">
                     <div class="d-flex align-items-start">
@@ -168,10 +152,12 @@
                                 <div class="mb-1">
                                     <i class="fas fa-calendar-plus mr-1"></i>
                                     Dibuat: {{ $distributor->created_at->format('d M Y H:i') }}
+                                    <small class="text-muted">({{ $distributor->created_at->diffForHumans() }})</small>
                                 </div>
                                 <div>
                                     <i class="fas fa-calendar-check mr-1"></i>
                                     Diupdate: {{ $distributor->updated_at->format('d M Y H:i') }}
+                                    <small class="text-muted">({{ $distributor->updated_at->diffForHumans() }})</small>
                                 </div>
                             </div>
                         </div>

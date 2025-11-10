@@ -57,37 +57,25 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="info-item">
                                                 <strong class="text-dark">Nama Distributor:</strong>
                                                 <div class="text-primary font-weight-bold mt-1">{{ $alternative->distributor?->name }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="info-item">
                                                 <strong class="text-dark">Perusahaan:</strong>
                                                 <div class="text-dark mt-1">{{ $alternative->distributor?->company_name }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="info-item">
-                                                <strong class="text-dark">Produk:</strong>
-                                                <div class="mt-1">
-                                                    <span class="badge badge-info badge-pill">
-                                                        {{ $alternative->distributor?->product?->name ?? 'Tidak ada kategori' }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="info-item">
                                                 <strong class="text-dark">Email:</strong>
                                                 <div class="text-muted mt-1">{{ $alternative->distributor?->email ?? '-' }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="info-item">
                                                 <strong class="text-dark">Telepon:</strong>
                                                 <div class="text-muted mt-1">{{ $alternative->distributor?->phone ?? '-' }}</div>
@@ -178,13 +166,13 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row text-center">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="border-right">
                                                 <h3 class="text-primary font-weight-bold">{{ $alternative->values->count() }}</h3>
                                                 <p class="text-muted mb-0">Total Kriteria</p>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="border-right">
                                                 <h3 class="text-success font-weight-bold">
                                                     {{ $alternative->values->sum(function($value) { return $value->subCriteria->value ?? 0; }) }}
@@ -192,8 +180,8 @@
                                                 <p class="text-muted mb-0">Total Nilai</p>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="border-right">
+                                        <div class="col-md-4">
+                                            <div>
                                                 <h3 class="text-info font-weight-bold">
                                                     @php
                                                         $values = $alternative->values->map(function($value) {
@@ -204,14 +192,6 @@
                                                     {{ number_format($average, 2) }}
                                                 </h3>
                                                 <p class="text-muted mb-0">Rata-rata Nilai</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div>
-                                                <h3 class="text-warning font-weight-bold">
-                                                    {{ number_format($alternative->score ?? 0, 3) }}
-                                                </h3>
-                                                <p class="text-muted mb-0">Skor Akhir</p>
                                             </div>
                                         </div>
                                     </div>

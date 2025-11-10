@@ -74,17 +74,21 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <strong>Nama Distributor:</strong>
                                                 <div id="previewDistributorName" class="text-primary font-weight-bold mt-1">-</div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <strong>Perusahaan:</strong>
                                                 <div id="previewCompanyName" class="text-dark mt-1">-</div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <strong>Produk:</strong>
-                                                <div id="previewProduct" class="text-info mt-1">-</div>
+                                            <div class="col-md-3">
+                                                <strong>Metode Pengiriman:</strong>
+                                                <div id="previewDeliveryMethod" class="text-dark mt-1">-</div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <strong>Termin Pembayaran:</strong>
+                                                <div id="previewPaymentTerm" class="text-dark mt-1">-</div>
                                             </div>
                                         </div>
                                     </div>
@@ -284,7 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const distributorPreview = document.getElementById('distributorPreview');
     const previewDistributorName = document.getElementById('previewDistributorName');
     const previewCompanyName = document.getElementById('previewCompanyName');
-    const previewProduct = document.getElementById('previewProduct');
+    const previewDeliveryMethod = document.getElementById('previewDeliveryMethod');
+    const previewPaymentTerm = document.getElementById('previewPaymentTerm');
     
     // Data distributor untuk preview - FIXED SYNTAX
     const distributorsData = {!! json_encode($distributors->map(function($distributor) {
@@ -292,7 +297,8 @@ document.addEventListener('DOMContentLoaded', function() {
             'id' => $distributor->id,
             'name' => $distributor->name,
             'company_name' => $distributor->company_name,
-            'product' => $distributor->product->name ?? '-'
+            'delivery_method' => $distributor->deliveryMethod->name,
+            'payment_term' => $distributor->paymentTerm->name,
         ];
     })) !!};
 
@@ -304,7 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selectedDistributor) {
             previewDistributorName.textContent = selectedDistributor.name;
             previewCompanyName.textContent = selectedDistributor.company_name;
-            previewProduct.textContent = selectedDistributor.product;
+            previewDeliveryMethod.textContent = selectedDistributor.delivery_method;
+            previewPaymentTerm.textContent = selectedDistributor.payment_term;
             distributorPreview.style.display = 'block';
         } else {
             distributorPreview.style.display = 'none';

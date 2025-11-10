@@ -43,22 +43,16 @@
                                                 <div class="text-dark">
                                                     <strong>Kode:</strong> 
                                                     <span class="badge badge-primary">{{ $subCriteria->criteria->code }}</span>
-                                                    <strong class="ml-3">Nama:</strong> 
+                                                    <strong class="ml-5">Nama:</strong> 
                                                     <span class="text-dark">{{ $subCriteria->criteria->name }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 text-right">
-                                                <div class="text-info">
-                                                    <strong>Bobot:</strong> 
-                                                    <span class="font-weight-bold">{{ $subCriteria->criteria->weight }}</span>
-                                                </div>
-                                                <div>
-                                                    <strong>Jenis:</strong> 
+                                                    <strong class="ml-5">Jenis:</strong> 
                                                     @if($subCriteria->criteria->attribute_type == 'Benefit')
                                                         <span class="badge badge-success">Benefit</span>
                                                     @else
                                                         <span class="badge badge-danger">Cost</span>
                                                     @endif
+                                                    <strong class="ml-5">Bobot:</strong> 
+                                                    <span class="font-weight-bold">{{ $subCriteria->criteria->weight }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -69,7 +63,7 @@
 
                         <!-- Form Input -->
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-tag text-primary mr-2"></i>Nama Sub Kriteria <span class="text-danger">*</span>
@@ -91,9 +85,7 @@
                                     </small>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="value" class="font-weight-bold text-dark mb-2">
@@ -106,33 +98,14 @@
                                            value="{{ old('value', $subCriteria->value) }}" 
                                            placeholder="1"
                                            min="1" 
-                                           max="100"
+                                           max="10"
                                            step="1"
                                            required>
                                     @error('value')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted mt-1">
-                                        <i class="fas fa-info-circle mr-1"></i>Nilai numerik untuk sub kriteria (1-100)
-                                    </small>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="description" class="font-weight-bold text-dark mb-2">
-                                        <i class="fas fa-file-alt text-warning mr-2"></i>Deskripsi (Opsional)
-                                    </label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" 
-                                              name="description" 
-                                              id="description"
-                                              rows="1" 
-                                              placeholder="Masukkan deskripsi tambahan">{{ old('description', $subCriteria->description) }}</textarea>
-                                    @error('description')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <small class="form-text text-muted mt-1">
-                                        <i class="fas fa-info-circle mr-1"></i>Penjelasan tambahan tentang sub kriteria ini
+                                        <i class="fas fa-info-circle mr-1"></i>Nilai numerik untuk sub kriteria (1-10)
                                     </small>
                                 </div>
                             </div>
@@ -149,22 +122,16 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <strong>Nama Sub Kriteria:</strong>
                                                 <div id="namePreview" class="text-primary font-weight-bold mt-1">
                                                     {{ old('name', $subCriteria->name) ?: '-' }}
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <strong>Nilai:</strong>
                                                 <div id="valuePreview" class="text-success font-weight-bold mt-1">
                                                     {{ old('value', $subCriteria->value) ?: '-' }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <strong>Deskripsi:</strong>
-                                                <div id="descriptionPreview" class="text-muted mt-1 small">
-                                                    {{ old('description', $subCriteria->description) ?: '-' }}
                                                 </div>
                                             </div>
                                         </div>
@@ -184,17 +151,13 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <strong>Nama Sub Kriteria:</strong>
                                                 <div class="text-primary font-weight-bold mt-1">{{ $subCriteria->name }}</div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <strong>Nilai:</strong>
                                                 <div class="text-success font-weight-bold mt-1">{{ $subCriteria->value }}</div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <strong>Deskripsi:</strong>
-                                                <div class="text-muted mt-1 small">{{ $subCriteria->description ?: '-' }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -221,7 +184,6 @@
                                                         <th width="5%">No</th>
                                                         <th width="40%">Nama Sub Kriteria</th>
                                                         <th width="15%">Nilai</th>
-                                                        <th width="30%">Deskripsi</th>
                                                         <th width="10%">Status</th>
                                                     </tr>
                                                 </thead>

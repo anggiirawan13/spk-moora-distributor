@@ -24,25 +24,9 @@
                 </div>
                 <div class="card-body p-4">
                     <x-alert />
-                    
-                    <x-user_form 
-                        route="profile.update" 
-                        :imageRequired="false" 
-                        :isReadOnly="true" 
-                        method="PUT" 
-                        :withRole="false"
-                        :name="auth()->user()->name" 
-                        :email="auth()->user()->email" 
-                        :withBack="false" 
-                        routeBack="" 
-                        :image="auth()->user()->image_name" 
-                        role=""
-                        :deletePhotoProfile="true" 
-                        :passwordRequired="false"
-                        :phone="auth()->user()->phone"
-                        :position="auth()->user()->position"
-                        :address="auth()->user()->address"
-                    />
+                    <x-user_form :id="auth()->user()->id" route="profile.update" :imageRequired="false" :isReadOnly="true" method="PUT"
+                :withRole="true" :name="auth()->user()->name" :email="auth()->user()->email" :withBack="true" routeBack="admin.user.index"
+                :image="auth()->user()->image_name" :phone="auth()->user()->phone" :address="auth()->user()->address" :role="auth()->user()->is_admin" :passwordRequired="false" :deletePhotoProfile="true" />
                 </div>
             </div>
         </div>

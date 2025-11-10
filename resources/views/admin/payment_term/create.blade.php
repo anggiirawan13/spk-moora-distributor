@@ -46,7 +46,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted mt-1">
-                                        <i class="fas fa-info-circle mr-1"></i>Contoh: Kabel Listrik, Perlengkapan Penerangan, dll.
+                                        <i class="fas fa-info-circle mr-1"></i>Contoh: Cash, 0 Day, 3 Day, 30 Day
                                     </small>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                     @enderror
                                     <div class="d-flex justify-content-between align-items-center mt-1">
                                         <small class="form-text text-muted">
-                                            <i class="fas fa-lightbulb mr-1"></i>Jelaskan karakteristik dan penggunaan termin pembayaran ini
+                                            <i class="fas fa-lightbulb mr-1"></i>Jelaskan tentang termin pembayaran
                                         </small>
                                         <small class="text-muted" id="charCount">0/500 karakter</small>
                                     </div>

@@ -56,7 +56,6 @@
                             <th class="text-center" style="width: 60px;">No</th>
                             <th>Nama Sub Kriteria</th>
                             <th class="text-center" style="width: 100px;">Nilai</th>
-                            <th class="text-center" style="width: 120px;">Status</th>
                             <th class="text-center" style="width: 150px;">Aksi</th>
                         </tr>
                     </thead>
@@ -70,18 +69,10 @@
                             </td>
                             <td class="align-middle">
                                 <div class="font-weight-bold text-dark">{{ $sub->name }}</div>
-                                @if($sub->description)
-                                <small class="text-muted">{{ Str::limit($sub->description, 50) }}</small>
-                                @endif
                             </td>
                             <td class="text-center align-middle">
                                 <span class="badge badge-success badge-pill" style="font-size: 1em;">
                                     {{ $sub->value }}
-                                </span>
-                            </td>
-                            <td class="text-center align-middle">
-                                <span class="badge {{ $sub->is_active ? 'badge-success' : 'badge-secondary' }}">
-                                    {{ $sub->is_active ? 'Aktif' : 'Nonaktif' }}
                                 </span>
                             </td>
                             <td class="text-center align-middle">
@@ -120,7 +111,6 @@
                                 <div class="text-muted">
                                     <i class="fas fa-inbox fa-2x mb-3"></i>
                                     <p class="mb-0">Belum ada sub kriteria</p>
-                                    <small>Klik tombol "Tambah Sub Kriteria" untuk menambahkan data</small>
                                 </div>
                             </td>
                         </tr>

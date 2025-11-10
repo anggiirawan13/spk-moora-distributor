@@ -45,7 +45,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted mt-1">
-                                        <i class="fas fa-info-circle mr-1"></i>Contoh: Pengiriman Ekspres, Reguler, COD, dll.
+                                        <i class="fas fa-info-circle mr-1"></i>Contoh: Pengiriman Ekspres, Reguler, COD
                                     </small>
                                 </div>
                             </div>

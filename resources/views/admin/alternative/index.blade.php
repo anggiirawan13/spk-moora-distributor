@@ -45,7 +45,6 @@
                                     </div>
                                 </th>
                             @endforeach
-                            <th class="text-center text-white" width="150px">Skor</th>
                             <th class="text-center text-white" width="120px">Aksi</th>
                         </tr>
                     </thead>
@@ -74,15 +73,6 @@
                                         @endif
                                     </td>
                                 @endforeach
-                                <td class="text-center align-middle">
-                                    @if(isset($item['score']))
-                                        <span class="badge badge-success badge-pill font-weight-bold">
-                                            {{ number_format($item['score'], 3) }}
-                                        </span>
-                                    @else
-                                        <span class="text-muted">-</span>
-                                    @endif
-                                </td>
                                 <td class="text-center align-middle">
                                     <div class="d-flex justify-content-center gap-1">
                                         <a href="{{ route('admin.alternative.show', $item['id']) }}"
@@ -119,14 +109,6 @@
                                     <div class="text-muted">
                                         <i class="fas fa-inbox fa-2x mb-3"></i>
                                         <p class="mb-1 font-weight-bold">Belum Ada Data Alternatif</p>
-                                        <p class="small mb-0">Silakan tambah data alternatif untuk memulai proses penilaian</p>
-                                        @auth
-                                            @if (auth()->user()->is_admin == 1)
-                                                <a href="{{ route('admin.alternative.create') }}" class="btn btn-primary btn-sm mt-2">
-                                                    <i class="fas fa-plus mr-1"></i>Tambah Alternatif
-                                                </a>
-                                            @endif
-                                        @endauth
                                     </div>
                                 </td>
                             </tr>

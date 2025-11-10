@@ -46,7 +46,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted mt-1">
-                                        <i class="fas fa-info-circle mr-1"></i>Contoh: UMKM, Corporate, Enterprise, Startup
+                                        <i class="fas fa-info-circle mr-1"></i>Contoh: Pengiriman Ekspres, Reguler, COD
                                     </small>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                     @enderror
                                     <div class="d-flex justify-content-between align-items-center mt-1">
                                         <small class="form-text text-muted">
-                                            <i class="fas fa-lightbulb mr-1"></i>Jelaskan karakteristik dan cakupan metode pengiriman
+                                            <i class="fas fa-lightbulb mr-1"></i>Jelaskan estimasi waktu dan cara pengiriman
                                         </small>
                                         <small class="text-muted" id="charCount">{{ strlen(old('description', $deliveryMethod->description)) }}/500 karakter</small>
                                     </div>

@@ -27,30 +27,41 @@
         <div class="col-md-4 text-center mb-4">
             <div class="profile-image-container">
                 <div class="position-relative d-inline-block">
+                @if($image)
+                    <!-- Tampilkan gambar jika ada -->
                     <img id="imagePreview" 
-                         class="img-thumbnail rounded-circle shadow" 
-                         style="width: 200px; height: 200px; object-fit: cover; display: none;"
-                         alt="Foto Profil">
+                        src="{{ asset('storage/user/' . $image) }}"
+                        class="img-thumbnail rounded-circle shadow" 
+                        style="width: 200px; height: 200px; object-fit: cover;"
+                        alt="Foto Profil">
+                    
+                    <!-- Tombol Hapus Foto -->
+                    {{-- @if($deletePhotoProfile)
+                    <button type="button" id="removePhotoBtn" 
+                            class="btn btn-danger btn-sm position-absolute rounded-circle"
+                            style="top: -5px; right: -5px; width: 30px; height: 30px;"
+                            title="Hapus Foto Profil"
+                            onclick="confirmDelete('{{ $id ? route('profile.delete_image', $id) : route('profile.delete_image') }}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    @endif --}}
+                @else
+                    <!-- Tampilkan placeholder jika tidak ada gambar -->
+                    <img id="imagePreview" 
+                        class="img-thumbnail rounded-circle shadow" 
+                        style="width: 200px; height: 200px; object-fit: cover; display: none;"
+                        alt="Foto Profil">
+                        
                     <div id="imagePlaceholder" 
-                         class="img-thumbnail rounded-circle bg-light d-flex align-items-center justify-content-center"
-                         style="width: 200px; height: 200px; border: 2px dashed #dee2e6;">
+                        class="img-thumbnail rounded-circle bg-light d-flex align-items-center justify-content-center"
+                        style="width: 200px; height: 200px; border: 2px dashed #dee2e6;">
                         <div class="text-center">
                             <i class="fas fa-user fa-3x text-muted mb-2"></i>
                             <p class="text-muted small mb-0">Belum ada foto</p>
                         </div>
                     </div>
-                    
-                    <!-- Tombol Hapus Foto -->
-                    @if ($image && $deletePhotoProfile)
-                    <button type="button" id="removePhotoBtn" 
-                            class="btn btn-danger btn-sm position-absolute rounded-circle"
-                            style="top: -5px; right: -5px; display: none; width: 30px; height: 30px;"
-                            title="Hapus Foto Profil"
-                            onclick="confirmDelete('{{ $id ? route('profile.delete_image', $id) : route('profile.delete_image') }}')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    @endif
-                </div>
+                @endif
+            </div>
                 
                 <div class="mt-3">
                     <label for="image_name" class="btn btn-outline-primary btn-sm cursor-pointer mb-2">
@@ -94,29 +105,30 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="email" class="font-weight-bold text-dark mb-2">
-                        <i class="fas fa-envelope text-info mr-2"></i>Alamat Email <span class="text-danger">*</span>
-                    </label>
-                    <input type="email" 
-                           class="form-control @error('email') is-invalid @enderror" 
-                           name="email" 
-                           id="email"
-                           value="{{ old('email', $email) }}" 
-                           placeholder="Masukkan alamat email"
-                           required
-                           {{ $isReadOnly ? 'readonly' : '' }}
-                           style="background-color: #f8f9fa;">
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                    <small class="form-text text-muted mt-1">
-                        <i class="fas fa-info-circle mr-1"></i>Email tidak dapat diubah
-                    </small>
-                </div>
-
-                <!-- Informasi Tambahan -->
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email" class="font-weight-bold text-dark mb-2">
+                                <i class="fas fa-envelope text-info mr-2"></i>Alamat Email <span class="text-danger">*</span>
+                            </label>
+                            <input type="email" 
+                                class="form-control @error('email') is-invalid @enderror" 
+                                name="email" 
+                                id="email"
+                                value="{{ old('email', $email) }}" 
+                                placeholder="Masukkan alamat email"
+                                required
+                                {{ $isReadOnly ? 'readonly' : '' }}
+                                style="background-color: #f8f9fa;">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="form-text text-muted mt-1">
+                                <i class="fas fa-info-circle mr-1"></i>Email tidak dapat diubah
+                            </small>
+                        </div>
+                    </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="phone" class="font-weight-bold text-dark mb-2">
@@ -129,22 +141,6 @@
                                    value="{{ old('phone', $phone) }}" 
                                    placeholder="Masukkan nomor telepon">
                             @error('phone')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="position" class="font-weight-bold text-dark mb-2">
-                                <i class="fas fa-briefcase text-primary mr-2"></i>Posisi/Jabatan
-                            </label>
-                            <input type="text" 
-                                   class="form-control @error('position') is-invalid @enderror" 
-                                   name="position" 
-                                   id="position"
-                                   value="{{ old('position', $position) }}" 
-                                   placeholder="Masukkan posisi/jabatan">
-                            @error('position')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -389,7 +385,7 @@ function previewImage(event) {
         reader.onload = function(e) {
             preview.src = e.target.result;
             preview.style.display = 'block';
-            placeholder.style.display = 'none';
+            placeholder.setAttribute('style', 'display: none !important');
             if (removeBtn) removeBtn.style.display = 'block';
         };
         

@@ -23,11 +23,12 @@ class AlternativeController extends Controller
         $dataAlternatives = $alternatives->map(function ($alt) use ($criterias) {
             $data = [
                 'id' => $alt->id,
-                'name' => $alt->distributor?->name
+                'name' => $alt->distributor?->name,
+                'company_name' => $alt->distributor?->company_name
             ];
 
             foreach ($criterias as $criteria) {
-                $value = $alt->values->first(function ($val) use ($criteria) {
+                $value = $alt->values->firstWhere(function ($val) use ($criteria) {
                     return $val->subCriteria && $val->subCriteria->criteria_id === $criteria->id;
                 });
 

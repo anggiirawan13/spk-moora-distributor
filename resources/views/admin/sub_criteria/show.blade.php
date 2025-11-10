@@ -36,10 +36,6 @@
                                     <span class="badge badge-success badge-pill mr-2">
                                         <i class="fas fa-hashtag mr-1"></i>Nilai: {{ $subCriteria->value }}
                                     </span>
-                                    <span class="badge {{ $subCriteria->is_active ? 'badge-success' : 'badge-secondary' }} badge-pill">
-                                        <i class="fas fa-circle mr-1"></i>
-                                        {{ $subCriteria->is_active ? 'Aktif' : 'Nonaktif' }}
-                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +80,7 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <div class="info-item">
                                                 <strong class="text-dark">Bobot Kriteria:</strong>
                                                 <div class="mt-1">
@@ -107,7 +103,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="info-item">
                                                 <strong class="text-dark">Keterangan:</strong>
                                                 <div class="mt-1 text-muted small">
@@ -150,29 +146,6 @@
                                                     <td>
                                                         <span class="badge badge-success badge-pill" style="font-size: 1.1em;">
                                                             {{ $subCriteria->value }}
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold text-dark">
-                                                        <i class="fas fa-file-alt text-warning mr-2"></i>Deskripsi
-                                                    </td>
-                                                    <td class="text-muted">
-                                                        @if($subCriteria->description)
-                                                            {{ $subCriteria->description }}
-                                                        @else
-                                                            <span class="text-muted font-italic">- Tidak ada deskripsi -</span>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold text-dark">
-                                                        <i class="fas fa-toggle-on text-info mr-2"></i>Status
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge {{ $subCriteria->is_active ? 'badge-success' : 'badge-secondary' }} badge-pill">
-                                                            <i class="fas {{ $subCriteria->is_active ? 'fa-check' : 'fa-times' }} mr-1"></i>
-                                                            {{ $subCriteria->is_active ? 'Aktif' : 'Nonaktif' }}
                                                         </span>
                                                     </td>
                                                 </tr>

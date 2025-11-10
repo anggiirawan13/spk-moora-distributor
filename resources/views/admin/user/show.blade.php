@@ -42,10 +42,6 @@
                                 </div>
                                 <h3 class="font-weight-bold text-primary mb-2">{{ $user->name }}</h3>
                                 <div class="status-badges">
-                                    <span class="badge {{ $user->is_admin ? 'badge-danger' : 'badge-primary' }} badge-pill mr-2">
-                                        <i class="fas fa-user-tag mr-1"></i>
-                                        {{ $user->is_admin ? 'Administrator' : 'Pengguna' }}
-                                    </span>
                                     <span class="badge badge-success badge-pill">
                                         <i class="fas fa-circle mr-1"></i>
                                         Aktif
@@ -86,7 +82,7 @@
                                                     <td>
                                                         <span class="badge {{ $user->is_admin ? 'badge-danger' : 'badge-primary' }} badge-pill">
                                                             <i class="fas {{ $user->is_admin ? 'fa-shield-alt' : 'fa-user' }} mr-1"></i>
-                                                            {{ $user->is_admin ? 'Administrator' : 'Pengguna' }}
+                                                            {{ $user->is_admin ? 'Administrator' : 'User' }}
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -96,14 +92,6 @@
                                                         <i class="fas fa-phone text-primary mr-2"></i>Nomor Telepon
                                                     </td>
                                                     <td class="text-muted">{{ $user->phone }}</td>
-                                                </tr>
-                                                @endif
-                                                @if($user->position)
-                                                <tr>
-                                                    <td class="font-weight-bold text-dark">
-                                                        <i class="fas fa-briefcase text-success mr-2"></i>Posisi/Jabatan
-                                                    </td>
-                                                    <td class="text-muted">{{ $user->position }}</td>
                                                 </tr>
                                                 @endif
                                                 @if($user->address)
@@ -156,59 +144,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-3">
-                                        <div class="col-12">
-                                            <div class="info-item">
-                                                <strong class="text-dark">
-                                                    <i class="fas fa-database text-secondary mr-2"></i>ID Data:
-                                                </strong>
-                                                <div class="text-muted">
-                                                    <code>{{ $user->id }}</code>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Statistik Aktivitas -->
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <div class="card border-left-primary">
-                                <div class="card-header bg-light py-2">
-                                    <h6 class="mb-0 font-weight-bold text-primary">
-                                        <i class="fas fa-chart-bar mr-2"></i>Ringkasan
-                                    </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row text-center">
-                                        <div class="col-md-4">
-                                            <div class="border-right">
-                                                <h3 class="text-primary font-weight-bold">
-                                                    {{ $user->created_at->format('d/m/Y') }}
-                                                </h3>
-                                                <p class="text-muted mb-0">Tanggal Bergabung</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="border-right">
-                                                <h3 class="text-success font-weight-bold">
-                                                    {{ $user->is_admin ? 'Admin' : 'User' }}
-                                                </h3>
-                                                <p class="text-muted mb-0">Level Akses</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div>
-                                                <h3 class="text-info font-weight-bold">
-                                                    {{ $user->updated_at->diffInDays($user->created_at) }}
-                                                </h3>
-                                                <p class="text-muted mb-0">Hari Aktif</p>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -223,13 +158,10 @@
                                 </a>
                                 <div>
                                     @if (auth()->user()->is_admin == 1)
-                                    <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning btn-lg mr-2">
+                                    <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-primary btn-lg mr-2">
                                         <i class="fas fa-edit mr-2"></i>Edit
                                     </a>
                                     @endif
-                                    <a href="{{ route('admin.user.index') }}" class="btn btn-primary btn-lg">
-                                        <i class="fas fa-list mr-2"></i>Lihat Semua
-                                    </a>
                                 </div>
                             </div>
                         </div>

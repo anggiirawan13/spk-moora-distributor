@@ -225,15 +225,7 @@
                                                     {{ $alternative->distributor->name }} - {{ $alternative->distributor->company_name }}
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <strong>Skor:</strong>
-                                                <div class="text-success font-weight-bold mt-1">
-                                                    {{ number_format($alternative->score ?? 0, 3) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <strong>Sub-Kriteria Terpilih:</strong>
                                                 <div class="mt-1">
                                                     @foreach ($criteria as $k)

@@ -27,10 +27,12 @@
                     <div class="row mb-4">
                         <div class="col-md-12 text-center mb-4">
                             <div class="profile-image-container">
-                                <img src="{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.jpg') }}"
+                                <a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage('{{ $distributor->name }}', '{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.jpg') }}')">
+                                    <img src="{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.jpg') }}"
                                     class="img-thumbnail rounded-circle shadow" 
                                     alt="{{ $distributor->name }}" 
                                     style="width: 200px; height: 200px; object-fit: cover;">
+                                </a>
                                 <div class="mt-3">
                                     <h4 class="font-weight-bold text-primary mb-1">{{ $distributor->name }}</h4>
                                     <p class="text-muted mb-0">{{ $distributor->company_name }}</p>
@@ -72,6 +74,22 @@
     </div>
 </div>
 
+<!-- Modal Bootstrap -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel"></h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" class="img-fluid rounded shadow-lg"
+                        style="max-height: 80vh; transition: 0.3s;">
+                </div>
+            </div>
+        </div>
+    </div>
+
 <style>
 .bg-gradient-info {
     background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%) !important;
@@ -101,4 +119,28 @@
     transform: scale(1.05);
 }
 </style>
+
+<script>
+    function showImage(namaDistributor, src) {
+        document.getElementById('imageModalLabel').innerText = namaDistributor;
+        document.getElementById('modalImage').src = src;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var modal = document.getElementById("imageModal");
+
+        modal.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                var modalInstance = bootstrap.Modal.getInstance(modal);
+                modalInstance.hide();
+            }
+        });
+
+        var closeButton = document.querySelector("#imageModal .btn-close");
+        closeButton.addEventListener("click", function() {
+            var modalInstance = bootstrap.Modal.getInstance(modal);
+            modalInstance.hide();
+        });
+    });
+</script>
 @endsection

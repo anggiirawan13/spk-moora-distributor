@@ -118,9 +118,6 @@ class CalculationController extends Controller
             'altValues',
             'products'
         ));
-
-        // Jika pertama kali buka, hanya tampilkan form
-        return view('admin.moora.calculation', compact('products'));
     }
 
     public function downloadPDF(Request $request)
