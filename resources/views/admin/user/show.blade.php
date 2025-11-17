@@ -82,7 +82,7 @@
                                                     <td>
                                                         <span class="badge {{ $user->is_admin ? 'badge-danger' : 'badge-primary' }} badge-pill">
                                                             <i class="fas {{ $user->is_admin ? 'fa-shield-alt' : 'fa-user' }} mr-1"></i>
-                                                            {{ $user->is_admin ? 'Administrator' : 'User' }}
+                                                            {{ $user->is_admin ? 'Administrator' : 'Staf' }}
                                                         </span>
                                                     </td>
                                                 </tr>

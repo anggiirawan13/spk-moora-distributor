@@ -37,7 +37,7 @@
                                     @if ($column['field'] === 'is_admin')
                                         <span class="badge badge-pill {{ $item['is_admin'] ? 'badge-danger' : 'badge-success' }}">
                                             <i class="fas {{ $item['is_admin'] === 1 ? 'fa-user-shield' : 'fa-user' }} mr-1"></i>
-                                            {{ $item['is_admin'] ? 'Admin' : 'User' }}
+                                            {{ $item['is_admin'] ? 'Admin' : 'Staf' }}
                                         </span>
                                     @elseif ($column['field'] === 'is_active' || $column['field'] === 'is_available')
                                         <span class="badge badge-pill {{ $item[$column['field']] ? 'badge-success' : 'badge-secondary' }}">
