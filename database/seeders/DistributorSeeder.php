@@ -10,21 +10,47 @@ class DistributorSeeder extends Seeder
 {
     public function run(): void
     {
-        $faker = Faker::create();
+        $faker = Faker::create('id_ID'); // Menggunakan locale Indonesia
+        
+        $distributors = [
+            'PT Sinar Elektrik Jaya',
+            'PT Mega Teknik Abadi',
+            'PT Cahaya Makmur Electric',
+            'PT Prima Sumber Teknik',
+            'PT Bentang Listrik Nusantara',
+            'PT Teknologi Cahaya Persada',
+            'PT Indotek Perkasa Mandiri',
+            'PT Energi Power System',
+            'PT Mitra Global Teknik',
+            'PT Pionir Elektrik Nusantara',
+            'PT Delta Mandiri Electric',
+            'PT Adi Sentosa Electric',
+            'PT Utama Teknik Indonesia',
+            'PT Surya Mandiri Electric',
+            'PT Bintang Power Solution',
+            'PT Global Teknik Lestari',
+            'PT Mandiri Cahaya Sakti',
+            'PT Acosta Elektro Supply',
+            'PT Nusantara Powerindo',
+            'PT Inti Jaya Sakti Electric',
+        ];
 
-        for ($i = 0; $i < 10; $i++) {
+        foreach ($distributors as $name) {
+            // Menghilangkan PT dan menyingkat menjadi nama perusahaan
+            $companyName = str_replace('PT ', '', $name); 
+            
             DB::table('distributors')->insert([
-                'name' => $faker->company() . ' Distributor',
+                'name' => $name,
                 'image_name' => null,
-                'company_name' => $faker->company(),
+                'company_name' => $companyName,
                 'address' => $faker->address(),
                 'phone' => $faker->phoneNumber(),
-                'email' => $faker->companyEmail(),
-                'payment_term_id' => $faker->numberBetween(1, 5),
-                'delivery_method_id' => $faker->numberBetween(1, 4),
-                'business_scale_id' => $faker->numberBetween(1, 5),
-                'description' => $faker->optional()->paragraph(),
-                'is_active' => $faker->boolean(80), // 80% chance of being active
+                'email' => strtolower(str_replace(' ', '', $companyName)) . '@' . $faker->domainName(),
+                'payment_term_id' => $faker->numberBetween(1, 5), // Asumsi 5 term pembayaran
+                'delivery_method_id' => $faker->numberBetween(1, 4), // Asumsi 4 metode pengiriman
+                'business_scale_id' => $faker->numberBetween(1, 5), // Asumsi 5 skala bisnis
+                'description' => $faker->optional()->paragraph(1),
+                'is_active' => $faker->boolean(90), // 90% chance of being active
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

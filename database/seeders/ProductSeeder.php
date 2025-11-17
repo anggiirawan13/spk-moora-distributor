@@ -9,43 +9,39 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('products')->insert([
-            [
-                'name' => 'Kabel NYY 4x16 mm²',
-                'description' => 'Kabel tanah NYY 4 inti 16 mm² untuk instalasi bawah tanah',
+        $products = [
+            // Kategori 1: MCB/MCCB
+            ['name' => 'Miniature Circuit Breaker (MCB)', 'description' => 'Breaker untuk proteksi arus rendah (6A-32A)', 'category' => 'MCB/MCCB'],
+            ['name' => 'Molded Case Circuit Breaker (MCCB)', 'description' => 'Breaker untuk proteksi arus menengah (100A-400A)', 'category' => 'MCB/MCCB'],
+            // Kategori 2: Contactor/Relay
+            ['name' => 'Contactor Elektrik', 'description' => 'Kontaktor utama untuk rangkaian daya', 'category' => 'Contactor/Relay'],
+            ['name' => 'Thermal Overload Relay', 'description' => 'Relay pengaman motor dari beban lebih', 'category' => 'Contactor/Relay'],
+            ['name' => 'Miniatur Relay (24VDC/220VAC)', 'description' => 'Relay kontrol umum', 'category' => 'Contactor/Relay'],
+            // Kategori 3: Kabel
+            ['name' => 'Kabel NYY', 'description' => 'Kabel instalasi power non-fleksibel', 'category' => 'Kabel'],
+            ['name' => 'Kabel NYAF', 'description' => 'Kabel fleksibel instalasi panel', 'category' => 'Kabel'],
+            ['name' => 'Kabel Kontrol CY', 'description' => 'Kabel kontrol berselubung perisai', 'category' => 'Kabel'],
+            // Kategori 4: Sensor/Kontrol
+            ['name' => 'Proximity Sensor', 'description' => 'Sensor pendeteksi tanpa sentuhan', 'category' => 'Sensor/Kontrol'],
+            ['name' => 'Limit Switch', 'description' => 'Saklar batas mekanis', 'category' => 'Sensor/Kontrol'],
+            ['name' => 'Timer Digital', 'description' => 'Pengatur waktu On/Off digital', 'category' => 'Sensor/Kontrol'],
+            // Kategori 5: Enclosure/Aksesoris Panel
+            ['name' => 'Panel Box Standard', 'description' => 'Box panel standar (IP54)', 'category' => 'Panel/Aksesoris'],
+            ['name' => 'Busbar Tembaga', 'description' => 'Konduktor penghubung utama di panel', 'category' => 'Panel/Aksesoris'],
+            ['name' => 'Indicator Light/Pilot Lamp', 'description' => 'Lampu indikator status panel (Merah/Hijau/Kuning)', 'category' => 'Panel/Aksesoris'],
+            ['name' => 'Cable Gland & Lug', 'description' => 'Aksesoris terminasi kabel', 'category' => 'Panel/Aksesoris'],
+        ];
+
+        $insertData = [];
+        foreach ($products as $product) {
+            $insertData[] = [
+                'name' => $product['name'],
+                'description' => $product['description'],
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'name' => 'Lampu LED Panel 60x60',
-                'description' => 'Lampu LED panel 60x60 cm untuk penerangan ruangan',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Saklar Tunggal Putih',
-                'description' => 'Saklar tunggal warna putih merek Broco',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'MCB 2 Pole 16A',
-                'description' => 'Miniature Circuit Breaker 2 pole 16 ampere',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Pipa PVC 3/4"',
-                'description' => 'Pipa PVC diameter 3/4 inch untuk instalasi listrik',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Stop Kontak Ganda',
-                'description' => 'Stop kontak ganda dengan grounding',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
+            ];
+        }
+
+        DB::table('products')->insert($insertData);
     }
 }
