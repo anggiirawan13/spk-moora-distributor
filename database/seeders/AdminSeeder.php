@@ -19,10 +19,10 @@ class AdminSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'user',
-            'email' => 'user@user.com',
+            'name' => 'staf',
+            'email' => 'staf@staf.com',
             'image_name' => '',
-            'password' => bcrypt('user123'),
+            'password' => bcrypt('staf123'),
             'is_admin' => 0,
         ]);
     }
