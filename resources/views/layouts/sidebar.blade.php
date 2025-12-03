@@ -19,7 +19,7 @@
     @auth
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
+            <a class="nav-link" href="{{ route('dashboard.index') }}">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -38,19 +38,19 @@
             </a>
             <div id="dataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item text-dark" href="{{ route('admin.business_scale.index') }}">
+                    <a class="collapse-item text-dark" href="{{ route('business_scale.index') }}">
                         <i class="fas fa-chart-line mr-2"></i> Skala Bisnis
                     </a>
-                    <a class="collapse-item text-dark" href="{{ route('admin.delivery_method.index') }}">
+                    <a class="collapse-item text-dark" href="{{ route('delivery_method.index') }}">
                         <i class="fas fa-shipping-fast mr-2"></i> Metode Pengiriman
                     </a>
-                    <a class="collapse-item text-dark" href="{{ route('admin.payment_term.index') }}">
+                    <a class="collapse-item text-dark" href="{{ route('payment_term.index') }}">
                         <i class="fas fa-money-bill-wave mr-2"></i> Termin Pembayaran
                     </a>
                     <a class="collapse-item text-dark" href="{{ route('distributor.index') }}">
                         <i class="fas fa-warehouse"></i> Distributor
                     </a>
-                    <a class="collapse-item text-dark" href="{{ route('admin.product.index') }}">
+                    <a class="collapse-item text-dark" href="{{ route('product.index') }}">
                         <i class="fas fa-boxes mr-2"></i> Produk
                     </a>
                 </div>
@@ -76,13 +76,13 @@
         </a>
         <div id="dataPenunjang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item text-dark" href="{{ route('admin.criteria.index') }}">
+                <a class="collapse-item text-dark" href="{{ route('criteria.index') }}">
                     <i class="fas fa-list mr-2"></i>Kriteria
                 </a>
-                <a class="collapse-item text-dark" href="{{ route('admin.subcriteria.index') }}">
+                <a class="collapse-item text-dark" href="{{ route('subcriteria.index') }}">
                     <i class="fas fa-stream mr-2"></i>Sub Kriteria
                 </a>
-                <a class="collapse-item text-dark" href="{{ route('admin.alternative.index') }}">
+                <a class="collapse-item text-dark" href="{{ route('alternative.index') }}">
                     <i class="fas fa-th mr-2"></i>Alternatif
                 </a>
             </div>
@@ -91,7 +91,7 @@
 
     <!-- Proses Perhitungan -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.moora.calculation') }}">
+        <a class="nav-link" href="{{ route('moora.calculation') }}">
             <i class="fas fa-calculator"></i>
             <span>Perhitungan MOORA</span>
         </a>
@@ -100,7 +100,7 @@
     @can('admin')
         <!-- Manajemen Pengguna -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.user.index') }}">
+            <a class="nav-link" href="{{ route('user.index') }}">
                 <i class="fas fa-users"></i>
                 <span>Manajemen User</span>
             </a>
