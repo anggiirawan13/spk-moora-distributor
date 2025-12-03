@@ -15,7 +15,6 @@ return new class extends Migration
             $table->text('image_name')->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->default(false);
             $table->rememberToken();
