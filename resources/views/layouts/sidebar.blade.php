@@ -4,7 +4,8 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('login') }}">
         <div class="sidebar-brand-icon">
-            <img src="{{ asset('img/logo.jpg') }}" alt="logo" width="40" height="40" class="img-fluid rounded-circle">
+            <img src="{{ asset('img/logo.jpg') }}" alt="logo" width="40" height="40"
+                class="img-fluid rounded-circle">
         </div>
         <div class="sidebar-brand-text mx-3">
             <div class="font-weight-bold">SPK MOORA</div>
@@ -16,47 +17,45 @@
     <hr class="sidebar-divider my-2">
 
     @auth
-        @can('admin')
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ route('admin.dashboard.index') }}">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-2">
+        <!-- Divider -->
+        <hr class="sidebar-divider my-2">
 
-            <!-- Data Master (Dropdown) -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataMaster"
-                    aria-expanded="false" aria-controls="dataMaster">
-                    <i class="fas fa-database"></i>
-                    <span>Data Master</span>
-                    <i class="fas float-right mt-1"></i>
-                </a>
-                <div id="dataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item text-dark" href="{{ route('admin.business_scale.index') }}">
-                            <i class="fas fa-chart-line mr-2"></i> Skala Bisnis
-                        </a>
-                        <a class="collapse-item text-dark" href="{{ route('admin.delivery_method.index') }}">
-                            <i class="fas fa-shipping-fast mr-2"></i> Metode Pengiriman
-                        </a>
-                        <a class="collapse-item text-dark" href="{{ route('admin.payment_term.index') }}">
-                            <i class="fas fa-money-bill-wave mr-2"></i> Termin Pembayaran
-                        </a>
-                        <a class="collapse-item text-dark" href="{{ route('distributor.index') }}">
-                            <i class="fas fa-warehouse"></i> Distributor
-                        </a>
-                        <a class="collapse-item text-dark" href="{{ route('admin.product.index') }}">
-                            <i class="fas fa-boxes mr-2"></i> Produk
-                        </a>
-                    </div>
+        <!-- Data Master (Dropdown) -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataMaster"
+                aria-expanded="false" aria-controls="dataMaster">
+                <i class="fas fa-database"></i>
+                <span>Data Master</span>
+                <i class="fas float-right mt-1"></i>
+            </a>
+            <div id="dataMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item text-dark" href="{{ route('admin.business_scale.index') }}">
+                        <i class="fas fa-chart-line mr-2"></i> Skala Bisnis
+                    </a>
+                    <a class="collapse-item text-dark" href="{{ route('admin.delivery_method.index') }}">
+                        <i class="fas fa-shipping-fast mr-2"></i> Metode Pengiriman
+                    </a>
+                    <a class="collapse-item text-dark" href="{{ route('admin.payment_term.index') }}">
+                        <i class="fas fa-money-bill-wave mr-2"></i> Termin Pembayaran
+                    </a>
+                    <a class="collapse-item text-dark" href="{{ route('distributor.index') }}">
+                        <i class="fas fa-warehouse"></i> Distributor
+                    </a>
+                    <a class="collapse-item text-dark" href="{{ route('admin.product.index') }}">
+                        <i class="fas fa-boxes mr-2"></i> Produk
+                    </a>
                 </div>
-            </li>
-        @endcan
+            </div>
+        </li>
     @endauth
 
     <!-- Perbandingan Distributor -->
@@ -67,48 +66,38 @@
         </a>
     </li>
 
+    <!-- Rekomendasi Distributor (Dropdown) -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPenunjang"
+            aria-expanded="false" aria-controls="dataPenunjang">
+            <i class="fas fa-cogs"></i>
+            <span>Kriteria & Alternatif</span>
+            <i class="fas float-right mt-1"></i>
+        </a>
+        <div id="dataPenunjang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item text-dark" href="{{ route('admin.criteria.index') }}">
+                    <i class="fas fa-list mr-2"></i>Kriteria
+                </a>
+                <a class="collapse-item text-dark" href="{{ route('admin.subcriteria.index') }}">
+                    <i class="fas fa-stream mr-2"></i>Sub Kriteria
+                </a>
+                <a class="collapse-item text-dark" href="{{ route('admin.alternative.index') }}">
+                    <i class="fas fa-th mr-2"></i>Alternatif
+                </a>
+            </div>
+        </div>
+    </li>
+
     <!-- Proses Perhitungan -->
-    @cannot('admin')
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('calculation.user') }}">
-                <i class="fas fa-bullseye"></i>
-                <span>Rekomendasi</span>
-            </a>
-        </li>
-    @endcannot
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.moora.calculation') }}">
+            <i class="fas fa-calculator"></i>
+            <span>Perhitungan MOORA</span>
+        </a>
+    </li>
 
     @can('admin')
-        <!-- Rekomendasi Distributor (Dropdown) -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPenunjang"
-                aria-expanded="false" aria-controls="dataPenunjang">
-                <i class="fas fa-cogs"></i>
-                <span>Kriteria & Alternatif</span>
-                <i class="fas float-right mt-1"></i>
-            </a>
-            <div id="dataPenunjang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item text-dark" href="{{ route('admin.criteria.index') }}">
-                        <i class="fas fa-list mr-2"></i>Kriteria
-                    </a>
-                    <a class="collapse-item text-dark" href="{{ route('admin.subcriteria.index') }}">
-                        <i class="fas fa-stream mr-2"></i>Sub Kriteria
-                    </a>
-                    <a class="collapse-item text-dark" href="{{ route('admin.alternative.index') }}">
-                        <i class="fas fa-th mr-2"></i>Alternatif
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Proses Perhitungan -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.moora.calculation') }}">
-                <i class="fas fa-calculator"></i>
-                <span>Perhitungan MOORA</span>
-            </a>
-        </li>
-
         <!-- Manajemen Pengguna -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.user.index') }}">
@@ -140,44 +129,44 @@
 </ul>
 
 <style>
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
-}
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
+    }
 
-.sidebar-brand-text {
-    line-height: 1.2;
-}
+    .sidebar-brand-text {
+        line-height: 1.2;
+    }
 
-.sidebar .nav-item .nav-link {
-    padding: 0.8rem 1rem;
-    margin: 0.1rem 0.5rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
+    .sidebar .nav-item .nav-link {
+        padding: 0.8rem 1rem;
+        margin: 0.1rem 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
 
-.sidebar .nav-item .nav-link:hover {
-    background: rgba(255,255,255,0.1);
-    transform: translateX(5px);
-}
+    .sidebar .nav-item .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(5px);
+    }
 
-.sidebar .nav-item.active .nav-link {
-    background: rgba(255,255,255,0.15);
-    border-left: 4px solid #10b981;
-}
+    .sidebar .nav-item.active .nav-link {
+        background: rgba(255, 255, 255, 0.15);
+        border-left: 4px solid #10b981;
+    }
 
-.collapse-item {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
+    .collapse-item {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
 
-.collapse-item:hover {
-    background: rgba(255,255,255,0.1);
-    text-decoration: none;
-}
+    .collapse-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+    }
 
-.sidebar-divider {
-    border-top: 1px solid rgba(255,255,255,0.1);
-}
+    .sidebar-divider {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
 </style>
 <!-- End of Sidebar -->

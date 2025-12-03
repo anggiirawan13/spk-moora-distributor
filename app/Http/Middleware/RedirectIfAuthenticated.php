@@ -17,7 +17,7 @@ class RedirectIfAuthenticated
                 if (Auth::user()->is_admin != 1) {
                     return redirect()->route('distributor.index');
                 } else {
-                    return redirect()->route('admin.dashboard.index');
+                    return redirect()->route('dashboard.index');
                 }
             }
         }
