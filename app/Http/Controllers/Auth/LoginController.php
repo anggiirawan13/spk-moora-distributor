@@ -32,11 +32,7 @@ class LoginController extends Controller
             return '/';
         }
 
-        if (Auth::user()->is_admin === 1) {
-            return '/admin/dashboard';
-        }
-
-        return '/distributor';
+        return '/dashboard';
     }
 
     /**
