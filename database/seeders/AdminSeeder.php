@@ -12,7 +12,7 @@ class AdminSeeder extends Seeder
         User::create([
             'id' => 1,
             'name' => 'admin',
-            'email' => 'admin@com',
+            'email' => 'admin@admin.com',
             'image_name' => '',
             'password' => bcrypt('admin123'),
             'is_admin' => 1,
