@@ -6,14 +6,14 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Selamat Datang <span class="font-weight-bold text-primary">{{ auth()->user()->name }}</span>!</h1>
-    <div class="text-muted jancok">
+    <div class="text-muted">
         <i class="fas fa-calendar-alt mr-1"></i>
         {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
     </div>
 </div>
 
 <!-- Statistics Cards -->
-<div class="row mb-4 jancok">
+<div class="row mb-4">
     <!-- Main Metrics -->
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2" style="border-left: 4px solid #059669 !important;">
@@ -98,7 +98,7 @@
     @endcan
 </div>
 
-<div class="row jancok">
+<div class="row">
     <!-- Master Data Section -->
     <div class="col-lg-8 mb-4">
         <div class="card shadow mb-4">
@@ -179,28 +179,28 @@
     </div>
 
     <!-- Quick Actions -->
-    <div class="col-lg-4 mb-4 jancok">
+    <div class="col-lg-4 mb-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h3 class="m-0 font-weight-bold text-primary">
                     <i class="fas fa-bolt mr-2"></i>Aksi Cepat
                 </h3>
             </div>
-            <div class="card-body jancok">
-                <div class="d-grid gap-2 jancok">
-                    <a href="{{ route('distributor.index') }}" class="btn btn-primary btn-block text-left jancok">
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ route('distributor.index') }}" class="btn btn-primary btn-block text-left">
                         <i class="fas fa-warehouse mr-2"></i>Lihat Distributor
                     </a>
-                    <a href="{{ route('distributor.compare.form') }}" class="btn btn-success btn-block text-left jancok">
+                    <a href="{{ route('distributor.compare.form') }}" class="btn btn-success btn-block text-left">
                         <i class="fas fa-balance-scale mr-2"></i>Bandingkan Distributor
                     </a>
                     @cannot('admin')
-                    <a href="{{ route('calculation.user') }}" class="btn btn-info btn-block text-left jancok">
+                    <a href="{{ route('calculation.user') }}" class="btn btn-info btn-block text-left">
                         <i class="fas fa-bullseye mr-2"></i>Dapatkan Rekomendasi
                     </a>
                     @endcannot
                     @can('admin')
-                    <a href="{{ route('moora.calculation') }}" class="btn btn-warning btn-block text-left jancok">
+                    <a href="{{ route('moora.calculation') }}" class="btn btn-warning btn-block text-left">
                         <i class="fas fa-calculator mr-2"></i>Hitung MOORA
                     </a>
                     @endcan
@@ -265,9 +265,6 @@
     padding: 15px;
     border-radius: 8px;
     border-left: 4px solid #059669;
-}
-.jancok {
-    font-size: 30px !important;
 }
 </style>
 
