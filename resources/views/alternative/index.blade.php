@@ -12,7 +12,7 @@
                 <h5 class="text-primary m-0 font-weight-bold">
                     <i class="fas fa-warehouse mr-2"></i>Daftar Alternatif
                 </h5>
-                <@auth
+                @auth
                 @if (auth()->user()->is_admin == 1)
                     <a href="{{ route('alternative.create') }}" id="btn-add-data" class="btn btn-primary btn-sm text-white">
                         <i class="fas fa-plus-circle mr-1"></i>Tambah Data

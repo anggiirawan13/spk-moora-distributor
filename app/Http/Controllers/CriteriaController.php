@@ -48,7 +48,7 @@ class CriteriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required|unique:criterias,code', // Tambahkan validasi unique di sini
+            'code' => 'required|unique:criterias,code',
             'name' => 'required',
             'weight' => 'required|numeric',
             'attribute_type' => 'required'
