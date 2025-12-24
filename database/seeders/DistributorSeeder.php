@@ -10,7 +10,7 @@ class DistributorSeeder extends Seeder
 {
     public function run(): void
     {
-        $faker = Faker::create('id_ID'); // Menggunakan locale Indonesia
+        $faker = Faker::create('id_ID');
         
         $distributors = [
             'PT Sinar Elektrik Jaya',
@@ -36,7 +36,7 @@ class DistributorSeeder extends Seeder
         ];
 
         foreach ($distributors as $name) {
-            // Menghilangkan PT dan menyingkat menjadi nama perusahaan
+    
             $companyName = str_replace('PT ', '', $name); 
             
             DB::table('distributors')->insert([
@@ -46,11 +46,11 @@ class DistributorSeeder extends Seeder
                 'address' => $faker->address(),
                 'phone' => $faker->phoneNumber(),
                 'email' => strtolower(str_replace(' ', '', $companyName)) . '@' . $faker->domainName(),
-                'payment_term_id' => $faker->numberBetween(1, 5), // Asumsi 5 term pembayaran
-                'delivery_method_id' => $faker->numberBetween(1, 4), // Asumsi 4 metode pengiriman
-                'business_scale_id' => $faker->numberBetween(1, 5), // Asumsi 5 skala bisnis
+                'payment_term_id' => $faker->numberBetween(1, 5),
+                'delivery_method_id' => $faker->numberBetween(1, 4),
+                'business_scale_id' => $faker->numberBetween(1, 5),
                 'description' => $faker->optional()->paragraph(1),
-                'is_active' => $faker->boolean(90), // 90% chance of being active
+                'is_active' => $faker->boolean(90),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
