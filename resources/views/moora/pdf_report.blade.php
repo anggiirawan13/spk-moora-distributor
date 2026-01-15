@@ -271,6 +271,7 @@
     </div>
 
     <!-- Final Recommendation -->
+    @php
         $bestAltId = array_key_first($valueMoora);
         $bestAlt = $alternatives->firstWhere('id', $bestAltId);
     @endphp
