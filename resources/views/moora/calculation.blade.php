@@ -35,7 +35,7 @@
                                 <form action="{{ route('moora.calculation') }}" method="GET" class="d-flex align-items-end">
                                     <div class="flex-grow-1 mr-3">
                                         <select class="form-control" name="product_id" id="product_id" style="border-radius: 10px; border: 2px solid #e9ecef; transition: all 0.3s ease;">
-                                            <option value="">-- Semua Distributor --</option>
+                                            <option value="">-- Pilih Produk --</option>
                                             @foreach($products as $product)
                                                 <option value="{{ $product->id }}" 
                                                         {{ request('product_id') == $product->id ? 'selected' : '' }}>

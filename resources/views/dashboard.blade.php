@@ -195,7 +195,7 @@
                         <i class="fas fa-balance-scale mr-2"></i>Bandingkan Distributor
                     </a>
                     @cannot('admin')
-                    <a href="{{ route('calculation.user') }}" class="btn btn-info btn-block text-left">
+                    <a href="{{ route('moora.calculation') }}" class="btn btn-info btn-block text-left">
                         <i class="fas fa-bullseye mr-2"></i>Dapatkan Rekomendasi
                     </a>
                     @endcannot

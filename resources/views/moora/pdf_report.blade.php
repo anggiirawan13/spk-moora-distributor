@@ -264,7 +264,7 @@
     <!-- Summary Information -->
     <div class="summary-box">
         <div class="summary-title">📊 Ringkasan Analisis</div>
-        <div>Product: <strong>{{ $product->name ?? 'Semua Distributor (Tidak ada produk yang di pilih)' }}</strong></div>
+        <div>Product: <strong>{{ $productSelected->name ?? 'Tidak ada produk yang dipilih' }}</strong></div>
         <div>Total Alternatif: <strong>{{ count($alternatives) }}</strong></div>
         <div>Total Kriteria: <strong>{{ count($criteria) }}</strong></div>
         <div>Metode: <strong>MOORA (Multi-Objective Optimization by Ratio Analysis)</strong></div>

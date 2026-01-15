@@ -236,8 +236,7 @@
                     </ul>
                 </div>
             </div>
-
-            @if ($withRole)
+            @if ($withRole && $role === 1)
             <div class="form-section mt-4">
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
                     <i class="fas fa-user-tag mr-2"></i>Role Pengguna
