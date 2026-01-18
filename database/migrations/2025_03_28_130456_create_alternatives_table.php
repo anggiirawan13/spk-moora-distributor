@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('alternatives', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('distributor_id');
+            $table->unsignedInteger('distributor_id')->unique();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

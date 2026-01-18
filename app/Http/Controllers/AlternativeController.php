@@ -83,7 +83,7 @@ class AlternativeController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'distributor_id' => 'required|numeric|exists:distributors,id',
+            'distributor_id' => 'required|exists:distributors,id|unique:alternatives,distributor_id',
             'criteria' => 'required|array',
             'criteria.*' => 'required|numeric|exists:sub_criterias,id',
         ]);
@@ -110,7 +110,7 @@ class AlternativeController extends Controller
         $alternative = Alternative::findOrFail($id);
 
         $request->validate([
-            'distributor_id' => 'required|numeric|exists:distributors,id',
+            'distributor_id' => 'required|exists:distributors,id|unique:alternatives,distributor_id',
             'criteria' => 'required|array',
             'criteria.*' => 'required|numeric|exists:sub_criterias,id',
         ]);

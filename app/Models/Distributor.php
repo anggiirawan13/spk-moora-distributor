@@ -54,6 +54,11 @@ class Distributor extends Model
         return $this->belongsToMany(Product::class, 'distributor_product');
     }
 
+    public function alternative()
+    {
+        return $this->hasOne(Alternative::class, 'distributor_id');
+    }
+
     public function paymentTerm()
     {
         return $this->belongsTo(PaymentTerm::class, 'payment_term_id');
