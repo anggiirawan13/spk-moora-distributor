@@ -43,6 +43,8 @@ class AlternativeSeeder extends Seeder
                 'distributor_id' => $distributor->id,
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ]);
 
             foreach (['C1', 'C2', 'C3', 'C4', 'C5', 'C6'] as $code) {
@@ -64,6 +66,8 @@ class AlternativeSeeder extends Seeder
                     'value' => $subCriteria->value,
                     'created_at' => now(),
                     'updated_at' => now(),
+                    'created_by' => 1,
+                    'updated_by' => 1,
                 ]);
             }
         }

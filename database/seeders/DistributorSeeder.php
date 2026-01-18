@@ -11,7 +11,7 @@ class DistributorSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create('id_ID');
-        
+
         $distributors = [
             'PT Sinar Elektrik Jaya',
             'PT Mega Teknik Abadi',
@@ -36,9 +36,9 @@ class DistributorSeeder extends Seeder
         ];
 
         foreach ($distributors as $name) {
-    
-            $companyName = str_replace('PT ', '', $name); 
-            
+
+            $companyName = str_replace('PT ', '', $name);
+
             DB::table('distributors')->insert([
                 'name' => $name,
                 'image_name' => null,
@@ -53,6 +53,8 @@ class DistributorSeeder extends Seeder
                 'is_active' => $faker->boolean(90),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ]);
         }
     }

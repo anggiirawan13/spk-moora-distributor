@@ -4,24 +4,31 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('distributors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
+            $table->increments('id');
+            $table->string('name', 100)->unique();
             $table->text('image_name')->nullable();
-            $table->string('company_name');
+            $table->string('company_name', 100);
             $table->text('address');
-            $table->string('phone');
-            $table->string('email');
-            $table->foreignId('payment_term_id')->constrained('payment_terms')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('delivery_method_id')->constrained('delivery_methods')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('business_scale_id')->constrained('business_scales')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('description')->nullable();
+            $table->string('phone', 20);
+            $table->string('email', 50);
+            $table->unsignedInteger('payment_term_id');
+            $table->unsignedInteger('delivery_method_id');
+            $table->unsignedInteger('business_scale_id');
+            $table->string('description', 255)->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+
+            $table->foreign('payment_term_id')->references('id')->on('payment_terms')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('delivery_method_id')->references('id')->on('delivery_methods')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('business_scale_id')->references('id')->on('business_scales')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 

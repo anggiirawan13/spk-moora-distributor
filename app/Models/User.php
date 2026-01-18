@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,7 +19,27 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'image_name',
+        'created_by',
+        'updated_by',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (auth()->check()) {
+                $model->created_by = auth()->id();
+                $model->updated_by = auth()->id();
+            }
+        });
+
+        static::updating(function ($model) {
+            if (auth()->check()) {
+                $model->updated_by = auth()->id();
+            }
+        });
+    }
 
     protected $hidden = [
         'password',

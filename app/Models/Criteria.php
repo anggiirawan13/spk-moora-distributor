@@ -16,7 +16,27 @@ class Criteria extends Model
         'name',
         'weight',
         'attribute_type',
+        'created_by',
+        'updated_by',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (auth()->check()) {
+                $model->created_by = auth()->id();
+                $model->updated_by = auth()->id();
+            }
+        });
+
+        static::updating(function ($model) {
+            if (auth()->check()) {
+                $model->updated_by = auth()->id();
+            }
+        });
+    }
 
     protected $casts = [
         'weight' => 'float',

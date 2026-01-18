@@ -17,6 +17,8 @@ class CriteriaSeeder extends Seeder
                 'attribute_type' => 'Cost',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ],
             [
                 'code' => 'C2',
@@ -25,6 +27,8 @@ class CriteriaSeeder extends Seeder
                 'attribute_type' => 'Cost',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ],
             [
                 'code' => 'C3',
@@ -33,6 +37,8 @@ class CriteriaSeeder extends Seeder
                 'attribute_type' => 'Benefit',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ],
             [
                 'code' => 'C4',
@@ -41,6 +47,8 @@ class CriteriaSeeder extends Seeder
                 'attribute_type' => 'Benefit',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ],
             [
                 'code' => 'C5',
@@ -49,6 +57,8 @@ class CriteriaSeeder extends Seeder
                 'attribute_type' => 'Benefit',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ],
             [
                 'code' => 'C6',
@@ -57,6 +67,8 @@ class CriteriaSeeder extends Seeder
                 'attribute_type' => 'Benefit',
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ],
         ]);
     }

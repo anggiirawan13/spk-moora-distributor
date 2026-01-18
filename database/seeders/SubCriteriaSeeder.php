@@ -60,6 +60,8 @@ class SubCriteriaSeeder extends Seeder
                     'value' => $item['value'],
                     'created_at' => now(),
                     'updated_at' => now(),
+                    'created_by' => 1,
+                    'updated_by' => 1,
                 ]);
             }
         }

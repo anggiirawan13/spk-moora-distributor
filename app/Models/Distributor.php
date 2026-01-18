@@ -23,7 +23,27 @@ class Distributor extends Model
         'business_scale_id',
         'description',
         'is_active',
+        'created_by',
+        'updated_by',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (auth()->check()) {
+                $model->created_by = auth()->id();
+                $model->updated_by = auth()->id();
+            }
+        });
+
+        static::updating(function ($model) {
+            if (auth()->check()) {
+                $model->updated_by = auth()->id();
+            }
+        });
+    }
 
     protected $casts = [
         'is_active' => 'boolean',

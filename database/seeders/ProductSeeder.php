@@ -39,6 +39,8 @@ class ProductSeeder extends Seeder
                 'description' => $product['description'],
                 'created_at' => now(),
                 'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ];
         }
 

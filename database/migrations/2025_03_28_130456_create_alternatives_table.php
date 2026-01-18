@@ -8,9 +8,15 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('alternatives', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('distributor_id')->constrained('distributors')->onUpdate('cascade')->onDelete('cascade');
+            $table->increments('id');
+            $table->unsignedInteger('distributor_id');
             $table->timestamps();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+
+            $table->foreign('distributor_id')->references('id')->on('distributors')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 
