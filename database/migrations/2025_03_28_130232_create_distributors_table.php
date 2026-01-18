@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->text('image_name')->nullable();
             $table->string('company_name', 100);
             $table->text('address');
-            $table->string('phone', 20);
+            $table->string('phone', 15)->nullable();
             $table->string('email', 50);
             $table->unsignedInteger('payment_term_id');
             $table->unsignedInteger('delivery_method_id');

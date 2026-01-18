@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('name', 100);
             $table->string('email', 50)->unique();
             $table->text('image_name')->nullable();
-            $table->string('phone', 20)->nullable();
+            $table->string('phone', 15)->nullable();
             $table->text('address')->nullable();
             $table->text('password');
             $table->boolean('is_admin')->default(false);
