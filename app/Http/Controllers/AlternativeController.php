@@ -16,7 +16,7 @@ class AlternativeController extends Controller
 {
     public function index(): View
     {
-        $criterias = Criteria::with('subCriteria')->orderBy('id')->get(); // Ambil semua kriteria
+        $criterias = Criteria::with('subCriteria')->orderBy('id')->get();
 
         $alternatives = Alternative::with(['values.subCriteria.criteria', 'distributor'])->get();
 

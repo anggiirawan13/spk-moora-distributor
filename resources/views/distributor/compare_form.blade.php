@@ -30,7 +30,6 @@
 
                     <form action="{{ route('distributor.compare.form') }}" method="GET" id="filterForm">
                         @csrf
-                        <!-- Form Pemilihan Produk -->
                         <div class="card card-filter mb-4">
                             <div class="card-body py-4">
                                 <div class="row align-items-center">
@@ -107,7 +106,6 @@
                             </div>
                         </div>
 
-                        <!-- Comparison Preview -->
                         <div id="comparisonPreview" class="mt-4 p-4 border rounded" style="display: none;">
                             <h6 class="font-weight-bold text-center mb-3 text-primary">
                                 <i class="fas fa-eye mr-2"></i>Preview Perbandingan
@@ -177,7 +175,6 @@
 </style>
 
 <script>
-// Fungsi untuk menunggu sampai Select2 tersedia
 function waitForSelect2(callback) {
     if (typeof $.fn.select2 !== 'undefined') {
         callback();
@@ -190,7 +187,6 @@ function waitForSelect2(callback) {
 
 document.addEventListener('DOMContentLoaded', function() {
     waitForSelect2(function() {
-        // Initialize Select2
         $('.select2').select2({
             placeholder: function() {
                 return $(this).data('placeholder');
@@ -198,7 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
             width: '100%'
         });
 
-        // Preview functionality
         function updatePreview(selectId, previewId, nameId, detailsId) {
             const select = $(selectId);
             const selectedOption = select.find('option:selected');
@@ -243,7 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Event listeners
         $('#distributor1').on('change', function() {
             updatePreview('#distributor1', '#distributor1-preview', '#preview1-name', '#preview1-details');
         });
@@ -252,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function() {
             updatePreview('#distributor2', '#distributor2-preview', '#preview2-name', '#preview2-details');
         });
 
-        // Form validation
         $('#compareForm').on('submit', function(e) {
             const distributor1 = $('#distributor1').val();
             const distributor2 = $('#distributor2').val();

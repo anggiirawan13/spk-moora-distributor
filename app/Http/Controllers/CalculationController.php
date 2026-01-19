@@ -12,13 +12,11 @@ class CalculationController extends Controller
 {
     public function calculation(Request $request)
     {
-        // Ambil semua produk untuk dropdown
         $products = Product::withCount('distributors')->get();
 
         $alternatives = null;
         $productSelected = null;
 
-        // Jika ada product_id yang dipilih
         if ($request->has('product_id') && $request->product_id) {
             $request->validate([
                 'product_id' => 'required|exists:products,id'
@@ -27,7 +25,6 @@ class CalculationController extends Controller
             $productId = $request->product_id;
             $productSelected = Product::findOrFail($productId);
 
-            // Hanya ambil distributor yang menyediakan produk yang dipilih
             $distributors = $productSelected->distributors;
             $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
 
@@ -35,7 +32,6 @@ class CalculationController extends Controller
                 return redirect()->back()->with('error', 'Tidak ada data alternatif untuk distributor yang menyediakan produk ini.')->with('products', $products);
             }
         } else {
-            // Jika tidak ada product_id yang dipilih, hitung semua distributor
             $alternatives = Alternative::all();
 
             if ($alternatives->isEmpty()) {
@@ -45,14 +41,11 @@ class CalculationController extends Controller
 
         $criteria = Criteria::with(['subCriteria'])->get();
 
-        // Load relationships untuk alternatives yang sudah difilter
         $alternatives->load(['values.subCriteria', 'distributor']);
 
-        // Normalisasi bobot kriteria
         $totalWeight = $criteria->sum('weight') ?: 1;
         $weight = $criteria->pluck('weight', 'id')->map(fn($w) => $w / $totalWeight);
 
-        // Ambil semua nilai alternatif berdasarkan sub_criterias.value
         $altValues = [];
 
         foreach ($alternatives as $alt) {
@@ -68,7 +61,6 @@ class CalculationController extends Controller
             }
         }
 
-        // Normalisasi nilai alternatif per kriteria (sqrt(sum^2))
         $normDivisor = [];
         foreach ($criteria as $c) {
             $sumSquares = 0;
@@ -79,7 +71,6 @@ class CalculationController extends Controller
             $normDivisor[$c->id] = sqrt($sumSquares) ?: 1;
         }
 
-        // Normalisasi dan perhitungan MOORA
         $normalization = [];
         $valueMoora = [];
 
@@ -104,7 +95,6 @@ class CalculationController extends Controller
             $valueMoora[$alt->id] = $benefit - $cost;
         }
 
-        // Urutkan berdasarkan nilai MOORA tertinggi ke terendah
         arsort($valueMoora);
 
         return view('moora.calculation', compact(
@@ -122,13 +112,11 @@ class CalculationController extends Controller
 
     public function downloadPDF(Request $request)
     {
-        // Ambil semua produk untuk dropdown
         $products = Product::withCount('distributors')->get();
 
         $alternatives = null;
         $productSelected = null;
 
-        // Jika ada product_id yang dipilih
         if ($request->product_id) {
             $request->validate([
                 'product_id' => 'required|exists:products,id'
@@ -137,7 +125,6 @@ class CalculationController extends Controller
             $productId = $request->product_id;
             $productSelected = Product::findOrFail($productId);
 
-            // Hanya ambil distributor yang menyediakan produk yang dipilih
             $distributors = $productSelected->distributors;
             $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
 
@@ -145,7 +132,6 @@ class CalculationController extends Controller
                 return redirect()->back()->with('error', 'Tidak ada data alternatif untuk distributor yang menyediakan produk ini.')->with('products', $products);
             }
         } else {
-            // Jika tidak ada product_id yang dipilih, hitung semua distributor
             $alternatives = Alternative::all();
 
             if ($alternatives->isEmpty()) {
@@ -155,14 +141,11 @@ class CalculationController extends Controller
 
         $criteria = Criteria::with(['subCriteria'])->get();
 
-        // Load relationships untuk alternatives yang sudah difilter
         $alternatives->load(['values.subCriteria', 'distributor']);
 
-        // Normalisasi bobot kriteria
         $totalWeight = $criteria->sum('weight') ?: 1;
         $weight = $criteria->pluck('weight', 'id')->map(fn($w) => $w / $totalWeight);
 
-        // Ambil semua nilai alternatif berdasarkan sub_criterias.value
         $altValues = [];
 
         foreach ($alternatives as $alt) {
@@ -178,7 +161,6 @@ class CalculationController extends Controller
             }
         }
 
-        // Normalisasi nilai alternatif per kriteria (sqrt(sum^2))
         $normDivisor = [];
         foreach ($criteria as $c) {
             $sumSquares = 0;
@@ -189,7 +171,6 @@ class CalculationController extends Controller
             $normDivisor[$c->id] = sqrt($sumSquares) ?: 1;
         }
 
-        // Normalisasi dan perhitungan MOORA
         $normalization = [];
         $valueMoora = [];
 
@@ -214,7 +195,6 @@ class CalculationController extends Controller
             $valueMoora[$alt->id] = $benefit - $cost;
         }
 
-        // Urutkan berdasarkan nilai MOORA tertinggi ke terendah
         arsort($valueMoora);
 
         $pdf = app('dompdf.wrapper');

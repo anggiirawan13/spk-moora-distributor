@@ -84,7 +84,6 @@ class BusinessScaleController extends Controller
     {
         $businessScale = BusinessScale::findOrFail($id);
 
-        // Check if business scale is used by any distributor
         if ($businessScale->distributors()->count() > 0) {
             return redirect()->route('business_scale.index')
                 ->with('error', 'Tidak dapat menghapus skala bisnis karena masih digunakan oleh distributor.');

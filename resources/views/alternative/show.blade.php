@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-warehouse text-primary mr-2"></i>Alternatif
@@ -23,7 +22,6 @@
                     </h5>
                 </div>
                 <div class="card-body p-4">
-                    <!-- Header Info -->
                     <div class="row mb-4">
                         <div class="col-12 text-center">
                             <div class="alternative-header">
@@ -46,7 +44,6 @@
                         </div>
                     </div>
 
-                    <!-- Informasi Distributor -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <div class="card border-left-primary">
@@ -87,7 +84,6 @@
                         </div>
                     </div>
 
-                    <!-- Nilai Kriteria -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <div class="card border-left-success">
@@ -154,7 +150,6 @@
                         </div>
                     </div>
 
-                    <!-- Summary Statistics -->
                     @if($alternative->values->count() > 0)
                     <div class="row mt-4">
                         <div class="col-12">
@@ -201,7 +196,6 @@
                     </div>
                     @endif
 
-                    <!-- Informasi Sistem -->
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="card border-left-secondary">
@@ -236,7 +230,6 @@
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">

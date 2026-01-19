@@ -22,7 +22,6 @@
                     </h5>
                 </div>
                 <div class="card-body p-4">
-                    <!-- Informasi Utama -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <div class="text-center mb-4">
@@ -38,7 +37,6 @@
                         </div>
                     </div>
 
-                    <!-- Detail Information -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card border-0 bg-light">
@@ -90,7 +88,6 @@
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">

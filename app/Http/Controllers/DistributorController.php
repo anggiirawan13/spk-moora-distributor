@@ -72,13 +72,12 @@ class DistributorController extends Controller
 
     public function showComparisonForm(Request $request)
     {
-        $products = Product::all(); // Get all products for dropdown
+        $products = Product::all();
 
         $selectedProductId = $request->input('product_id');
         $distributors = collect();
 
         if ($selectedProductId) {
-            // Get distributors that have the selected product through pivot table
             $distributors = Distributor::whereHas('products', function ($query) use ($selectedProductId) {
                 $query->where('product_id', $selectedProductId);
             })->with([
@@ -87,7 +86,6 @@ class DistributorController extends Controller
                         }
                     ])->get();
         } else {
-            // Jika tidak ada product yang dipilih, tampilkan semua distributor dengan products mereka
             $distributors = Distributor::with('products')->get();
         }
 
@@ -152,7 +150,9 @@ class DistributorController extends Controller
         if ($distributor->image_name) {
             Storage::delete('public/distributor/' . $distributor->image_name);
         }
+
         $distributor->delete();
+        
         return redirect()->route('distributor.index')->with('success', 'Data distributor berhasil dihapus');
     }
 }

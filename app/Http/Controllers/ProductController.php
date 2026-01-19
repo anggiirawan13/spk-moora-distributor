@@ -52,7 +52,6 @@ class ProductController extends Controller
                 'description' => $request->description,
             ]);
 
-            // Attach selected distributors
             if ($request->has('distributors')) {
                 $product->distributors()->attach($request->distributors);
             }
@@ -84,7 +83,6 @@ class ProductController extends Controller
                 'description' => $request->description,
             ]);
 
-            // Sync distributors (add/remove as needed)
             $product->distributors()->sync($request->distributors ?? []);
 
             return redirect()->route('product.index')->with('success', 'Data produk berhasil diubah');
@@ -101,7 +99,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // Detach all distributors before deleting
         $product->distributors()->detach();
 
         $product->delete();

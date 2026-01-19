@@ -12,9 +12,7 @@
     </div>
 </div>
 
-<!-- Statistics Cards -->
 <div class="row mb-4">
-    <!-- Main Metrics -->
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2" style="border-left: 4px solid #059669 !important;">
             <div class="card-body">
@@ -99,7 +97,6 @@
 </div>
 
 <div class="row">
-    <!-- Master Data Section -->
     <div class="col-lg-8 mb-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
@@ -178,7 +175,6 @@
         </div>
     </div>
 
-    <!-- Quick Actions -->
     <div class="col-lg-4 mb-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -208,7 +204,6 @@
             </div>
         </div>
 
-        <!-- System Info -->
         <div class="card shadow">
             <div class="card-header py-3">
                 <h3 class="m-0 font-weight-bold text-primary">

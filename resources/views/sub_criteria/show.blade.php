@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-layer-group text-primary mr-2"></i>Sub Kriteria
@@ -23,7 +22,6 @@
                     </h5>
                 </div>
                 <div class="card-body p-4">
-                    <!-- Header Info -->
                     <div class="row mb-4">
                         <div class="col-12 text-center">
                             <div class="subcriteria-header">
@@ -41,7 +39,6 @@
                         </div>
                     </div>
 
-                    <!-- Kriteria Induk Info -->
                     <div class="row mb-4">
                         <div class="col-12">
                             <div class="card border-left-primary">
@@ -121,7 +118,6 @@
                         </div>
                     </div>
 
-                    <!-- Detail Information -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card border-0 bg-light">
@@ -175,7 +171,6 @@
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">

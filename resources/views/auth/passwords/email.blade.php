@@ -8,16 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password - Sistem Pendukung Keputusan</title>
 
-    <!-- Favicon -->
     <link rel="icon" href="{{ asset('img/logo.jpg') }}?v=2.0" type="image/jpeg">
 
-    <!-- Font Awesome -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     
-    <!-- SB Admin 2 CSS -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
@@ -123,7 +119,6 @@
 
     <div class="container">
 
-        <!-- Outer Row -->
         <div class="row justify-content-center align-items-center min-vh-100">
 
             <div class="col-xl-5 col-lg-6 col-md-8">
@@ -131,7 +126,6 @@
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-5">
                         
-                        <!-- Logo & Header -->
                         <div class="logo-container">
                             @if(file_exists(public_path('img/logo.jpg')))
                                 <img src="{{ asset('img/logo.jpg') }}" alt="Logo" class="logo">
@@ -152,7 +146,6 @@
                             </p>
                         </div>
 
-                        <!-- Reset Password Form -->
                         <form class="user" method="POST" action="{{ route('password.email') }}" id="resetPasswordForm">
                             @csrf
 
@@ -186,7 +179,6 @@
                             </a>
                         </div>
 
-                        <!-- Additional Help -->
                         <div class="text-center mt-4">
                             <small class="text-muted">
                                 <i class="fas fa-info-circle mr-1"></i>
@@ -203,19 +195,16 @@
 
     </div>
 
-    <!-- SB Admin 2 JS -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
-    <!-- SweetAlert2 Alert Handling -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('resetPasswordForm');
             const submitBtn = document.getElementById('submitBtn');
 
-            // SweetAlert2 configurations
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -252,7 +241,6 @@
                 });
             @endif
 
-            // Form submission handler
             form.addEventListener('submit', function(e) {
                 const email = document.getElementById('email').value.trim();
                 
@@ -267,12 +255,10 @@
                     return;
                 }
 
-                // Show loading state
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Mengirim...';
                 submitBtn.disabled = true;
             });
 
-            // Email validation on input
             document.getElementById('email').addEventListener('input', function() {
                 const email = this.value.trim();
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -284,7 +270,6 @@
                 }
             });
 
-            // Enter key support
             document.getElementById('email').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     form.dispatchEvent(new Event('submit'));
@@ -294,5 +279,4 @@
     </script>
 
 </body>
-
 </html>

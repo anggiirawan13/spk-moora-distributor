@@ -134,7 +134,6 @@
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                // Buat dan submit form delete secara dinamis
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = url;
@@ -159,11 +158,9 @@
         });
     }
 
-    // Initialize tooltips
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
         
-        // Add hover effects
         $('.btn-action').hover(
             function() {
                 $(this).css('transform', 'scale(1.1)');

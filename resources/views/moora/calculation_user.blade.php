@@ -87,7 +87,6 @@
 
     </div>
 
-    <!-- Modal Filter Kriteria -->
     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -133,7 +132,6 @@
         </div>
     </div>
 
-    <!-- Modal Booking -->
     <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

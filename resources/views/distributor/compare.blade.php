@@ -15,7 +15,6 @@
     </div>
 
     <div class="row">
-        <!-- Distributor 1 -->
         <div class="col-lg-6 mb-4">
             <div class="card shadow border-0 h-100">
                 <div class="card-header bg-gradient-primary text-white py-3">
@@ -27,7 +26,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- Logo & Basic Info -->
                     <div class="text-center mb-4">
                         <div class="position-relative d-inline-block">
                             <img src="{{ $distributor1->image_name ? asset('storage/distributor/' . $distributor1->image_name) : asset('img/default-image.jpg') }}" 
@@ -44,7 +42,6 @@
                         </span>
                     </div>
 
-                    <!-- Comparison Highlights -->
                     <div class="comparison-highlights mb-4">
                         <div class="row text-center">
                             <div class="col-4">
@@ -71,13 +68,11 @@
                         </div>
                     </div>
 
-                    <!-- Detailed Info -->
                     <x-table_distributor :distributor="$distributor1" />
                 </div>
             </div>
         </div>
 
-        <!-- Distributor 2 -->
         <div class="col-lg-6 mb-4">
             <div class="card shadow border-0 h-100">
                 <div class="card-header bg-gradient-info text-white py-3">
@@ -89,7 +84,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- Logo & Basic Info -->
                     <div class="text-center mb-4">
                         <div class="position-relative d-inline-block">
                             <img src="{{ $distributor2->image_name ? asset('storage/distributor/' . $distributor2->image_name) : asset('img/default-image.jpg') }}" 
@@ -106,7 +100,6 @@
                         </span>
                     </div>
 
-                    <!-- Comparison Highlights -->
                     <div class="comparison-highlights mb-4">
                         <div class="row text-center">
                             <div class="col-4">
@@ -133,14 +126,12 @@
                         </div>
                     </div>
 
-                    <!-- Detailed Info -->
                     <x-table_distributor :distributor="$distributor2" />
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Comparison Summary -->
     <div class="row mt-4">
         <div class="col-12">
             <div class="card shadow border-0">

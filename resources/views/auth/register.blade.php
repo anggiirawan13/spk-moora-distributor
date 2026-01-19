@@ -8,16 +8,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Registrasi - Sistem Pendukung Keputusan</title>
 
-    <!-- Favicon -->
     <link rel="icon" href="{{ asset('img/logo.jpg') }}?v=2.0" type="image/jpeg">
 
-    <!-- Font Awesome -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     
-    <!-- SB Admin 2 CSS -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
@@ -184,7 +180,6 @@
     <div class="container">
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block bg-register-image">
                         <div class="d-flex align-items-center justify-content-center h-100 text-white p-5">
@@ -198,7 +193,6 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             
-                            <!-- Logo & Header -->
                             <div class="logo-container">
                                 @if(file_exists(public_path('img/logo.jpg')))
                                     <img src="{{ asset('img/logo.jpg') }}" alt="Logo" class="logo">
@@ -224,7 +218,6 @@
                             <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data" id="registerForm">
                                 @csrf
 
-                                <!-- Profile Image -->
                                 <div class="profile-image-container">
                                     <div class="position-relative d-inline-block">
                                         <img id="imagePreview" class="profile-preview" alt="Preview Foto Profil">
@@ -252,7 +245,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Personal Information -->
                                 <div class="form-group">
                                     <label for="name" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-user text-success mr-2"></i>Nama Lengkap <span class="text-danger">*</span>
@@ -296,7 +288,6 @@
                                     @enderror
                                 </div>
 
-                                <!-- Password Section -->
                                 <div class="form-group">
                                     <label for="password" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-lock text-warning mr-2"></i>Password <span class="text-danger">*</span>
@@ -337,10 +328,8 @@
                                     @enderror
                                 </div>
 
-                                <!-- Password Match Indicator -->
                                 <div id="passwordMatch" class="mt-2 font-weight-bold" style="display: none;"></div>
 
-                                <!-- Password Requirements -->
                                 <div class="form-group mt-3">
                                     <label class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-list-check mr-2"></i>Syarat Password:
@@ -388,7 +377,6 @@
         </div>
     </div>
 
-    <!-- SB Admin 2 JS -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
@@ -425,22 +413,18 @@
             const form = document.getElementById('registerForm');
             const submitBtn = document.getElementById('submitBtn');
 
-            // Password validation
             passwordInput.addEventListener('input', function() {
                 const val = passwordInput.value;
 
-                // Update requirements
                 updateRequirement(minChar, val.length >= 8, 'Minimal 8 karakter');
                 updateRequirement(hasUpper, /[A-Z]/.test(val), 'Minimal 1 huruf besar');
                 updateRequirement(hasLower, /[a-z]/.test(val), 'Minimal 1 huruf kecil');
                 updateRequirement(hasNumber, /\d/.test(val), 'Minimal 1 angka');
                 updateRequirement(hasSpecial, /[!@#$%^&*(),.?":{}|<>]/.test(val), 'Minimal 1 karakter spesial');
 
-                // Check password match
                 checkPasswordMatch();
             });
 
-            // Password confirmation
             confirmInput.addEventListener('input', checkPasswordMatch);
 
             function updateRequirement(element, condition, text) {
@@ -477,7 +461,6 @@
                 }
             }
 
-            // Form validation
             form.addEventListener('submit', function(e) {
                 const name = document.getElementById('name').value.trim();
                 const email = document.getElementById('email').value.trim();
@@ -494,12 +477,10 @@
                     return;
                 }
 
-                // Show loading state
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Mendaftarkan...';
                 submitBtn.disabled = true;
             });
 
-            // Email validation
             document.getElementById('email').addEventListener('blur', function() {
                 const email = this.value.trim();
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

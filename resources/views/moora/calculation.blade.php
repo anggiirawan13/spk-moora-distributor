@@ -17,7 +17,6 @@
 
     <div class="container-fluid">
 
-        <!-- Form Pemilihan Produk -->
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card shadow-sm border-0" style="border-radius: 15px; overflow: hidden;">
@@ -55,7 +54,6 @@
             </div>
         </div>
 
-        <!-- Pembatas dengan garis horizontal -->
         @if(isset($alternatives) && $alternatives->count() > 0)
         <div class="row mb-4">
             <div class="col-12">
@@ -71,7 +69,6 @@
         </div>
         @endif
 
-        <!-- Header Section -->
         @if(isset($alternatives) && $alternatives->count() > 0)
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div>
@@ -100,7 +97,6 @@
         </div>
         @endif
 
-        <!-- Summary Cards -->
         <div class="row mb-4">
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -539,7 +535,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const productSelect = document.getElementById('product_id');
             
-            // Add subtle animation when selecting
             productSelect.addEventListener('focus', function() {
                 this.style.borderColor = '#047857';
                 this.style.boxShadow = '0 0 0 0.2rem rgba(4, 120, 87, 0.1)';

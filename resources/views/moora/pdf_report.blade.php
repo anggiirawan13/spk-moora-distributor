@@ -249,7 +249,6 @@
         </div>
     </div>
 
-    <!-- Kriteria Information -->
     <div class="criteria-info">
         <strong>Kriteria Penilaian:</strong>
         <div id="assessment-criteria">
@@ -261,7 +260,6 @@
         </div>
     </div>
 
-    <!-- Summary Information -->
     <div class="summary-box">
         <div class="summary-title">📊 Ringkasan Analisis</div>
         <div>Product: <strong>{{ $productSelected->name ?? 'Tidak ada produk yang dipilih' }}</strong></div>
@@ -270,7 +268,6 @@
         <div>Metode: <strong>MOORA (Multi-Objective Optimization by Ratio Analysis)</strong></div>
     </div>
 
-    <!-- Final Recommendation -->
     @php
         $bestAltId = array_key_first($valueMoora);
         $bestAlt = $alternatives->firstWhere('id', $bestAltId);

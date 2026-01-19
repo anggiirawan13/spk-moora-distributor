@@ -15,7 +15,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DeliveryMethodController;
 use App\Http\Controllers\BusinessScaleController;
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/404', function () {
     return response()->view('errors.404', [], 404);
@@ -39,10 +39,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/moora/report', [CalculationController::class, 'downloadPDF'])->name('moora.download_pdf');
 
     Route::resource('/user', UserController::class)->names('user');
-    Route::resource('/business_scale', BusinessScaleController::class)->names('business_scale');
-    Route::resource('/delivery_method', DeliveryMethodController::class)->names('delivery_method');
+    Route::resource('/business-scale', BusinessScaleController::class)->names('business_scale');
+    Route::resource('/delivery-method', DeliveryMethodController::class)->names('delivery_method');
     Route::resource('/product', ProductController::class)->names('product');
-    Route::resource('/payment_term', PaymentTermController::class)->names('payment_term');
+    Route::resource('/payment-term', PaymentTermController::class)->names('payment_term');
     Route::resource('/criteria', CriteriaController::class)->names('criteria');
     Route::resource('/sub-criteria', SubCriteriaController::class)->names('subcriteria');
     Route::resource('/alternative', AlternativeController::class)->names('alternative');

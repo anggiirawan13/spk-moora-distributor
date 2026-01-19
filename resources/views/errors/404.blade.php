@@ -6,7 +6,6 @@
     <title>@yield('title', 'Error')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Tambahkan CSS dasar (misal Bootstrap) -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         body {

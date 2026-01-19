@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-users text-primary mr-2"></i>Pengguna
@@ -23,7 +22,6 @@
                     </h5>
                 </div>
                 <div class="card-body p-4">
-                    <!-- Header Info -->
                     <div class="row mb-4">
                         <div class="col-12 text-center">
                             <div class="user-header">
@@ -51,7 +49,6 @@
                         </div>
                     </div>
 
-                    <!-- Informasi Akun -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card border-0 bg-light">
@@ -110,7 +107,6 @@
                         </div>
                     </div>
 
-                    <!-- Informasi Sistem -->
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="card border-left-secondary">
@@ -149,7 +145,6 @@
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">
@@ -238,7 +233,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Additional JavaScript can be added here if needed
     console.log('User detail page loaded');
 });
 </script>

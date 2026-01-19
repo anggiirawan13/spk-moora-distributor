@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-list-alt text-primary mr-2"></i>Kriteria
@@ -131,7 +130,6 @@
                             </div>
                         </div>
 
-                        <!-- Preview Section -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-info">
@@ -255,17 +253,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const weightPercentage = document.getElementById('weightPercentage');
     const attributeInfo = document.getElementById('attributeInfo');
 
-    // Real-time preview for code
     codeInput.addEventListener('input', function() {
         codePreview.textContent = this.value || '-';
     });
 
-    // Real-time preview for name
     nameInput.addEventListener('input', function() {
         namePreview.textContent = this.value || '-';
     });
 
-    // Real-time preview for weight with progress bar
     weightInput.addEventListener('input', function() {
         const weight = parseFloat(this.value) || 0;
         const percentage = Math.min(weight * 100, 100);
@@ -276,7 +271,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (weight > 0) {
             weightPreview.textContent = weight.toFixed(2) + ' (' + percentage.toFixed(0) + '%)';
             
-            // Change progress bar color based on weight
             if (weight > 0.3) {
                 weightProgress.className = 'progress-bar bg-danger';
             } else if (weight > 0.15) {
@@ -290,7 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Real-time preview for attribute type
     attributeSelect.addEventListener('change', function() {
         const value = this.value;
         if (value === 'Benefit') {
@@ -305,7 +298,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Form validation
     const form = document.getElementById('criteriaForm');
     form.addEventListener('submit', function(e) {
         const code = codeInput.value.trim();
@@ -345,12 +337,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Auto-format code to uppercase
     codeInput.addEventListener('input', function() {
         this.value = this.value.toUpperCase();
     });
 
-    // Initialize previews
     if (codeInput.value) codeInput.dispatchEvent(new Event('input'));
     if (nameInput.value) nameInput.dispatchEvent(new Event('input'));
     if (weightInput.value) weightInput.dispatchEvent(new Event('input'));

@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-th text-primary mr-2"></i>Alternatif
@@ -28,7 +27,6 @@
                     <form action="{{ route('alternative.store') }}" method="POST" id="alternativeForm">
                         @csrf
 
-                        <!-- Informasi Distributor -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
@@ -63,7 +61,6 @@
                             </div>
                         </div>
 
-                        <!-- Preview Distributor Terpilih -->
                         <div class="row mb-4" id="distributorPreview" style="display: none;">
                             <div class="col-12">
                                 <div class="card border-left-success">
@@ -96,7 +93,6 @@
                             </div>
                         </div>
 
-                        <!-- Penilaian Kriteria -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
@@ -154,7 +150,6 @@
                             @endforeach
                         </div>
 
-                        <!-- Summary Preview -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-info">
@@ -203,7 +198,6 @@
                             </div>
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -291,7 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewDeliveryMethod = document.getElementById('previewDeliveryMethod');
     const previewPaymentTerm = document.getElementById('previewPaymentTerm');
     
-    // Data distributor untuk preview - FIXED SYNTAX
     const distributorsData = {!! json_encode($distributors->map(function($distributor) {
         return [
             'id' => $distributor->id,
@@ -302,7 +295,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
     })) !!};
 
-    // Update distributor preview
     distributorSelect.addEventListener('change', function() {
         const selectedId = parseInt(this.value);
         const selectedDistributor = distributorsData.find(d => d.id === selectedId);
@@ -318,7 +310,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Update summary table when sub-criteria is selected
     document.querySelectorAll('select[name^="criteria"]').forEach(select => {
         select.addEventListener('change', function() {
             const criteriaCode = this.getAttribute('data-criteria');
@@ -327,11 +318,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const subCriteriaName = optionText.split(' (Nilai: ')[0];
             const subCriteriaValue = optionText.match(/Nilai: (\d+)/)?.[1] || '-';
             
-            // Update summary table
             document.getElementById(`summary_${criteriaCode}_name`).textContent = subCriteriaName;
             document.getElementById(`summary_${criteriaCode}_value`).textContent = subCriteriaValue;
             
-            // Highlight row
             const row = document.querySelector(`tr[data-criteria="${criteriaCode}"]`);
             if (row) {
                 row.classList.add('table-success');
@@ -340,7 +329,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form validation
     const form = document.getElementById('alternativeForm');
     form.addEventListener('submit', function(e) {
         const distributorId = distributorSelect.value;
@@ -353,7 +341,6 @@ document.addEventListener('DOMContentLoaded', function() {
             errorMessage = 'Harap pilih distributor terlebih dahulu!';
             distributorSelect.focus();
         } else {
-            // Check if all criteria are selected
             const unselectedCriteria = [];
             criteriaSelects.forEach(select => {
                 if (!select.value) {
@@ -382,12 +369,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize distributor preview if already selected
     if (distributorSelect.value) {
         distributorSelect.dispatchEvent(new Event('change'));
     }
 
-    // Initialize summary table for pre-selected criteria
     document.querySelectorAll('select[name^="criteria"]').forEach(select => {
         if (select.value) {
             select.dispatchEvent(new Event('change'));

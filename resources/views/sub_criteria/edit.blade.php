@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-layer-group text-primary mr-2"></i>Sub Kriteria
@@ -30,7 +29,6 @@
                         @method('PUT')
                         <input type="hidden" name="criteria_id" value="{{ $subCriteria->criteria->id }}">
 
-                        <!-- Kriteria Info -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <div class="card border-left-info bg-light">
@@ -61,7 +59,6 @@
                             </div>
                         </div>
 
-                        <!-- Form Input -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -111,7 +108,6 @@
                             </div>
                         </div>
 
-                        <!-- Preview Section -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-success">
@@ -140,7 +136,6 @@
                             </div>
                         </div>
 
-                        <!-- Original Data Section -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-secondary">
@@ -165,7 +160,6 @@
                             </div>
                         </div>
 
-                        <!-- Existing Sub Criteria -->
                         @if($subCriteria->criteria->subCriterias && $subCriteria->criteria->subCriterias->count() > 0)
                         <div class="row mt-4">
                             <div class="col-12">
@@ -303,22 +297,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const valuePreview = document.getElementById('valuePreview');
     const descriptionPreview = document.getElementById('descriptionPreview');
 
-    // Real-time preview for name
     nameInput.addEventListener('input', function() {
         namePreview.textContent = this.value || '-';
     });
 
-    // Real-time preview for value
     valueInput.addEventListener('input', function() {
         valuePreview.textContent = this.value || '-';
     });
 
-    // Real-time preview for description
     descriptionInput.addEventListener('input', function() {
         descriptionPreview.textContent = this.value || '-';
     });
 
-    // Form validation
     const form = document.getElementById('subcriteriaForm');
     form.addEventListener('submit', function(e) {
         const name = nameInput.value.trim();
@@ -348,10 +338,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Auto-focus on name input
     nameInput.focus();
 
-    // Initialize previews
     if (nameInput.value) nameInput.dispatchEvent(new Event('input'));
     if (valueInput.value) valueInput.dispatchEvent(new Event('input'));
     if (descriptionInput.value) descriptionInput.dispatchEvent(new Event('input'));

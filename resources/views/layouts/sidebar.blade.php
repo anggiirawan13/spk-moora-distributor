@@ -1,7 +1,6 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('login') }}">
         <div class="sidebar-brand-icon">
             <img src="{{ asset('img/logo.jpg') }}" alt="logo" width="40" height="40"
@@ -13,11 +12,9 @@
         </div>
     </a>
 
-    <!-- Divider -->
     <hr class="sidebar-divider my-2">
 
     @auth
-        <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
             <a class="nav-link" href="{{ route('dashboard.index') }}">
                 <i class="fas fa-tachometer-alt"></i>
@@ -25,10 +22,8 @@
             </a>
         </li>
 
-        <!-- Divider -->
         <hr class="sidebar-divider my-2">
 
-        <!-- Data Master (Dropdown) -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataMaster"
                 aria-expanded="false" aria-controls="dataMaster">
@@ -58,7 +53,6 @@
         </li>
     @endauth
 
-    <!-- Perbandingan Distributor -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('distributor.compare.form') }}">
             <i class="fas fa-balance-scale"></i>
@@ -66,7 +60,6 @@
         </a>
     </li>
 
-    <!-- Rekomendasi Distributor (Dropdown) -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPenunjang"
             aria-expanded="false" aria-controls="dataPenunjang">
@@ -89,7 +82,6 @@
         </div>
     </li>
 
-    <!-- Proses Perhitungan -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('moora.calculation') }}">
             <i class="fas fa-calculator"></i>
@@ -98,7 +90,6 @@
     </li>
 
     @can('admin')
-        <!-- Manajemen Pengguna -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('user.index') }}">
                 <i class="fas fa-users"></i>
@@ -107,7 +98,6 @@
         </li>
     @endcan
 
-    <!-- User Profile -->
     <hr class="sidebar-divider my-2">
     <li class="nav-item">
         <a class="nav-link" href="{{ route('profile.edit') }}">
@@ -116,10 +106,8 @@
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle" style="background: rgba(255,255,255,0.1);">
             <i class="text-white"></i>

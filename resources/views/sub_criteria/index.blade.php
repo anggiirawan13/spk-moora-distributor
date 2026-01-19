@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-layer-group text-primary mr-2"></i>Sub Kriteria
@@ -20,7 +19,6 @@
 
     @foreach ($criteria as $item)
     <div class="card shadow border-0 mb-4">
-        <!-- Card Header -->
         <div class="card-header bg-gradient-primary text-white py-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -47,7 +45,6 @@
             </div>
         </div>
 
-        <!-- Card Body -->
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -120,7 +117,6 @@
             </div>
         </div>
 
-        <!-- Card Footer -->
         @if($item->subCriteria->count() > 0)
         <div class="card-footer bg-light py-2">
             <div class="row">
@@ -243,7 +239,6 @@ function confirmDelete(url, name) {
     });
 }
 
-// Initialize tooltips
 document.addEventListener('DOMContentLoaded', function() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {

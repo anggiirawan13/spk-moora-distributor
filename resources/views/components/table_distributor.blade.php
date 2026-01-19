@@ -6,7 +6,6 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <!-- Informasi Kontak -->
             <div class="col-md-6">
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
                     <i class="fas fa-address-card mr-2"></i>Informasi Kontak
@@ -69,7 +68,6 @@
                 </div>
             </div>
 
-            <!-- Informasi Bisnis -->
             <div class="col-md-6">
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
                     <i class="fas fa-chart-line mr-2"></i>Informasi Bisnis
@@ -140,7 +138,6 @@
                     </div>
                 </div>
 
-                <!-- Timestamps -->
                 <div class="info-item">
                     <div class="d-flex align-items-start">
                         <div class="icon-container bg-light rounded p-2 mr-3">
@@ -166,7 +163,6 @@
             </div>
         </div>
 
-        <!-- Deskripsi Perusahaan -->
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card border-left-info">
@@ -182,7 +178,6 @@
             </div>
         </div>
 
-        <!-- Statistics (Optional) -->
         @if($distributor->alternatives && $distributor->alternatives->count() > 0)
         <div class="row mt-4">
             <div class="col-12">

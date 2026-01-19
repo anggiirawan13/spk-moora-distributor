@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-money-bill-wave text-primary mr-2"></i>Termin Pembayaran
@@ -76,7 +75,6 @@
                             </div>
                         </div>
 
-                        <!-- Preview Section -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-info">
@@ -169,18 +167,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const descriptionPreview = document.getElementById('descriptionPreview');
     const charCount = document.getElementById('charCount');
 
-    // Real-time preview for name
     nameInput.addEventListener('input', function() {
         namePreview.textContent = this.value || '-';
     });
 
-    // Real-time preview and character count for description
     descriptionInput.addEventListener('input', function() {
         const text = this.value;
         descriptionPreview.textContent = text || '-';
         charCount.textContent = `${text.length}/500 karakter`;
         
-        // Change color when approaching limit
         if (text.length > 450) {
             charCount.className = 'text-warning';
         } else if (text.length > 490) {
@@ -190,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Form validation
     const form = document.getElementById('paymentTermForm');
     form.addEventListener('submit', function(e) {
         const name = nameInput.value.trim();
@@ -207,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize character count
     if (descriptionInput.value) {
         descriptionInput.dispatchEvent(new Event('input'));
     }

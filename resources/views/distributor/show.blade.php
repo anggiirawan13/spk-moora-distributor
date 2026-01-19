@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-truck-loading text-primary mr-2"></i>Detail Distributor
@@ -23,7 +22,6 @@
                     </h5>
                 </div>
                 <div class="card-body p-4">
-                    <!-- Logo & Basic Info -->
                     <div class="row mb-4">
                         <div class="col-md-12 text-center mb-4">
                             <div class="profile-image-container">
@@ -44,14 +42,12 @@
                         </div>
                     </div>
 
-                    <!-- Detail Information -->
                     <div class="row">
                         <div class="col-12">
                             <x-table_distributor :distributor="$distributor" />
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-center">

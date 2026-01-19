@@ -1,17 +1,12 @@
-<!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-    <!-- Brand -->
     <a class="navbar-brand text-uppercase font-weight-bold" href="">
         PT Anugrah Hadi Electric
     </a>
 
-    <!-- Navbar Items (Right Side) -->
     <ul class="navbar-nav ml-auto">
-        <!-- Divider -->
         <div class="topbar-divider d-none d-sm-block"></div>
 
-        <!-- User Dropdown -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -27,7 +22,6 @@
 
             </a>
 
-            <!-- Dropdown Menu -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="{{ route('profile.edit') }}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -43,12 +37,10 @@
     </ul>
 </nav>
 
-<!-- Hidden Logout Form -->
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
 </form>
 
-<!-- JavaScript for Logout -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelector(".logout-trigger").addEventListener("click", function(e) {

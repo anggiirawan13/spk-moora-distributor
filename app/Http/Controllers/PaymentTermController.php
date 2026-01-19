@@ -83,8 +83,6 @@ class PaymentTermController extends Controller
     public function destroy($id)
     {
         $paymentTerm = PaymentTerm::findOrFail($id);
-
-        // Check if payment term is used by any distributor
         if ($paymentTerm->distributors()->count() > 0) {
             return redirect()->route('payment_term.index')
                 ->with('error', 'Tidak dapat menghapus termin pembayaran karena masih digunakan oleh distributor.');

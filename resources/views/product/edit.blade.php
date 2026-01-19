@@ -76,7 +76,6 @@
                             </div>
                         </div>
 
-                        <!-- Distributor Selection -->
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -123,7 +122,6 @@
                             </div>
                         </div>
 
-                        <!-- Preview Section -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-info">
@@ -169,7 +167,6 @@
                             </div>
                         </div>
 
-                        <!-- Original Data -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-secondary">
@@ -292,12 +289,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const charCount = document.getElementById('charCount');
     const distributorCheckboxes = document.querySelectorAll('input[name="distributors[]"]');
 
-    // Real-time preview for name
     nameInput.addEventListener('input', function() {
         namePreview.textContent = this.value || '-';
     });
 
-    // Real-time preview and character count for description
     descriptionInput.addEventListener('input', function() {
         const text = this.value;
         descriptionPreview.textContent = text || '-';
@@ -312,7 +307,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Real-time preview for distributors
     distributorCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', updateDistributorsPreview);
     });
@@ -335,7 +329,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Form validation
     const form = document.getElementById('productForm');
     form.addEventListener('submit', function(e) {
         const name = nameInput.value.trim();
@@ -352,7 +345,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize
     if (nameInput.value) {
         nameInput.dispatchEvent(new Event('input'));
     }

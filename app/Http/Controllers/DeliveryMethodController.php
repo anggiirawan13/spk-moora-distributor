@@ -83,8 +83,6 @@ class DeliveryMethodController extends Controller
     public function destroy($id)
     {
         $deliveryMethod = DeliveryMethod::findOrFail($id);
-
-        // Check if delivery method is used by any distributor
         if ($deliveryMethod->distributors()->count() > 0) {
             return redirect()->route('delivery_method.index')
                 ->with('error', 'Tidak dapat menghapus metode pengiriman karena masih digunakan oleh distributor.');

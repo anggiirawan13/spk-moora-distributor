@@ -23,30 +23,16 @@
     @method($method)
 
     <div class="row">
-        <!-- Foto Profil -->
         <div class="col-md-4 text-center mb-4">
             <div class="profile-image-container">
                 <div class="position-relative d-inline-block">
                 @if($image)
-                    <!-- Tampilkan gambar jika ada -->
                     <img id="imagePreview" 
                         src="{{ asset('storage/user/' . $image) }}"
                         class="img-thumbnail rounded-circle shadow" 
                         style="width: 200px; height: 200px; object-fit: cover;"
                         alt="Foto Profil">
-                    
-                    <!-- Tombol Hapus Foto -->
-                    {{-- @if($deletePhotoProfile)
-                    <button type="button" id="removePhotoBtn" 
-                            class="btn btn-danger btn-sm position-absolute rounded-circle"
-                            style="top: -5px; right: -5px; width: 30px; height: 30px;"
-                            title="Hapus Foto Profil"
-                            onclick="confirmDelete('{{ $id ? route('profile.delete_image', $id) : route('profile.delete_image') }}')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    @endif --}}
                 @else
-                    <!-- Tampilkan placeholder jika tidak ada gambar -->
                     <img id="imagePreview" 
                         class="img-thumbnail rounded-circle shadow" 
                         style="width: 200px; height: 200px; object-fit: cover; display: none;"
@@ -81,7 +67,6 @@
             </div>
         </div>
 
-        <!-- Informasi Profil -->
         <div class="col-md-8">
             <div class="form-section">
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
@@ -162,7 +147,6 @@
                 </div>
             </div>
 
-            <!-- Section Ganti Password -->
             <div class="form-section mt-4">
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
                     <i class="fas fa-lock mr-2"></i>Ganti Password
@@ -211,10 +195,8 @@
                     </div>
                 </div>
 
-                <!-- Password Match Indicator -->
                 <div id="passwordMatch" class="mt-2 font-weight-bold" style="display: none;"></div>
 
-                <!-- Password Requirements -->
                 <div class="form-group mt-3">
                     <label class="font-weight-bold text-dark mb-2"><i class="fas fa-list-check mr-2"></i>Syarat Password:</label>
                     <ul id="passwordRequirements" class="list-unstyled text-sm pl-3">
@@ -259,7 +241,6 @@
         </div>
     </div>
 
-    <!-- Action Buttons -->
     <div class="row mt-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
@@ -285,7 +266,6 @@
     </div>
 </form>
 
-<!-- Modal Konfirmasi Hapus -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -408,24 +388,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const hasNumber = document.getElementById('number');
     const hasSpecial = document.getElementById('special');
 
-    // Password validation
     if (passwordInput) {
         passwordInput.addEventListener('input', function() {
             const val = passwordInput.value;
 
-            // Update requirements
             updateRequirement(minChar, val.length >= 8, 'Minimal 8 karakter');
             updateRequirement(hasUpper, /[A-Z]/.test(val), 'Minimal 1 huruf besar');
             updateRequirement(hasLower, /[a-z]/.test(val), 'Minimal 1 huruf kecil');
             updateRequirement(hasNumber, /\d/.test(val), 'Minimal 1 angka');
             updateRequirement(hasSpecial, /[!@#$%^&*(),.?":{}|<>]/.test(val), 'Minimal 1 karakter spesial');
 
-            // Check password match
             checkPasswordMatch();
         });
     }
 
-    // Password confirmation
     if (confirmInput) {
         confirmInput.addEventListener('input', checkPasswordMatch);
     }
@@ -466,7 +442,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Form validation
     const form = document.getElementById('userForm');
     if (form) {
         form.addEventListener('submit', function(e) {

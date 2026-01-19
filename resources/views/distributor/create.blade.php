@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-warehouse text-primary mr-2"></i>Distributor
@@ -28,7 +27,6 @@
                     <form action="{{ route('distributor.store') }}" method="POST" enctype="multipart/form-data" id="distributorForm">
                         @csrf
 
-                        <!-- Informasi Dasar -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
@@ -74,7 +72,6 @@
                             </div>
                         </div>
 
-                        <!-- Logo Perusahaan -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <div class="form-group">
@@ -99,7 +96,6 @@
                                         <i class="fas fa-info-circle mr-1"></i>Format: JPG, PNG, GIF (Maksimal 2MB)
                                     </small>
                                     
-                                    <!-- Image Preview -->
                                     <div class="mt-3 text-center">
                                         <img id="imagePreview" class="img-thumbnail" 
                                              style="max-width: 200px; max-height: 200px; display: none;" 
@@ -109,7 +105,6 @@
                             </div>
                         </div>
 
-                        <!-- Kontak & Alamat -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
@@ -171,7 +166,6 @@
                             </div>
                         </div>
 
-                        <!-- Klasifikasi -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
@@ -246,7 +240,6 @@
                             </div>
                         </div>
 
-                        <!-- Deskripsi & Status -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
@@ -299,7 +292,6 @@
                             </div>
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -362,12 +354,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('image_name');
     const imageLabel = document.getElementById('image_name_label');
 
-    // Character count for description
     descriptionInput.addEventListener('input', function() {
         const text = this.value;
         charCount.textContent = `${text.length}/1000 karakter`;
         
-        // Change color when approaching limit
         if (text.length > 900) {
             charCount.className = 'text-warning';
         } else if (text.length > 980) {
@@ -377,13 +367,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // File input label update
     imageInput.addEventListener('change', function() {
         const fileName = this.files[0] ? this.files[0].name : 'Pilih file logo...';
         imageLabel.textContent = fileName;
     });
 
-    // Form validation
     const form = document.getElementById('distributorForm');
     form.addEventListener('submit', function(e) {
         const requiredFields = [
@@ -408,7 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Validate email format
         const emailField = document.getElementById('email');
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (emailField.value && !emailRegex.test(emailField.value)) {
@@ -433,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize character count
     if (descriptionInput.value) {
         descriptionInput.dispatchEvent(new Event('input'));
     }

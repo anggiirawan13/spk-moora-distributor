@@ -44,7 +44,7 @@ class DistributorSeeder extends Seeder
                 'image_name' => null,
                 'company_name' => $companyName,
                 'address' => $faker->address(),
-                'phone' => $faker->phoneNumber(),
+                'phone' => $faker->numerify('08#########'),
                 'email' => strtolower(str_replace(' ', '', $companyName)) . '@' . $faker->domainName(),
                 'payment_term_id' => $faker->numberBetween(1, 5),
                 'delivery_method_id' => $faker->numberBetween(1, 4),

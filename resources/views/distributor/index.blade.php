@@ -36,7 +36,6 @@
             ['label' => 'Status', 'field' => 'is_active'],
         ]" />
 
-    <!-- Modal Bootstrap -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

@@ -76,7 +76,6 @@
                             </div>
                         </div>
 
-                        <!-- Preview Section -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-info">
@@ -105,7 +104,6 @@
                             </div>
                         </div>
 
-                        <!-- Original Data -->
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-secondary">
@@ -203,18 +201,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const descriptionPreview = document.getElementById('descriptionPreview');
     const charCount = document.getElementById('charCount');
 
-    // Real-time preview for name
     nameInput.addEventListener('input', function() {
         namePreview.textContent = this.value || '-';
     });
 
-    // Real-time preview and character count for description
     descriptionInput.addEventListener('input', function() {
         const text = this.value;
         descriptionPreview.textContent = text || '-';
         charCount.textContent = `${text.length}/500 karakter`;
         
-        // Change color when approaching limit
         if (text.length > 450) {
             charCount.className = 'text-warning';
         } else if (text.length > 490) {
@@ -224,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Form validation
     const form = document.getElementById('deliveryMethodForm');
     form.addEventListener('submit', function(e) {
         const name = nameInput.value.trim();
@@ -241,7 +235,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize previews and character count
     if (nameInput.value) {
         nameInput.dispatchEvent(new Event('input'));
     }
