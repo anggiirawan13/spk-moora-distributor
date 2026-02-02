@@ -13,7 +13,7 @@ class AdminSeeder extends Seeder
             'id' => 1,
             'name' => 'admin',
             'email' => 'admin@admin.com',
-            'image_name' => '',
+            'image_name' => 'Ex1y3eAnda4xT6AiP1j93VCJ9HQpTEmBMzaMLJsf.jpg',
             'phone' => '08123456789',
             'address' => 'Tangerang',
             'password' => bcrypt('admin123'),
@@ -27,7 +27,7 @@ class AdminSeeder extends Seeder
         User::create([
             'name' => 'staf',
             'email' => 'staf@staf.com',
-            'image_name' => '',
+            'image_name' => 'Ex1y3eAnda4xT6AiP1j93VCJ9HQpTEmBMzaMLJsf.jpg',
             'phone' => '08123456789',
             'address' => 'Tangerang',
             'password' => bcrypt('staf123'),

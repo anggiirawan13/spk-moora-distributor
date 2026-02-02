@@ -41,7 +41,7 @@ class DistributorSeeder extends Seeder
 
             DB::table('distributors')->insert([
                 'name' => $name,
-                'image_name' => null,
+                'image_name' => 'Ex1y3eAnda4xT6AiP1j93VCJ9HQpTEmBMzaMLJsf.jpg',
                 'company_name' => $companyName,
                 'address' => $faker->address(),
                 'phone' => $faker->numerify('08#########'),
