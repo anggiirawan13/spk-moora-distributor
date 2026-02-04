@@ -149,7 +149,7 @@
 
             <div class="form-section mt-4">
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
-                    <i class="fas fa-lock mr-2"></i>Ganti Password
+                    <i class="fas fa-lock mr-2"></i>Ubah Password
                 </h6>
                 <div class="alert alert-info">
                     <small>

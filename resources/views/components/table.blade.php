@@ -89,9 +89,13 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
+                                            @php
+                                                $nameColumnIndex = $columns[0]['html'] ?? false ? 1 : 0;
+                                            @endphp
+
                                             <button type="button" 
                                                     class="btn btn-danger btn-sm btn-action m-1"
-                                                    onclick="confirmDelete('{{ route($deleteRoute, $item['id']) }}', '{{ $item[$columns[0]['field']] ?? $item['name'] ?? 'Data' }}')"
+                                                    onclick="confirmDelete('{{ route($deleteRoute, $item['id']) }}', '{{ $item[$columns[$nameColumnIndex]['field']] ?? $item['name'] ?? 'Data' }}')"
                                                     data-toggle="tooltip" title="Hapus Data">
                                                 <i class="fas fa-trash"></i>
                                             </button>
