@@ -31,7 +31,7 @@
         }
 
         h1 {
-            color: #4e73df;
+            color: #059669;
             font-size: 24px;
             margin-bottom: 10px;
         }
@@ -44,7 +44,7 @@
 
         .btn {
             display: inline-block;
-            background-color: #4e73df;
+            background-color: #059669;
             color: #fff;
             padding: 12px 24px;
             text-decoration: none;
