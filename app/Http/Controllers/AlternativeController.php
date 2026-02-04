@@ -110,7 +110,7 @@ class AlternativeController extends Controller
         $alternative = Alternative::findOrFail($id);
 
         $request->validate([
-            'distributor_id' => 'required|exists:distributors,id|unique:alternatives,distributor_id',
+            'distributor_id' => 'required|exists:distributors,id|unique:alternatives,distributor_id,' . $id,
             'criteria' => 'required|array',
             'criteria.*' => 'required|numeric|exists:sub_criterias,id',
         ]);
