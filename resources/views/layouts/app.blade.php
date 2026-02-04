@@ -11,7 +11,7 @@
 
     <title>AHE - @yield('title', 'Dashboard')</title>
 
-    <link rel="icon" href="{{ asset('img/logo.jpg') }}" type="image/png">
+    <link rel="icon" href="{{ asset('img/logo.jpg') }}">
     
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" type="text/css">
     
