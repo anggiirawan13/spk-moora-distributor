@@ -218,7 +218,7 @@
                     </ul>
                 </div>
             </div>
-            @if ($withRole && $role === 1)
+            @if ($withRole)
             <div class="form-section mt-4">
                 <h6 class="font-weight-bold text-primary mb-3 border-bottom pb-2">
                     <i class="fas fa-user-tag mr-2"></i>Role Pengguna
@@ -228,9 +228,8 @@
                         <i class="fas fa-shield-alt text-info mr-2"></i>Role
                     </label>
                     <select class="form-control @error('role') is-invalid @enderror" name="role" required>
-                        <option value="" hidden>Pilih role</option>
                         <option value="1" {{ old('role', $role) == 1 ? 'selected' : '' }}>Admin</option>
-                        <option value="0" {{ old('role', $role) == 0 ? 'selected' : '' }}>User</option>
+                        <option value="0" {{ old('role', $role) == 0 ? 'selected' : '' }}>Staf</option>
                     </select>
                     @error('role')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -349,6 +348,8 @@
 .text-sm {
     font-size: 0.875rem;
 }
+
+select { cursor: pointer !important; }
 </style>
 
 <script>

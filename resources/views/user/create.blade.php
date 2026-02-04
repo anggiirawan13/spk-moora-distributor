@@ -12,7 +12,7 @@
         </div>
         <div class="card-body">
             <x-user_form route="user.store" :imageRequired="false" :isReadOnly="false" method="POST" :withRole="true"
-                name="" email="" :withBack="true" routeBack="user.index" image="" role=""
+                name="" email="" :withBack="true" routeBack="user.index" image="" role="{{ auth()->user()->is_admin }}"
                 :deletePhotoProfile="false" :passwordRequired="true" />
         </div>
     </div>

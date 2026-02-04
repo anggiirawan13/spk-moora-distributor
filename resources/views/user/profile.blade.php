@@ -24,7 +24,7 @@
                 <div class="card-body p-4">
                     <x-alert />
                     <x-user_form :id="auth()->user()->id" route="profile.update" :imageRequired="false" :isReadOnly="true" method="PUT"
-                :withRole="true" :name="auth()->user()->name" :email="auth()->user()->email" :withBack="true" routeBack="user.index"
+                :withRole="false" :name="auth()->user()->name" :email="auth()->user()->email" :withBack="true" routeBack="user.index"
                 :image="auth()->user()->image_name" :phone="auth()->user()->phone" :address="auth()->user()->address" :role="auth()->user()->is_admin" :passwordRequired="false" :deletePhotoProfile="true" />
                 </div>
             </div>
