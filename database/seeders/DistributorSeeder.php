@@ -17,27 +17,27 @@ class DistributorSeeder extends Seeder
         $deliveryMethods = array_column(\Database\Seeders\DeliveryMethodSeeder::data(), 'name');
         $businessScales = array_column(\Database\Seeders\BusinessScaleSeeder::data(), 'name');
 
-        $distributors = [
-            'PT Sinar Elektrik Jaya',
-            'PT Mega Teknik Abadi',
-            'PT Cahaya Makmur Electric',
-            'PT Prima Sumber Teknik',
-            'PT Bentang Listrik Nusantara',
-            'PT Teknologi Cahaya Persada',
-            'PT Indotek Perkasa Mandiri',
-            'PT Energi Power System',
-            'PT Mitra Global Teknik',
-            'PT Pionir Elektrik Nusantara',
-            'PT Delta Mandiri Electric',
-            'PT Adi Sentosa Electric',
-            'PT Utama Teknik Indonesia',
-            'PT Surya Mandiri Electric',
-            'PT Bintang Power Solution',
-            'PT Global Teknik Lestari',
-            'PT Mandiri Cahaya Sakti',
-            'PT Acosta Elektro Supply',
-            'PT Nusantara Powerindo',
-            'PT Inti Jaya Sakti Electric',
+        $distributors = [            
+            'PT Arvanta Prima',
+            'PT Kaluna Mandira',
+            'PT Soreva Nusantara',
+            'PT Talora Cipta',
+            'PT Nuvexa Raya',
+            'PT Laksora Abadi',
+            'PT Velora Sentra',
+            'PT Armeta Global',
+            'PT Zafira Mandala',
+            'PT Kireva Persada',
+            'PT Solvanta Utama',
+            'PT Nerava Lestari',
+            'PT Trivora Jaya',
+            'PT Alvion Sentosa',
+            'PT Vireza Nusantara',
+            'PT Karsena Prima',
+            'PT Elvara Mandiri',
+            'PT Ravento Cipta',
+            'PT Nexara Abadi',
+            'PT Arxena Global'
         ];
 
         $rows = [];
