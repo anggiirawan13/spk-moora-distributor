@@ -14,6 +14,7 @@ use App\Http\Controllers\PaymentTermController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DeliveryMethodController;
 use App\Http\Controllers\BusinessScaleController;
+use App\Http\Controllers\ImportController;
 
 Auth::routes(['register' => false]);
 
@@ -46,4 +47,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/criteria', CriteriaController::class)->names('criteria');
     Route::resource('/sub-criteria', SubCriteriaController::class)->names('subcriteria');
     Route::resource('/alternative', AlternativeController::class)->names('alternative');
+
+    Route::middleware(['can:admin'])->group(function () {
+        Route::get('/import/excel', [ImportController::class, 'index'])->name('import.excel.index');
+        Route::post('/import/excel/preview', [ImportController::class, 'preview'])->name('import.excel.preview');
+        Route::post('/import/excel', [ImportController::class, 'store'])->name('import.excel.store');
+        Route::get('/import/excel/errors/{file}', [ImportController::class, 'downloadErrors'])->name('import.excel.errors');
+        Route::get('/import/excel/template', [ImportController::class, 'downloadTemplate'])->name('import.excel.template');
+    });
 });

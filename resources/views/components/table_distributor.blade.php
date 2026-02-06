@@ -14,6 +14,18 @@
                 <div class="info-item mb-3">
                     <div class="d-flex align-items-start">
                         <div class="icon-container bg-light rounded p-2 mr-3">
+                            <i class="fas fa-hashtag text-secondary fa-lg"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="font-weight-bold text-dark mb-1">Kode Distributor</h6>
+                            <p class="mb-0 text-muted">{{ $distributor->dist_code }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-item mb-3">
+                    <div class="d-flex align-items-start">
+                        <div class="icon-container bg-light rounded p-2 mr-3">
                             <i class="fas fa-id-card text-primary fa-lg"></i>
                         </div>
                         <div class="flex-grow-1">

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DistributorRequest extends FormRequest
 {
@@ -13,7 +14,15 @@ class DistributorRequest extends FormRequest
 
     public function rules()
     {
+        $distributorId = $this->route('distributor')?->id ?? $this->route('distributor');
+
         return [
+            'dist_code' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('distributors', 'dist_code')->ignore($distributorId),
+            ],
             'name' => 'required|string|max:255',
             'npwp' => 'required|regex:/^\\d{15}$/',
             'address' => 'required|string',
@@ -36,11 +45,18 @@ class DistributorRequest extends FormRequest
             'delivery_method_id.required' => 'Metode pengiriman harus dipilih',
             'business_scale_id.required' => 'Skala bisnis harus dipilih',
             'npwp.regex' => 'NPWP harus 15 digit angka',
+            'dist_code.unique' => 'Kode distributor sudah digunakan',
         ];
     }
 
     protected function prepareForValidation()
     {
+        if ($this->has('dist_code')) {
+            $this->merge([
+                'dist_code' => strtoupper(trim((string) $this->input('dist_code'))),
+            ]);
+        }
+
         if ($this->has('npwp')) {
             $this->merge([
                 'npwp' => preg_replace('/\\D+/', '', (string) $this->input('npwp')),

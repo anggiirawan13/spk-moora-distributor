@@ -36,6 +36,27 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="dist_code" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-hashtag text-secondary mr-2"></i>Kode Distributor <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           class="form-control @error('dist_code') is-invalid @enderror" 
+                                           name="dist_code" 
+                                           id="dist_code"
+                                           value="{{ old('dist_code') }}" 
+                                           placeholder="Contoh: D001"
+                                           required>
+                                    @error('dist_code')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="form-text text-muted mt-1">
+                                        <i class="fas fa-info-circle mr-1"></i>Kode unik untuk mapping import
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="name" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-tag text-primary mr-2"></i>Nama Distributor <span class="text-danger">*</span>
                                     </label>
@@ -358,6 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('image_name');
     const imageLabel = document.getElementById('image_name_label');
     const npwpInput = document.getElementById('npwp');
+    const distCodeInput = document.getElementById('dist_code');
 
     descriptionInput.addEventListener('input', function() {
         const text = this.value;
@@ -405,10 +427,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    if (distCodeInput) {
+        distCodeInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase().replace(/\s+/g, '');
+        });
+    }
+
     const form = document.getElementById('distributorForm');
     form.addEventListener('submit', function(e) {
         const requiredFields = [
-            'name', 'npwp', 'email', 'phone', 'address',
+            'dist_code', 'name', 'npwp', 'email', 'phone', 'address',
             'payment_term_id', 'delivery_method_id', 
             'business_scale_id', 'is_active'
         ];

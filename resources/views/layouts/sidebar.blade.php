@@ -48,6 +48,11 @@
                     <a class="collapse-item text-dark" href="{{ route('product.index') }}">
                         <i class="fas fa-boxes mr-2"></i> Produk
                     </a>
+                    @can('admin')
+                    <a class="collapse-item text-dark" href="{{ route('import.excel.index') }}">
+                        <i class="fas fa-file-excel mr-2"></i> Import Excel
+                    </a>
+                    @endcan
                 </div>
             </div>
         </li>

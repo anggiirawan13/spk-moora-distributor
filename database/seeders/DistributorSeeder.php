@@ -35,13 +35,15 @@ class DistributorSeeder extends Seeder
             'PT Inti Jaya Sakti Electric',
         ];
 
-        foreach ($distributors as $name) {
+        foreach ($distributors as $index => $name) {
 
             $companyName = str_replace('PT ', '', $name);
             $npwp = $faker->numerify('###############');
+            $distCode = 'D' . str_pad((string) ($index + 1), 3, '0', STR_PAD_LEFT);
 
             DB::table('distributors')->insert([
                 'name' => $name,
+                'dist_code' => $distCode,
                 'image_name' => 'Ex1y3eAnda4xT6AiP1j93VCJ9HQpTEmBMzaMLJsf.jpg',
                 'npwp' => $npwp,
                 'address' => $faker->address(),
