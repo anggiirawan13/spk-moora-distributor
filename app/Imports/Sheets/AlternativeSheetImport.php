@@ -61,6 +61,7 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $this->seenCombos[$comboKey] = true;
 
             if (isset($blockedDistributors[$distCode])) {
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
@@ -76,7 +77,7 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 }
             }
 
-            if ($distributor->id !== 0) {
+            if ($distributor->id !== 0 && !isset($createdAlternatives[$distCode])) {
                 $existingAlternative = Alternative::where('distributor_id', $distributor->id)->first();
                 if ($existingAlternative) {
                     $this->errors->add(self::SHEET, $rowNumber, "Alternative sudah ada untuk distributor {$distCode}");
@@ -113,7 +114,6 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             if (!isset($createdAlternatives[$distCode])) {
                 if ($this->dryRun) {
                     $createdAlternatives[$distCode] = true;
-                    $this->stats->addWouldCreate(self::SHEET);
                     $this->stats->addSample(self::SHEET, [
                         'code' => $distCode,
                         'criteria_code' => $criteriaCode,
@@ -123,7 +123,6 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                     $createdAlternatives[$distCode] = Alternative::create([
                         'distributor_id' => $distributor->id,
                     ]);
-                    $this->stats->addCreated(self::SHEET);
                 }
             }
 
