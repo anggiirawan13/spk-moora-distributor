@@ -27,7 +27,7 @@ class DistributorController extends Controller
                                 <img class="default-img" src="' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '" width="60">
                             </a>',
                 'name' => $distributor->name,
-                'company_name' => $distributor->company_name,
+                'npwp' => $distributor->npwp_formatted,
                 'phone' => $distributor->phone,
                 'email' => $distributor->email,
                 'payment_term' => $distributor->paymentTerm?->name ?? 'N/A',

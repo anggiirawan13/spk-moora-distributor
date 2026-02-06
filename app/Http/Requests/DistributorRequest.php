@@ -15,7 +15,7 @@ class DistributorRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
+            'npwp' => 'required|regex:/^\\d{15}$/',
             'address' => 'required|string',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
@@ -35,6 +35,16 @@ class DistributorRequest extends FormRequest
             'payment_term_id.required' => 'Termin pembayaran harus dipilih',
             'delivery_method_id.required' => 'Metode pengiriman harus dipilih',
             'business_scale_id.required' => 'Skala bisnis harus dipilih',
+            'npwp.regex' => 'NPWP harus 15 digit angka',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->has('npwp')) {
+            $this->merge([
+                'npwp' => preg_replace('/\\D+/', '', (string) $this->input('npwp')),
+            ]);
+        }
     }
 }

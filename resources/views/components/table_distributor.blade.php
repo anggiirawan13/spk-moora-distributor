@@ -14,11 +14,11 @@
                 <div class="info-item mb-3">
                     <div class="d-flex align-items-start">
                         <div class="icon-container bg-light rounded p-2 mr-3">
-                            <i class="fas fa-building text-primary fa-lg"></i>
+                            <i class="fas fa-id-card text-primary fa-lg"></i>
                         </div>
                         <div class="flex-grow-1">
-                            <h6 class="font-weight-bold text-dark mb-1">Nama Perusahaan</h6>
-                            <p class="mb-0 text-muted">{{ $distributor->company_name }}</p>
+                            <h6 class="font-weight-bold text-dark mb-1">NPWP</h6>
+                            <p class="mb-0 text-muted">{{ $distributor->npwp_formatted }}</p>
                         </div>
                     </div>
                 </div>

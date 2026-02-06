@@ -24,7 +24,7 @@ class AlternativeController extends Controller
             $data = [
                 'id' => $alt->id,
                 'name' => $alt->distributor?->name,
-                'company_name' => $alt->distributor?->company_name
+                'npwp' => $alt->distributor?->npwp_formatted
             ];
 
             foreach ($criterias as $criteria) {

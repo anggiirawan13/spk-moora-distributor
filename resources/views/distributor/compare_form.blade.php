@@ -71,9 +71,9 @@
                                         <option value=""></option>
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}" 
-                                                    data-company="{{ $distributor->company_name }}"
+                                                    data-npwp="{{ $distributor->npwp_formatted }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
-                                                {{ $distributor->name }} - {{ $distributor->company_name }}
+                                                {{ $distributor->name }} - {{ $distributor->npwp_formatted }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -93,9 +93,9 @@
                                         <option value=""></option>
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}"
-                                                    data-company="{{ $distributor->company_name }}"
+                                                    data-npwp="{{ $distributor->npwp_formatted }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
-                                                {{ $distributor->name }} - {{ $distributor->company_name }}
+                                                {{ $distributor->name }} - {{ $distributor->npwp_formatted }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -202,11 +202,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const detailsElement = $(detailsId);
 
             if (selectedOption.val()) {
-                const company = selectedOption.data('company');
+                const npwp = selectedOption.data('npwp');
                 const scale = selectedOption.data('scale');
                 
                 nameElement.text(selectedOption.text());
-                detailsElement.text(`${company} • ${scale}`);
+                detailsElement.text(`${npwp} • ${scale}`);
                 preview.show();
             } else {
                 preview.hide();

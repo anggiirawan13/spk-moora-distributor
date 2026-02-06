@@ -36,7 +36,7 @@
                                 <i class="fas fa-check"></i>
                             </span>
                         </div>
-                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor1->company_name }}</h4>
+                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor1->npwp_formatted }}</h4>
                         <span class="badge badge-pill {{ $distributor1->is_active ? 'badge-success' : 'badge-secondary' }}">
                             {{ $distributor1->is_active ? 'Aktif' : 'Tidak Aktif' }}
                         </span>
@@ -94,7 +94,7 @@
                                 <i class="fas fa-check"></i>
                             </span>
                         </div>
-                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor2->company_name }}</h4>
+                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor2->npwp_formatted }}</h4>
                         <span class="badge badge-pill {{ $distributor2->is_active ? 'badge-success' : 'badge-secondary' }}">
                             {{ $distributor2->is_active ? 'Aktif' : 'Tidak Aktif' }}
                         </span>
@@ -149,7 +149,7 @@
                             <ul class="list-unstyled">
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>
-                                    <strong>Perusahaan:</strong> {{ $distributor1->company_name }}
+                                    <strong>NPWP:</strong> {{ $distributor1->npwp_formatted }}
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>
@@ -168,7 +168,7 @@
                             <ul class="list-unstyled">
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>
-                                    <strong>Perusahaan:</strong> {{ $distributor2->company_name }}
+                                    <strong>NPWP:</strong> {{ $distributor2->npwp_formatted }}
                                 </li>
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success mr-2"></i>

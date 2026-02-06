@@ -38,11 +38,12 @@ class DistributorSeeder extends Seeder
         foreach ($distributors as $name) {
 
             $companyName = str_replace('PT ', '', $name);
+            $npwp = $faker->numerify('###############');
 
             DB::table('distributors')->insert([
                 'name' => $name,
                 'image_name' => 'Ex1y3eAnda4xT6AiP1j93VCJ9HQpTEmBMzaMLJsf.jpg',
-                'company_name' => $companyName,
+                'npwp' => $npwp,
                 'address' => $faker->address(),
                 'phone' => $faker->numerify('08#########'),
                 'email' => strtolower(str_replace(' ', '', $companyName)) . '@' . $faker->domainName(),

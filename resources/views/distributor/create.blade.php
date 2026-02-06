@@ -55,19 +55,23 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="company_name" class="font-weight-bold text-dark mb-2">
-                                        <i class="fas fa-building text-success mr-2"></i>Nama Perusahaan <span class="text-danger">*</span>
+                                    <label for="npwp" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-id-card text-success mr-2"></i>NPWP <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" 
-                                           class="form-control @error('company_name') is-invalid @enderror" 
-                                           name="company_name" 
-                                           id="company_name"
-                                           value="{{ old('company_name') }}" 
-                                           placeholder="Masukkan nama perusahaan"
+                                           class="form-control @error('npwp') is-invalid @enderror" 
+                                           name="npwp" 
+                                           id="npwp"
+                                           value="{{ old('npwp') }}" 
+                                           placeholder="Masukkan 15 digit NPWP"
+                                           inputmode="numeric"
                                            required>
-                                    @error('company_name')
+                                    @error('npwp')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
+                                    <small class="form-text text-muted mt-1">
+                                        <i class="fas fa-info-circle mr-1"></i>Hanya 15 digit angka (tanda baca akan diabaikan)
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -353,6 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const charCount = document.getElementById('charCount');
     const imageInput = document.getElementById('image_name');
     const imageLabel = document.getElementById('image_name_label');
+    const npwpInput = document.getElementById('npwp');
 
     descriptionInput.addEventListener('input', function() {
         const text = this.value;
@@ -372,10 +377,38 @@ document.addEventListener('DOMContentLoaded', function() {
         imageLabel.textContent = fileName;
     });
 
+    function formatNpwp(value) {
+        const digits = value.replace(/\D+/g, '').slice(0, 15);
+        let formatted = '';
+
+        for (let i = 0; i < digits.length; i++) {
+            formatted += digits[i];
+            if (i === 1 || i === 4 || i === 7 || i === 8 || i === 11) {
+                if (i === 8) {
+                    formatted += '-';
+                } else if (i !== digits.length - 1) {
+                    formatted += '.';
+                }
+            }
+        }
+
+        return formatted;
+    }
+
+    if (npwpInput) {
+        npwpInput.addEventListener('input', function() {
+            this.value = formatNpwp(this.value);
+        });
+
+        if (npwpInput.value) {
+            npwpInput.value = formatNpwp(npwpInput.value);
+        }
+    }
+
     const form = document.getElementById('distributorForm');
     form.addEventListener('submit', function(e) {
         const requiredFields = [
-            'name', 'company_name', 'email', 'phone', 'address',
+            'name', 'npwp', 'email', 'phone', 'address',
             'payment_term_id', 'delivery_method_id', 
             'business_scale_id', 'is_active'
         ];

@@ -27,7 +27,7 @@
         editRoute="distributor.edit" deleteRoute="distributor.destroy" :data="$distributors" :columns="[
             ['label' => 'Nama Distributor', 'field' => 'name'],
             ['label' => 'Logo', 'field' => 'image', 'html' => true],
-            ['label' => 'Nama Perusahaan', 'field' => 'company_name'],
+            ['label' => 'NPWP', 'field' => 'npwp'],
             ['label' => 'Telepon', 'field' => 'phone'],
             ['label' => 'Email', 'field' => 'email'],
             ['label' => 'Termin Pembayaran', 'field' => 'payment_term'],

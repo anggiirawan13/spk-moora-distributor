@@ -59,7 +59,7 @@
                                 <td class="align-middle">
                                     <div class="font-weight-bold text-dark">{{ $item['name'] }}</div>
                                     <small class="text-muted">
-                                        {{ $item['company_name'] ?? 'Distributor' }}
+                                        {{ $item['npwp'] ?? 'Distributor' }}
                                     </small>
                                 </td>
                                 @foreach ($criterias as $criteria)

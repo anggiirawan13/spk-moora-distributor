@@ -32,7 +32,7 @@
                                 <h3 class="font-weight-bold text-primary mb-2">{{ $alternative->distributor?->name }}</h3>
                                 <div class="status-badges">
                                     <span class="badge badge-primary badge-pill mr-2">
-                                        <i class="fas fa-building mr-1"></i>{{ $alternative->distributor?->company_name }}
+                                        <i class="fas fa-id-card mr-1"></i>{{ $alternative->distributor?->npwp_formatted }}
                                     </span>
                                     @if($alternative->score)
                                     <span class="badge badge-success badge-pill">
@@ -62,8 +62,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="info-item">
-                                                <strong class="text-dark">Perusahaan:</strong>
-                                                <div class="text-dark mt-1">{{ $alternative->distributor?->company_name }}</div>
+                                                <strong class="text-dark">NPWP:</strong>
+                                                <div class="text-dark mt-1">{{ $alternative->distributor?->npwp_formatted }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">

@@ -14,7 +14,7 @@ class Distributor extends Model
     protected $fillable = [
         'name',
         'image_name',
-        'company_name',
+        'npwp',
         'address',
         'phone',
         'email',
@@ -48,6 +48,22 @@ class Distributor extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function getNpwpFormattedAttribute(): string
+    {
+        $digits = preg_replace('/\D+/', '', (string) $this->npwp);
+
+        if (strlen($digits) !== 15) {
+            return (string) $this->npwp;
+        }
+
+        return substr($digits, 0, 2) . '.'
+            . substr($digits, 2, 3) . '.'
+            . substr($digits, 5, 3) . '.'
+            . substr($digits, 8, 1) . '-'
+            . substr($digits, 9, 3) . '.'
+            . substr($digits, 12, 3);
+    }
 
     public function products()
     {

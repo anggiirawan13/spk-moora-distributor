@@ -47,7 +47,7 @@
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}" 
                                                 {{ old('distributor_id') == $distributor->id ? 'selected' : '' }}>
-                                                {{ $distributor->name }} - {{ $distributor->company_name }}
+                                                {{ $distributor->name }} - {{ $distributor->npwp_formatted }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -76,8 +76,8 @@
                                                 <div id="previewDistributorName" class="text-primary font-weight-bold mt-1">-</div>
                                             </div>
                                             <div class="col-md-3">
-                                                <strong>Perusahaan:</strong>
-                                                <div id="previewCompanyName" class="text-dark mt-1">-</div>
+                                                <strong>NPWP:</strong>
+                                                <div id="previewNpwp" class="text-dark mt-1">-</div>
                                             </div>
                                             <div class="col-md-3">
                                                 <strong>Metode Pengiriman:</strong>
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const distributorSelect = document.getElementById('distributor_id');
     const distributorPreview = document.getElementById('distributorPreview');
     const previewDistributorName = document.getElementById('previewDistributorName');
-    const previewCompanyName = document.getElementById('previewCompanyName');
+    const previewNpwp = document.getElementById('previewNpwp');
     const previewDeliveryMethod = document.getElementById('previewDeliveryMethod');
     const previewPaymentTerm = document.getElementById('previewPaymentTerm');
     
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return [
             'id' => $distributor->id,
             'name' => $distributor->name,
-            'company_name' => $distributor->company_name,
+            'npwp' => $distributor->npwp_formatted,
             'delivery_method' => $distributor->deliveryMethod->name,
             'payment_term' => $distributor->paymentTerm->name,
         ];
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (selectedDistributor) {
             previewDistributorName.textContent = selectedDistributor.name;
-            previewCompanyName.textContent = selectedDistributor.company_name;
+            previewNpwp.textContent = selectedDistributor.npwp;
             previewDeliveryMethod.textContent = selectedDistributor.delivery_method;
             previewPaymentTerm.textContent = selectedDistributor.payment_term;
             distributorPreview.style.display = 'block';
