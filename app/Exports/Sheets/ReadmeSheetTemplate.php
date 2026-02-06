@@ -16,6 +16,8 @@ class ReadmeSheetTemplate implements FromArray, WithTitle
             ['- Gunakan 1 file Excel dengan sheet sesuai nama berikut.'],
             ['- Kolom "code" di sheet distributors adalah kode distributor.'],
             ['- Kolom "code" di sheet alternatives juga memakai kode distributor.'],
+            ['- Kolom "sub_criteria_code" di sheet alternatives harus sesuai code sub kriteria.'],
+            ['- Kolom "code" di sheet sub_criteria opsional, jika kosong akan dibuat otomatis.'],
             ['- NPWP boleh memakai titik/strip, sistem akan menyimpan 15 digit.'],
             ['- Data yang sudah ada akan di-skip dan dicatat di error.'],
         ];

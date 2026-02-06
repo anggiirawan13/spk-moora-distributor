@@ -36,17 +36,17 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $rowNumber = $index + 2;
             $distCode = strtoupper(trim((string) ($row['code'] ?? $row['dist_code'] ?? '')));
             $criteriaCode = strtoupper(trim((string) ($row['criteria_code'] ?? '')));
-            $subCriteriaName = trim((string) ($row['sub_criteria_name'] ?? ''));
+            $subCriteriaCode = strtoupper(trim((string) ($row['sub_criteria_code'] ?? '')));
 
-            if ($distCode === '' || $criteriaCode === '' || $subCriteriaName === '') {
-                $this->errors->add('alternatives', $rowNumber, 'Field wajib kosong (code, criteria_code, sub_criteria_name)');
+            if ($distCode === '' || $criteriaCode === '' || $subCriteriaCode === '') {
+                $this->errors->add('alternatives', $rowNumber, 'Field wajib kosong (code, criteria_code, sub_criteria_code)');
                 $this->stats->addSkipped('alternatives');
                 continue;
             }
 
-            $comboKey = $distCode . '|' . $criteriaCode . '|' . $subCriteriaName;
+            $comboKey = $distCode . '|' . $criteriaCode . '|' . $subCriteriaCode;
             if (isset($this->seenCombos[$comboKey])) {
-                $this->errors->add('alternatives', $rowNumber, "Duplikat di file: {$distCode} - {$criteriaCode} - {$subCriteriaName}");
+                $this->errors->add('alternatives', $rowNumber, "Duplikat di file: {$distCode} - {$criteriaCode} - {$subCriteriaCode}");
                 $this->stats->addSkipped('alternatives');
                 continue;
             }
@@ -81,37 +81,37 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             }
 
             $subCriteria = SubCriteria::where('criteria_id', $criteria->id)
-                ->where('name', $subCriteriaName)
+                ->where('code', $subCriteriaCode)
                 ->first();
 
             if (!$subCriteria) {
-                $this->errors->add('alternatives', $rowNumber, "Sub kriteria tidak ditemukan: {$criteriaCode} - {$subCriteriaName}");
+                $this->errors->add('alternatives', $rowNumber, "Sub kriteria tidak ditemukan: {$criteriaCode} - {$subCriteriaCode}");
                 $this->stats->addSkipped('alternatives');
                 continue;
             }
 
             if (!isset($createdAlternatives[$distCode])) {
-            if ($this->dryRun) {
-                $createdAlternatives[$distCode] = true;
-                $this->stats->addWouldCreate('alternatives');
-                $this->stats->addSample('alternatives', [
-                    'code' => $distCode,
-                    'criteria_code' => $criteriaCode,
-                    'sub_criteria_name' => $subCriteriaName,
-                ]);
-            } else {
-                $createdAlternatives[$distCode] = Alternative::create([
-                    'distributor_id' => $distributor->id,
-                ]);
-                $this->stats->addCreated('alternatives');
-            }
+                if ($this->dryRun) {
+                    $createdAlternatives[$distCode] = true;
+                    $this->stats->addWouldCreate('alternatives');
+                    $this->stats->addSample('alternatives', [
+                        'code' => $distCode,
+                        'criteria_code' => $criteriaCode,
+                        'sub_criteria_code' => $subCriteriaCode,
+                    ]);
+                } else {
+                    $createdAlternatives[$distCode] = Alternative::create([
+                        'distributor_id' => $distributor->id,
+                    ]);
+                    $this->stats->addCreated('alternatives');
+                }
             }
 
             $alt = $createdAlternatives[$distCode];
             $valueKey = ($this->dryRun ? $distCode : $alt->id) . ':' . $subCriteria->id;
 
             if (isset($createdAltValues[$valueKey])) {
-                $this->errors->add('alternatives', $rowNumber, "Duplikat mapping: {$distCode} - {$criteriaCode} - {$subCriteriaName}");
+                $this->errors->add('alternatives', $rowNumber, "Duplikat mapping: {$distCode} - {$criteriaCode} - {$subCriteriaCode}");
                 $this->stats->addSkipped('alternatives');
                 continue;
             }

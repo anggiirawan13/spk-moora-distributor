@@ -28,6 +28,7 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
             $criteriaCode = strtoupper(trim((string) ($row['criteria_code'] ?? '')));
+            $code = strtoupper(trim((string) ($row['code'] ?? '')));
             $name = trim((string) ($row['name'] ?? ''));
             $value = trim((string) ($row['value'] ?? ''));
 
@@ -46,6 +47,16 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
             $this->seenCombos[$comboKey] = true;
 
+            if ($code !== '') {
+                $codeKey = 'code|' . $code;
+                if (isset($this->seenCombos[$codeKey])) {
+                    $this->errors->add('sub_criteria', $rowNumber, "Duplikat code di file: {$code}");
+                    $this->stats->addSkipped('sub_criteria');
+                    continue;
+                }
+                $this->seenCombos[$codeKey] = true;
+            }
+
             if (!is_numeric($value) || (int) $value < 0) {
                 $this->errors->add('sub_criteria', $rowNumber, 'Value harus angka >= 0');
                 $this->stats->addSkipped('sub_criteria');
@@ -55,6 +66,12 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $criteria = Criteria::where('code', $criteriaCode)->first();
             if (!$criteria) {
                 $this->errors->add('sub_criteria', $rowNumber, "Criteria code tidak ditemukan: {$criteriaCode}");
+                $this->stats->addSkipped('sub_criteria');
+                continue;
+            }
+
+            if ($code !== '' && SubCriteria::where('code', $code)->exists()) {
+                $this->errors->add('sub_criteria', $rowNumber, "Code sub kriteria sudah ada: {$code}");
                 $this->stats->addSkipped('sub_criteria');
                 continue;
             }
@@ -69,6 +86,7 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 $this->stats->addWouldCreate('sub_criteria');
                 $this->stats->addSample('sub_criteria', [
                     'criteria_code' => $criteriaCode,
+                    'code' => $code !== '' ? $code : '(auto)',
                     'name' => $name,
                     'value' => (int) $value,
                 ]);
@@ -77,6 +95,7 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
             SubCriteria::create([
                 'criteria_id' => $criteria->id,
+                'code' => $code !== '' ? $code : null,
                 'name' => $name,
                 'value' => (int) $value,
             ]);

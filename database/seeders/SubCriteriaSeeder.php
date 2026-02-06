@@ -44,12 +44,18 @@ class SubCriteriaSeeder extends Seeder
             ['criteria_code' => 'C6', 'name' => 'Klaim sangat mudah, garansi minimal 12 bulan, dukungan teknis 24/7 (Sangat Baik)', 'value' => 5],
         ];
 
+        $counters = [];
+
         foreach ($subCriteria as $item) {
             $criteria = DB::table('criterias')->where('code', $item['criteria_code'])->first();
 
             if ($criteria) {
+                $counters[$criteria->id] = ($counters[$criteria->id] ?? 0) + 1;
+                $code = strtoupper($item['criteria_code']) . '-' . str_pad((string) $counters[$criteria->id], 3, '0', STR_PAD_LEFT);
+
                 DB::table('sub_criterias')->insert([
                     'criteria_id' => $criteria->id,
+                    'code' => $code,
                     'name' => $item['name'],
                     'value' => $item['value'],
                     'created_at' => now(),

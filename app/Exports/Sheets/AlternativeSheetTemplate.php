@@ -10,18 +10,18 @@ class AlternativeSheetTemplate implements FromArray, WithHeadings, WithTitle
 {
     public function headings(): array
     {
-        return ['code', 'criteria_code', 'sub_criteria_name'];
+        return ['code', 'criteria_code', 'sub_criteria_code'];
     }
 
     public function array(): array
     {
         return [
-            ['D001', 'C1', 'Murah'],
-            ['D001', 'C2', 'Baik'],
-            ['D001', 'C3', 'Cepat'],
-            ['D002', 'C1', 'Sedang'],
-            ['D002', 'C2', 'Sangat Baik'],
-            ['D002', 'C3', 'Cepat'],
+            ['D001', 'C1', 'C1-001'],
+            ['D001', 'C2', 'C2-002'],
+            ['D001', 'C3', 'C3-001'],
+            ['D002', 'C1', 'C1-002'],
+            ['D002', 'C2', 'C2-001'],
+            ['D002', 'C3', 'C3-001'],
         ];
     }
 

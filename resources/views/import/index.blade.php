@@ -84,8 +84,8 @@
                 <li><strong>payment_terms</strong>: `name`, `description`</li>
                 <li><strong>distributors</strong>: `code`, `name`, `npwp`, `email`, `phone`, `address`, `payment_term`, `delivery_method`, `business_scale`, `description`, `is_active`</li>
                 <li><strong>criterias</strong>: `code`, `name`, `weight`, `attribute_type` (Benefit/Cost)</li>
-                <li><strong>sub_criteria</strong>: `criteria_code`, `name`, `value`</li>
-                <li><strong>alternatives</strong>: `code`, `criteria_code`, `sub_criteria_name`</li>
+                <li><strong>sub_criteria</strong>: `criteria_code`, `code`, `name`, `value`</li>
+                <li><strong>alternatives</strong>: `code`, `criteria_code`, `sub_criteria_code`</li>
             </ul>
 
             <div class="alert alert-info mt-3 mb-0">
