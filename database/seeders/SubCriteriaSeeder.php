@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class SubCriteriaSeeder extends Seeder
 {
-    public function run(): void
+    public static function data(): array
     {
         $subCriteria = [
             ['criteria_code' => 'C1', 'name' => '> 120% (Sangat Rendah)', 'value' => 1],
@@ -45,25 +45,44 @@ class SubCriteriaSeeder extends Seeder
         ];
 
         $counters = [];
+        $rows = [];
 
         foreach ($subCriteria as $item) {
-            $criteria = DB::table('criterias')->where('code', $item['criteria_code'])->first();
+            $key = strtoupper($item['criteria_code']);
+            $counters[$key] = ($counters[$key] ?? 0) + 1;
+            $code = $key . '-' . str_pad((string) $counters[$key], 3, '0', STR_PAD_LEFT);
 
-            if ($criteria) {
-                $counters[$criteria->id] = ($counters[$criteria->id] ?? 0) + 1;
-                $code = strtoupper($item['criteria_code']) . '-' . str_pad((string) $counters[$criteria->id], 3, '0', STR_PAD_LEFT);
+            $rows[] = [
+                'criteria_code' => $key,
+                'code' => $code,
+                'name' => $item['name'],
+                'value' => $item['value'],
+            ];
+        }
 
-                DB::table('sub_criterias')->insert([
-                    'criteria_id' => $criteria->id,
-                    'code' => $code,
-                    'name' => $item['name'],
-                    'value' => $item['value'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                    'created_by' => 1,
-                    'updated_by' => 1,
-                ]);
+        return $rows;
+    }
+
+    public function run(): void
+    {
+        $criteriaMap = DB::table('criterias')->pluck('id', 'code');
+
+        foreach (self::data() as $row) {
+            $criteriaId = $criteriaMap[$row['criteria_code']] ?? null;
+            if (!$criteriaId) {
+                continue;
             }
+
+            DB::table('sub_criterias')->insert([
+                'criteria_id' => $criteriaId,
+                'code' => $row['code'],
+                'name' => $row['name'],
+                'value' => $row['value'],
+                'created_at' => now(),
+                'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
+            ]);
         }
     }
 }

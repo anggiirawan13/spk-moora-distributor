@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class DistributorProductSeeder extends Seeder
 {
-    public function run(): void
+    public static function data(): array
     {
+        $distCodes = array_column(\Database\Seeders\DistributorSeeder::data(), 'code');
+        $productCodes = array_column(\Database\Seeders\ProductSeeder::data(), 'code');
+
         $distributorProductMapping = [
             1 => [1, 3, 4, 5, 6, 10, 14, 15],
             2 => [1, 7, 9, 11, 13, 15],
@@ -32,20 +35,54 @@ class DistributorProductSeeder extends Seeder
             20 => [1, 3, 5, 14, 15],
         ];
 
-        $dataToInsert = [];
+        $rows = [];
         foreach ($distributorProductMapping as $distributorId => $productIds) {
+            $distCode = $distCodes[$distributorId - 1] ?? null;
+            if (!$distCode) {
+                continue;
+            }
+
             foreach ($productIds as $productId) {
-                $dataToInsert[] = [
-                    'distributor_id' => $distributorId,
-                    'product_id' => $productId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                    'created_by' => 1,
-                    'updated_by' => 1,
+                $productCode = $productCodes[$productId - 1] ?? null;
+                if (!$productCode) {
+                    continue;
+                }
+
+                $rows[] = [
+                    'code' => $distCode,
+                    'product_code' => $productCode,
                 ];
             }
         }
 
-        DB::table('distributor_product')->insert($dataToInsert);
+        return $rows;
+    }
+
+    public function run(): void
+    {
+        $distIds = DB::table('distributors')->pluck('id', 'dist_code');
+        $productIds = DB::table('products')->pluck('id', 'code');
+
+        $dataToInsert = [];
+        foreach (self::data() as $row) {
+            $distributorId = $distIds[$row['code']] ?? null;
+            $productId = $productIds[$row['product_code']] ?? null;
+            if (!$distributorId || !$productId) {
+                continue;
+            }
+
+            $dataToInsert[] = [
+                'distributor_id' => $distributorId,
+                'product_id' => $productId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'created_by' => 1,
+                    'updated_by' => 1,
+            ];
+        }
+
+        if (!empty($dataToInsert)) {
+            DB::table('distributor_product')->insert($dataToInsert);
+        }
     }
 }

@@ -54,5 +54,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/import/excel', [ImportController::class, 'store'])->name('import.excel.store');
         Route::get('/import/excel/errors/{file}', [ImportController::class, 'downloadErrors'])->name('import.excel.errors');
         Route::get('/import/excel/template', [ImportController::class, 'downloadTemplate'])->name('import.excel.template');
+        Route::get('/import/excel/template-seeder', [ImportController::class, 'downloadSeederTemplate'])->name('import.excel.template_seeder');
     });
 });

@@ -7,6 +7,7 @@ use App\Imports\ImportErrorBag;
 use App\Imports\ImportStats;
 use App\Imports\MasterImport;
 use App\Exports\TemplateExport;
+use App\Exports\SeederTemplateExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -109,5 +110,15 @@ class ImportController extends Controller
     public function downloadTemplate()
     {
         return Excel::download(new TemplateExport(), 'template-import.xlsx');
+    }
+
+    public function downloadSeederTemplate()
+    {
+        $fileName = 'template-import-seeder.xlsx';
+        $storedPath = 'templates/' . $fileName;
+
+        Excel::store(new SeederTemplateExport(), $storedPath, 'local');
+
+        return Storage::disk('local')->download($storedPath, $fileName);
     }
 }
