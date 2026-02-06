@@ -6,7 +6,7 @@
             ['label' => 'Foto', 'field' => 'image', 'html' => true],
             ['label' => 'Nama', 'field' => 'name'],
             ['label' => 'Email', 'field' => 'email'],
-            ['label' => 'Peran', 'field' => 'is_admin'],
+            ['label' => 'Peran', 'field' => 'role_label'],
         ]" />
 @endsection
 

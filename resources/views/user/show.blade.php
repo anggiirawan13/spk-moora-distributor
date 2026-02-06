@@ -77,9 +77,25 @@
                                                         <i class="fas fa-user-tag text-warning mr-2"></i>Role Akun
                                                     </td>
                                                     <td>
-                                                        <span class="badge {{ $user->is_admin ? 'badge-danger' : 'badge-primary' }} badge-pill">
-                                                            <i class="fas {{ $user->is_admin ? 'fa-shield-alt' : 'fa-user' }} mr-1"></i>
-                                                            {{ $user->is_admin ? 'Administrator' : 'Staf' }}
+                                                        @php
+                                                            $roleLabel = $user->role_label;
+                                                            $roleBadgeClass = 'badge-primary';
+                                                            $roleIcon = 'fa-user';
+
+                                                            if ($roleLabel === 'Admin') {
+                                                                $roleBadgeClass = 'badge-danger';
+                                                                $roleIcon = 'fa-user-shield';
+                                                            } elseif ($roleLabel === 'Owner') {
+                                                                $roleBadgeClass = 'badge-warning';
+                                                                $roleIcon = 'fa-crown';
+                                                            } elseif ($roleLabel === 'Direktur Utama') {
+                                                                $roleBadgeClass = 'badge-info';
+                                                                $roleIcon = 'fa-briefcase';
+                                                            }
+                                                        @endphp
+                                                        <span class="badge {{ $roleBadgeClass }} badge-pill">
+                                                            <i class="fas {{ $roleIcon }} mr-1"></i>
+                                                            {{ $roleLabel }}
                                                         </span>
                                                     </td>
                                                 </tr>

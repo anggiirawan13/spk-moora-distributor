@@ -11,7 +11,7 @@
     'name' => '',
     'email' => '',
     'image' => '',
-    'role' => 0,
+    'role' => 'staf',
     'deletePhotoProfile' => false,
     'phone' => '',
     'position' => '',
@@ -228,8 +228,10 @@
                         <i class="fas fa-shield-alt text-info mr-2"></i>Role
                     </label>
                     <select class="form-control @error('role') is-invalid @enderror" name="role" required>
-                        <option value="1" {{ old('role', $role) == 1 ? 'selected' : '' }}>Admin</option>
-                        <option value="0" {{ old('role', $role) == 0 ? 'selected' : '' }}>Staf</option>
+                        <option value="admin" {{ old('role', $role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="staf" {{ old('role', $role) == 'staf' ? 'selected' : '' }}>Staf</option>
+                        <option value="owner" {{ old('role', $role) == 'owner' ? 'selected' : '' }}>Owner</option>
+                        <option value="direktur_utama" {{ old('role', $role) == 'direktur_utama' ? 'selected' : '' }}>Direktur Utama</option>
                     </select>
                     @error('role')
                         <div class="invalid-feedback">{{ $message }}</div>

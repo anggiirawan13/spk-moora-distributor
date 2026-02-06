@@ -28,7 +28,7 @@ class UserController extends Controller
                             </a>',
                 'name' => $user->name,
                 'email' => $user->email,
-                'is_admin' => $user->is_admin,
+                'role_label' => $user->role_label,
             ];
         });
 
@@ -64,6 +64,7 @@ class UserController extends Controller
             'phone' => $validatedData['phone'],
             'password' => Hash::make($validatedData['password']),
             'is_admin' => 0,
+            'role' => 'staf',
             'image_name' => $imageName,
         ]);
 
@@ -85,7 +86,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string|max:15',
             'password' => 'string|min:8|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
-            'role' => 'required|in:0,1',
+            'role' => 'required|in:admin,staf,owner,direktur_utama',
         ]);
 
         User::create([
@@ -94,7 +95,8 @@ class UserController extends Controller
             'email' => $validatedData['email'],
             'phone' => $validatedData['phone'],
             'password' => Hash::make($validatedData['password']),
-            'is_admin' => $validatedData['role'],
+            'is_admin' => $validatedData['role'] === 'admin' ? 1 : 0,
+            'role' => $validatedData['role'],
             'image_name' => $imageName,
         ]);
 
@@ -133,12 +135,12 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'phone' => 'required|string|max:15',
             'password' => 'nullable|string|min:8|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
-            'role' => 'required|in:0,1',
+            'role' => 'required|in:admin,staf,owner,direktur_utama',
         ]);
 
         $user = User::findOrFail($id);
 
-        $validatedData['is_admin'] = $validatedData['role'];
+        $validatedData['is_admin'] = $validatedData['role'] === 'admin' ? 1 : 0;
 
         if (!empty($validatedData['password'])) {
             $validatedData['password'] = Hash::make($validatedData['password']);

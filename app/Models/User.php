@@ -18,6 +18,7 @@ class User extends Authenticatable
         'address',
         'password',
         'is_admin',
+        'role',
         'image_name',
         'created_by',
         'updated_by',
@@ -53,5 +54,18 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new \App\Notifications\CustomResetPassword($token));
+    }
+
+    public function getRoleLabelAttribute(): string
+    {
+        if ((int) $this->is_admin === 1) {
+            return 'Admin';
+        }
+
+        return match ($this->role) {
+            'owner' => 'Owner',
+            'direktur_utama' => 'Direktur Utama',
+            default => 'Staf',
+        };
     }
 }

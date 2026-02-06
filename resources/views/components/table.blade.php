@@ -34,7 +34,28 @@
                             <td class="text-center text-muted">{{ $key + 1 }}</td>
                             @foreach ($columns as $column)
                                 <td>
-                                    @if ($column['field'] === 'is_admin')
+                                    @if ($column['field'] === 'role_label')
+                                        @php
+                                            $roleLabel = $item['role_label'] ?? '';
+                                            $roleBadgeClass = 'badge-primary';
+                                            $roleIcon = 'fa-user';
+
+                                            if ($roleLabel === 'Admin') {
+                                                $roleBadgeClass = 'badge-danger';
+                                                $roleIcon = 'fa-user-shield';
+                                            } elseif ($roleLabel === 'Owner') {
+                                                $roleBadgeClass = 'badge-warning';
+                                                $roleIcon = 'fa-crown';
+                                            } elseif ($roleLabel === 'Direktur Utama') {
+                                                $roleBadgeClass = 'badge-info';
+                                                $roleIcon = 'fa-briefcase';
+                                            }
+                                        @endphp
+                                        <span class="badge badge-pill {{ $roleBadgeClass }}">
+                                            <i class="fas {{ $roleIcon }} mr-1"></i>
+                                            {{ $roleLabel ?: '-' }}
+                                        </span>
+                                    @elseif ($column['field'] === 'is_admin')
                                         <span class="badge badge-pill {{ $item['is_admin'] ? 'badge-danger' : 'badge-success' }}">
                                             <i class="fas {{ $item['is_admin'] === 1 ? 'fa-user-shield' : 'fa-user' }} mr-1"></i>
                                             {{ $item['is_admin'] ? 'Admin' : 'Staf' }}
