@@ -11,18 +11,22 @@ class DeliveryMethodSeeder extends Seeder
     {
         return [
             [
+                'code' => 'DM001',
                 'name' => 'Pengiriman Ekspres (1-2 hari)',
                 'description' => 'Pengiriman cepat dengan estimasi 1-2 hari kerja',
             ],
             [
+                'code' => 'DM002',
                 'name' => 'Pengiriman Reguler (3-5 hari)',
                 'description' => 'Pengiriman standar dengan estimasi 3-5 hari kerja',
             ],
             [
+                'code' => 'DM003',
                 'name' => 'Pickup Mandiri',
                 'description' => 'Pelanggan mengambil barang langsung ke gudang distributor',
             ],
             [
+                'code' => 'DM004',
                 'name' => 'Pengiriman Gudang ke Gudang',
                 'description' => 'Pengiriman antar gudang untuk order dalam jumlah besar',
             ],

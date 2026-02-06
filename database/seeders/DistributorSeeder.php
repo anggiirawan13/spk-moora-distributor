@@ -13,9 +13,9 @@ class DistributorSeeder extends Seeder
         $faker = Faker::create('id_ID');
         $faker->seed(2026);
 
-        $paymentTerms = array_column(\Database\Seeders\PaymentTermSeeder::data(), 'name');
-        $deliveryMethods = array_column(\Database\Seeders\DeliveryMethodSeeder::data(), 'name');
-        $businessScales = array_column(\Database\Seeders\BusinessScaleSeeder::data(), 'name');
+        $paymentTerms = array_column(\Database\Seeders\PaymentTermSeeder::data(), 'code');
+        $deliveryMethods = array_column(\Database\Seeders\DeliveryMethodSeeder::data(), 'code');
+        $businessScales = array_column(\Database\Seeders\BusinessScaleSeeder::data(), 'code');
 
         $distributors = [            
             'PT Arvanta Prima',
@@ -70,9 +70,9 @@ class DistributorSeeder extends Seeder
 
     public function run(): void
     {
-        $paymentTerms = DB::table('payment_terms')->pluck('id', 'name');
-        $deliveryMethods = DB::table('delivery_methods')->pluck('id', 'name');
-        $businessScales = DB::table('business_scales')->pluck('id', 'name');
+        $paymentTerms = DB::table('payment_terms')->pluck('id', 'code');
+        $deliveryMethods = DB::table('delivery_methods')->pluck('id', 'code');
+        $businessScales = DB::table('business_scales')->pluck('id', 'code');
 
         $rows = [];
         foreach (self::data() as $row) {

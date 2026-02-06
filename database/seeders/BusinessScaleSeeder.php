@@ -11,22 +11,27 @@ class BusinessScaleSeeder extends Seeder
     {
         return [
             [
+                'code' => 'BS001',
                 'name' => 'Distributor Nasional',
                 'description' => 'Distributor dengan jangkauan seluruh Indonesia',
             ],
             [
+                'code' => 'BS002',
                 'name' => 'Distributor Regional',
                 'description' => 'Distributor dengan jangkauan beberapa provinsi',
             ],
             [
+                'code' => 'BS003',
                 'name' => 'Distributor Lokal',
                 'description' => 'Distributor dengan jangkauan dalam satu kota/kabupaten',
             ],
             [
+                'code' => 'BS004',
                 'name' => 'Supplier Per Kota',
                 'description' => 'Supplier yang melayani area tertentu dalam kota',
             ],
             [
+                'code' => 'BS005',
                 'name' => 'Reseller Terotorisasi',
                 'description' => 'Reseller resmi dengan wilayah pemasaran terbatas',
             ],

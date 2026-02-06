@@ -11,22 +11,27 @@ class PaymentTermSeeder extends Seeder
     {
         return [
             [
+                'code' => 'PT001',
                 'name' => 'Cash / Tunai',
                 'description' => 'Pembayaran secara tunai saat transaksi',
             ],
             [
+                'code' => 'PT002',
                 'name' => 'COD (Cash on Delivery)',
                 'description' => 'Pembayaran saat barang diterima',
             ],
             [
+                'code' => 'PT003',
                 'name' => 'Net 7 Hari',
                 'description' => 'Pembayaran dalam jangka waktu 7 hari setelah pengiriman',
             ],
             [
+                'code' => 'PT004',
                 'name' => 'Net 30 Hari',
                 'description' => 'Pembayaran dalam jangka waktu 30 hari setelah pengiriman',
             ],
             [
+                'code' => 'PT005',
                 'name' => 'DP 50%, Pelunasan Sebelum Pengiriman',
                 'description' => 'Down payment 50% dan pelunasan sebelum barang dikirim',
             ],
