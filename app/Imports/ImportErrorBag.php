@@ -9,7 +9,7 @@ class ImportErrorBag
 
     public function add(string $sheet, int $row, string $message): void
     {
-        $this->errors[] = sprintf('[%s] Row %d: %s', $sheet, $row, $message);
+        $this->errors[] = sprintf('[%s] Baris %d: %s', $sheet, $row, $message);
         $this->counts[$sheet] = ($this->counts[$sheet] ?? 0) + 1;
     }
 
