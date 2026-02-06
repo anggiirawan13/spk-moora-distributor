@@ -19,7 +19,7 @@ class AlternativeSheetTemplate implements FromArray, WithHeadings, WithTitle
             ['D001', 'C1', 'C1-001'],
             ['D001', 'C2', 'C2-002'],
             ['D001', 'C3', 'C3-001'],
-            ['D002', 'C1', 'C1-002'],
+            ['D002', 'C1', 'C1-003'],
             ['D002', 'C2', 'C2-001'],
             ['D002', 'C3', 'C3-001'],
         ];
@@ -27,6 +27,6 @@ class AlternativeSheetTemplate implements FromArray, WithHeadings, WithTitle
 
     public function title(): string
     {
-        return 'alternatives';
+        return 'Alternatif';
     }
 }

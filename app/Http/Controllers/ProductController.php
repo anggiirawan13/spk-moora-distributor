@@ -40,6 +40,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'code' => 'required|string|max:20|unique:products,code',
             'name' => 'required|unique:products,name',
             'description' => 'nullable|string',
             'distributors' => 'array',
@@ -47,7 +48,9 @@ class ProductController extends Controller
         ]);
 
         try {
+            $code = strtoupper(trim((string) $request->code));
             $product = Product::create([
+                'code' => $code,
                 'name' => $request->name,
                 'description' => $request->description,
             ]);
@@ -69,6 +72,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'code' => 'required|string|max:20|unique:products,code,' . $id,
             'name' => 'required|unique:products,name,' . $id,
             'description' => 'nullable|string',
             'distributors' => 'array',
@@ -79,6 +83,7 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
 
             $product->update([
+                'code' => strtoupper(trim((string) $request->code)),
                 'name' => $request->name,
                 'description' => $request->description,
             ]);

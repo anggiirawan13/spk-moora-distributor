@@ -5,16 +5,17 @@ namespace App\Imports\Sheets;
 use App\Imports\ImportContext;
 use App\Imports\ImportErrorBag;
 use App\Imports\ImportStats;
-use App\Models\PaymentTerm;
+use App\Models\Product;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class PaymentTermSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
+class ProductSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
-    private const SHEET = 'Termin_Pembayaran';
+    private const SHEET = 'Produk';
     private array $seenNames = [];
+    private array $seenCodes = [];
 
     public function __construct(
         private readonly ImportErrorBag $errors,
@@ -33,14 +34,22 @@ class PaymentTermSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
+            $code = strtoupper(trim((string) ($row['code'] ?? '')));
             $name = trim((string) ($row['name'] ?? ''));
             $description = trim((string) ($row['description'] ?? ''));
 
-            if ($name === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Nama kosong');
+            if ($code === '' || $name === '') {
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, name)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
+
+            if (isset($this->seenCodes[$code])) {
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat code di file: {$code}");
+                $this->stats->addSkipped(self::SHEET);
+                continue;
+            }
+            $this->seenCodes[$code] = true;
 
             if (isset($this->seenNames[$name])) {
                 $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$name}");
@@ -50,7 +59,13 @@ class PaymentTermSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
             $this->seenNames[$name] = true;
 
-            if (PaymentTerm::where('name', $name)->exists()) {
+            if (Product::where('code', $code)->exists()) {
+                $this->errors->add(self::SHEET, $rowNumber, "Code sudah ada: {$code}");
+                $this->stats->addSkipped(self::SHEET);
+                continue;
+            }
+
+            if (Product::where('name', $name)->exists()) {
                 $this->errors->add(self::SHEET, $rowNumber, "Nama sudah ada: {$name}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
@@ -59,19 +74,23 @@ class PaymentTermSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             if ($this->dryRun) {
                 $this->stats->addWouldCreate(self::SHEET);
                 $this->stats->addSample(self::SHEET, [
+                    'code' => $code,
                     'name' => $name,
                     'description' => $description !== '' ? $description : null,
                 ]);
-                $this->context->paymentTerms[$name] = true;
+                $this->context->products[$name] = true;
+                $this->context->productCodes[$code] = $name;
                 continue;
             }
 
-            PaymentTerm::create([
+            Product::create([
+                'code' => $code,
                 'name' => $name,
                 'description' => $description !== '' ? $description : null,
             ]);
             $this->stats->addCreated(self::SHEET);
-            $this->context->paymentTerms[$name] = true;
+            $this->context->products[$name] = true;
+            $this->context->productCodes[$code] = $name;
         }
     }
 }

@@ -14,12 +14,16 @@ class ReadmeSheetTemplate implements FromArray, WithTitle
             [''],
             ['Catatan:'],
             ['- Gunakan 1 file Excel dengan sheet sesuai nama berikut.'],
-            ['- Kolom "code" di sheet distributors adalah kode distributor.'],
-            ['- Kolom "code" di sheet alternatives juga memakai kode distributor.'],
-            ['- Kolom "sub_criteria_code" di sheet alternatives harus sesuai code sub kriteria.'],
-            ['- Kolom "code" di sheet sub_criteria opsional, jika kosong akan dibuat otomatis.'],
+            ['- Nama sheet: Skala_Bisnis, Metode_Pengiriman, Termin_Pembayaran, Distributor, Produk, Distributor_Produk, Kriteria, Sub_Kriteria, Alternatif.'],
+            ['- Kolom "code" di sheet Distributor adalah kode distributor.'],
+            ['- Kolom "code" di sheet Alternatif juga memakai kode distributor.'],
+            ['- Kolom "sub_criteria_code" di sheet Alternatif harus sesuai code sub kriteria.'],
+            ['- Kolom "code" di sheet Sub_Kriteria opsional, jika kosong akan dibuat otomatis.'],
+            ['- Kolom "code" di sheet Produk wajib unik.'],
+            ['- Kolom "product_code" di sheet Distributor_Produk mengacu ke code Produk.'],
             ['- NPWP boleh memakai titik/strip, sistem akan menyimpan 15 digit.'],
             ['- Data yang sudah ada akan di-skip dan dicatat di error.'],
+            ['- Urutan sheet wajib: Skala_Bisnis, Metode_Pengiriman, Termin_Pembayaran, Distributor, Produk, Distributor_Produk, Kriteria, Sub_Kriteria, Alternatif.'],
         ];
     }
 

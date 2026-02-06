@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ImportContext;
 use App\Imports\ImportErrorBag;
 use App\Imports\ImportStats;
 use App\Imports\MasterImport;
@@ -29,7 +30,8 @@ class ImportController extends Controller
 
         $errors = new ImportErrorBag();
         $stats = new ImportStats();
-        $import = new MasterImport($errors, $stats, true);
+        $context = new ImportContext();
+        $import = new MasterImport($errors, $stats, $context, true);
 
         Excel::import($import, Storage::disk('local')->path($storedPath));
 
@@ -43,15 +45,8 @@ class ImportController extends Controller
             'stats' => $stats->all(),
             'errors' => $errors->all(),
             'error_counts' => $errors->counts(),
-            'samples' => $stats->samples(),
             'stored_file' => $storedPath,
             'error_file' => $errorFile,
-            'preview_json' => json_encode([
-                'stats' => $stats->all(),
-                'errors' => $errors->all(),
-                'error_counts' => $errors->counts(),
-                'samples' => $stats->samples(),
-            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
         ]);
     }
 
@@ -69,7 +64,8 @@ class ImportController extends Controller
 
         $errors = new ImportErrorBag();
         $stats = new ImportStats();
-        $import = new MasterImport($errors, $stats, false);
+        $context = new ImportContext();
+        $import = new MasterImport($errors, $stats, $context, false);
 
         Excel::import($import, Storage::disk('local')->path($storedFile));
 
@@ -87,13 +83,14 @@ class ImportController extends Controller
             Storage::disk('local')->put($fileName, $errors->toText());
 
             return redirect()
-                ->back()
+                ->route('import.excel.index')
                 ->with('warning', 'Import selesai dengan beberapa error.')
                 ->with('import_errors_file', $fileName)
                 ->with('import_stats', $statsSummary);
         }
 
-        return redirect()->back()
+        return redirect()
+            ->route('import.excel.index')
             ->with('success', 'Import berhasil.')
             ->with('import_stats', $statsSummary);
     }

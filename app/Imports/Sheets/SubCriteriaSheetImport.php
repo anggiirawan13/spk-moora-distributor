@@ -2,6 +2,7 @@
 
 namespace App\Imports\Sheets;
 
+use App\Imports\ImportContext;
 use App\Imports\ImportErrorBag;
 use App\Imports\ImportStats;
 use App\Models\Criteria;
@@ -13,11 +14,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
+    private const SHEET = 'Sub_Kriteria';
     private array $seenCombos = [];
 
     public function __construct(
         private readonly ImportErrorBag $errors,
         private readonly ImportStats $stats,
+        private readonly ImportContext $context,
         private readonly bool $dryRun
     )
     {
@@ -25,6 +28,10 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
     public function collection(Collection $rows)
     {
+        if ($this->context->abort) {
+            return;
+        }
+
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
             $criteriaCode = strtoupper(trim((string) ($row['criteria_code'] ?? '')));
@@ -33,15 +40,15 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $value = trim((string) ($row['value'] ?? ''));
 
             if ($criteriaCode === '' || $name === '' || $value === '') {
-                $this->errors->add('sub_criteria', $rowNumber, 'Field wajib kosong (criteria_code, name, value)');
-                $this->stats->addSkipped('sub_criteria');
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (criteria_code, name, value)');
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
             $comboKey = $criteriaCode . '|' . $name;
             if (isset($this->seenCombos[$comboKey])) {
-                $this->errors->add('sub_criteria', $rowNumber, "Duplikat di file: {$criteriaCode} - {$name}");
-                $this->stats->addSkipped('sub_criteria');
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$criteriaCode} - {$name}");
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
@@ -50,46 +57,53 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             if ($code !== '') {
                 $codeKey = 'code|' . $code;
                 if (isset($this->seenCombos[$codeKey])) {
-                    $this->errors->add('sub_criteria', $rowNumber, "Duplikat code di file: {$code}");
-                    $this->stats->addSkipped('sub_criteria');
+                    $this->errors->add(self::SHEET, $rowNumber, "Duplikat code di file: {$code}");
+                    $this->stats->addSkipped(self::SHEET);
                     continue;
                 }
                 $this->seenCombos[$codeKey] = true;
             }
 
             if (!is_numeric($value) || (int) $value < 0) {
-                $this->errors->add('sub_criteria', $rowNumber, 'Value harus angka >= 0');
-                $this->stats->addSkipped('sub_criteria');
+                $this->errors->add(self::SHEET, $rowNumber, 'Value harus angka >= 0');
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
             $criteria = Criteria::where('code', $criteriaCode)->first();
             if (!$criteria) {
-                $this->errors->add('sub_criteria', $rowNumber, "Criteria code tidak ditemukan: {$criteriaCode}");
-                $this->stats->addSkipped('sub_criteria');
-                continue;
+                if ($this->dryRun && isset($this->context->criterias[$criteriaCode])) {
+                    $criteria = (object) ['id' => 0];
+                } else {
+                    $this->errors->add(self::SHEET, $rowNumber, "Criteria code tidak ditemukan: {$criteriaCode}");
+                    $this->stats->addSkipped(self::SHEET);
+                    continue;
+                }
             }
 
             if ($code !== '' && SubCriteria::where('code', $code)->exists()) {
-                $this->errors->add('sub_criteria', $rowNumber, "Code sub kriteria sudah ada: {$code}");
-                $this->stats->addSkipped('sub_criteria');
+                $this->errors->add(self::SHEET, $rowNumber, "Code sub kriteria sudah ada: {$code}");
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
             if (SubCriteria::where('criteria_id', $criteria->id)->where('name', $name)->exists()) {
-                $this->errors->add('sub_criteria', $rowNumber, "Sub kriteria sudah ada untuk {$criteriaCode}: {$name}");
-                $this->stats->addSkipped('sub_criteria');
+                $this->errors->add(self::SHEET, $rowNumber, "Sub kriteria sudah ada untuk {$criteriaCode}: {$name}");
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
             if ($this->dryRun) {
-                $this->stats->addWouldCreate('sub_criteria');
-                $this->stats->addSample('sub_criteria', [
+                $this->stats->addWouldCreate(self::SHEET);
+                $this->stats->addSample(self::SHEET, [
                     'criteria_code' => $criteriaCode,
                     'code' => $code !== '' ? $code : '(auto)',
                     'name' => $name,
                     'value' => (int) $value,
                 ]);
+                if ($code !== '') {
+                    $this->context->subCriteriaCodes[$criteriaCode][$code] = true;
+                }
                 continue;
             }
 
@@ -99,7 +113,10 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 'name' => $name,
                 'value' => (int) $value,
             ]);
-            $this->stats->addCreated('sub_criteria');
+            $this->stats->addCreated(self::SHEET);
+            if ($code !== '') {
+                $this->context->subCriteriaCodes[$criteriaCode][$code] = true;
+            }
         }
     }
 }

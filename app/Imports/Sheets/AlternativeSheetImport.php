@@ -2,6 +2,7 @@
 
 namespace App\Imports\Sheets;
 
+use App\Imports\ImportContext;
 use App\Imports\ImportErrorBag;
 use App\Imports\ImportStats;
 use App\Models\Alternative;
@@ -16,11 +17,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
+    private const SHEET = 'Alternatif';
     private array $seenCombos = [];
 
     public function __construct(
         private readonly ImportErrorBag $errors,
         private readonly ImportStats $stats,
+        private readonly ImportContext $context,
         private readonly bool $dryRun
     )
     {
@@ -28,6 +31,10 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
     public function collection(Collection $rows)
     {
+        if ($this->context->abort) {
+            return;
+        }
+
         $blockedDistributors = [];
         $createdAlternatives = [];
         $createdAltValues = [];
@@ -39,15 +46,15 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $subCriteriaCode = strtoupper(trim((string) ($row['sub_criteria_code'] ?? '')));
 
             if ($distCode === '' || $criteriaCode === '' || $subCriteriaCode === '') {
-                $this->errors->add('alternatives', $rowNumber, 'Field wajib kosong (code, criteria_code, sub_criteria_code)');
-                $this->stats->addSkipped('alternatives');
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, criteria_code, sub_criteria_code)');
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
             $comboKey = $distCode . '|' . $criteriaCode . '|' . $subCriteriaCode;
             if (isset($this->seenCombos[$comboKey])) {
-                $this->errors->add('alternatives', $rowNumber, "Duplikat di file: {$distCode} - {$criteriaCode} - {$subCriteriaCode}");
-                $this->stats->addSkipped('alternatives');
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$distCode} - {$criteriaCode} - {$subCriteriaCode}");
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
@@ -59,25 +66,35 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
             $distributor = Distributor::where('dist_code', $distCode)->first();
             if (!$distributor) {
-                $this->errors->add('alternatives', $rowNumber, "Distributor code tidak ditemukan: {$distCode}");
-                $blockedDistributors[$distCode] = true;
-                $this->stats->addSkipped('alternatives');
-                continue;
+                if ($this->dryRun && isset($this->context->distributors[$distCode])) {
+                    $distributor = (object) ['id' => 0];
+                } else {
+                    $this->errors->add(self::SHEET, $rowNumber, "Distributor code tidak ditemukan: {$distCode}");
+                    $blockedDistributors[$distCode] = true;
+                    $this->stats->addSkipped(self::SHEET);
+                    continue;
+                }
             }
 
-            $existingAlternative = Alternative::where('distributor_id', $distributor->id)->first();
-            if ($existingAlternative) {
-                $this->errors->add('alternatives', $rowNumber, "Alternative sudah ada untuk distributor {$distCode}");
-                $blockedDistributors[$distCode] = true;
-                $this->stats->addSkipped('alternatives');
-                continue;
+            if ($distributor->id !== 0) {
+                $existingAlternative = Alternative::where('distributor_id', $distributor->id)->first();
+                if ($existingAlternative) {
+                    $this->errors->add(self::SHEET, $rowNumber, "Alternative sudah ada untuk distributor {$distCode}");
+                    $blockedDistributors[$distCode] = true;
+                    $this->stats->addSkipped(self::SHEET);
+                    continue;
+                }
             }
 
             $criteria = Criteria::where('code', $criteriaCode)->first();
             if (!$criteria) {
-                $this->errors->add('alternatives', $rowNumber, "Criteria code tidak ditemukan: {$criteriaCode}");
-                $this->stats->addSkipped('alternatives');
-                continue;
+                if ($this->dryRun && isset($this->context->criterias[$criteriaCode])) {
+                    $criteria = (object) ['id' => 0];
+                } else {
+                    $this->errors->add(self::SHEET, $rowNumber, "Criteria code tidak ditemukan: {$criteriaCode}");
+                    $this->stats->addSkipped(self::SHEET);
+                    continue;
+                }
             }
 
             $subCriteria = SubCriteria::where('criteria_id', $criteria->id)
@@ -85,16 +102,19 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 ->first();
 
             if (!$subCriteria) {
-                $this->errors->add('alternatives', $rowNumber, "Sub kriteria tidak ditemukan: {$criteriaCode} - {$subCriteriaCode}");
-                $this->stats->addSkipped('alternatives');
-                continue;
+                if (!$this->dryRun || !isset($this->context->subCriteriaCodes[$criteriaCode][$subCriteriaCode])) {
+                    $this->errors->add(self::SHEET, $rowNumber, "Sub kriteria tidak ditemukan: {$criteriaCode} - {$subCriteriaCode}");
+                    $this->stats->addSkipped(self::SHEET);
+                    continue;
+                }
+                $subCriteria = (object) ['id' => 0, 'value' => 0];
             }
 
             if (!isset($createdAlternatives[$distCode])) {
                 if ($this->dryRun) {
                     $createdAlternatives[$distCode] = true;
-                    $this->stats->addWouldCreate('alternatives');
-                    $this->stats->addSample('alternatives', [
+                    $this->stats->addWouldCreate(self::SHEET);
+                    $this->stats->addSample(self::SHEET, [
                         'code' => $distCode,
                         'criteria_code' => $criteriaCode,
                         'sub_criteria_code' => $subCriteriaCode,
@@ -103,28 +123,28 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                     $createdAlternatives[$distCode] = Alternative::create([
                         'distributor_id' => $distributor->id,
                     ]);
-                    $this->stats->addCreated('alternatives');
+                    $this->stats->addCreated(self::SHEET);
                 }
             }
 
             $alt = $createdAlternatives[$distCode];
-            $valueKey = ($this->dryRun ? $distCode : $alt->id) . ':' . $subCriteria->id;
+            $valueKey = ($this->dryRun ? $distCode : $alt->id) . ':' . ($this->dryRun ? $subCriteriaCode : $subCriteria->id);
 
             if (isset($createdAltValues[$valueKey])) {
-                $this->errors->add('alternatives', $rowNumber, "Duplikat mapping: {$distCode} - {$criteriaCode} - {$subCriteriaCode}");
-                $this->stats->addSkipped('alternatives');
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat mapping: {$distCode} - {$criteriaCode} - {$subCriteriaCode}");
+                $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
             if ($this->dryRun) {
-                $this->stats->addWouldCreate('alternatives');
+                $this->stats->addWouldCreate(self::SHEET);
             } else {
                 AlternativeValue::create([
                     'alternative_id' => $alt->id,
                     'sub_criteria_id' => $subCriteria->id,
                     'value' => $subCriteria->value ?? 0,
                 ]);
-                $this->stats->addCreated('alternatives');
+                $this->stats->addCreated(self::SHEET);
             }
 
             $createdAltValues[$valueKey] = true;

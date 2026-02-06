@@ -16,14 +16,17 @@ class CriteriaSheetTemplate implements FromArray, WithHeadings, WithTitle
     public function array(): array
     {
         return [
-            ['C1', 'Harga', '30', 'Cost'],
-            ['C2', 'Kualitas', '25', 'Benefit'],
-            ['C3', 'Pengiriman', '20', 'Benefit'],
+            ['C1', 'Harga Produk', '0.25', 'Cost'],
+            ['C2', 'Waktu Kirim', '0.20', 'Cost'],
+            ['C3', 'Status Pajak', '0.15', 'Benefit'],
+            ['C4', 'Kualitas Produk', '0.25', 'Benefit'],
+            ['C5', 'Responsivitas Layanan', '0.10', 'Benefit'],
+            ['C6', 'Dukungan Purna Jual', '0.05', 'Benefit'],
         ];
     }
 
     public function title(): string
     {
-        return 'criterias';
+        return 'Kriteria';
     }
 }

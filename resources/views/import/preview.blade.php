@@ -41,37 +41,6 @@
                 </table>
             </div>
 
-            @if (!empty($samples))
-                <div class="mt-4">
-                    <h6 class="font-weight-bold">Preview Data (maks 5 baris per sheet)</h6>
-                    @foreach ($samples as $sheet => $rows)
-                        <div class="mt-3">
-                            <div class="font-weight-bold text-primary mb-2">{{ $sheet }}</div>
-                            <div class="table-responsive">
-                                <table class="table table-sm table-bordered">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            @foreach (array_keys($rows[0]) as $header)
-                                                <th>{{ $header }}</th>
-                                            @endforeach
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($rows as $row)
-                                            <tr>
-                                                @foreach ($row as $value)
-                                                    <td>{{ $value }}</td>
-                                                @endforeach
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-
             @if (!empty($errors))
                 <div class="alert alert-warning mt-3">
                     <div class="d-flex justify-content-between align-items-center">
@@ -115,16 +84,6 @@
                     <i class="fas fa-cloud-upload-alt mr-2"></i>Commit Import
                 </button>
             </form>
-
-            @if (!empty($preview_json))
-                <div class="mt-4">
-                    <h6 class="font-weight-bold">Preview JSON</h6>
-                    <button class="btn btn-outline-secondary btn-sm mb-2" type="button" onclick="downloadPreviewJson()">
-                        <i class="fas fa-download mr-1"></i>Download JSON
-                    </button>
-                    <pre id="previewJson" class="bg-light p-3 border rounded small" style="max-height: 300px; overflow: auto;">{{ $preview_json }}</pre>
-                </div>
-            @endif
         </div>
     </div>
 </div>
@@ -134,19 +93,4 @@
     background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
 }
 </style>
-
-@if (!empty($preview_json))
-<script>
-function downloadPreviewJson() {
-    const content = document.getElementById('previewJson').textContent;
-    const blob = new Blob([content], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'import-preview.json';
-    a.click();
-    window.URL.revokeObjectURL(url);
-}
-</script>
-@endif
 @endsection

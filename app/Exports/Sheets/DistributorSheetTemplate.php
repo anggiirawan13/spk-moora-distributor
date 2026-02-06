@@ -30,27 +30,27 @@ class DistributorSheetTemplate implements FromArray, WithHeadings, WithTitle
         return [
             [
                 'D001',
-                'PT Contoh Distributor',
+                'PT Sinar Elektrik Jaya',
                 '123456789012345',
-                'contoh@distributor.co.id',
+                'sinarelektrikjaya@contoh.co.id',
                 '081234567890',
                 'Jl. Contoh No. 1, Jakarta',
-                'Net 30',
-                'Ekspedisi',
-                'Besar',
+                'Cash / Tunai',
+                'Pengiriman Ekspres (1-2 hari)',
+                'Distributor Nasional',
                 'Distributor utama',
                 '1',
             ],
             [
                 'D002',
-                'PT Sinar Elektrik',
+                'PT Mega Teknik Abadi',
                 '987654321098765',
-                'sinar@distributor.co.id',
+                'megateknikabadi@contoh.co.id',
                 '6281234567890',
                 'Jl. Listrik No. 2, Bandung',
-                'Net 15',
-                'Kurir',
-                'Menengah',
+                'Net 30 Hari',
+                'Pengiriman Reguler (3-5 hari)',
+                'Distributor Regional',
                 'Distributor regional',
                 '1',
             ],
@@ -59,6 +59,6 @@ class DistributorSheetTemplate implements FromArray, WithHeadings, WithTitle
 
     public function title(): string
     {
-        return 'distributors';
+        return 'Distributor';
     }
 }

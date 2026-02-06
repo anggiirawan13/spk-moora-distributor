@@ -16,14 +16,14 @@ class DeliveryMethodSheetTemplate implements FromArray, WithHeadings, WithTitle
     public function array(): array
     {
         return [
-            ['Ekspedisi', 'Pengiriman melalui ekspedisi'],
-            ['Pickup', 'Pengambilan sendiri'],
-            ['Kurir', 'Pengiriman kurir internal'],
+            ['Pengiriman Ekspres (1-2 hari)', 'Pengiriman cepat dengan estimasi 1-2 hari kerja'],
+            ['Pengiriman Reguler (3-5 hari)', 'Pengiriman standar dengan estimasi 3-5 hari kerja'],
+            ['Pickup Mandiri', 'Pelanggan mengambil barang langsung ke gudang distributor'],
         ];
     }
 
     public function title(): string
     {
-        return 'delivery_methods';
+        return 'Metode_Pengiriman';
     }
 }

@@ -16,14 +16,14 @@ class BusinessScaleSheetTemplate implements FromArray, WithHeadings, WithTitle
     public function array(): array
     {
         return [
-            ['Besar', 'Skala bisnis besar'],
-            ['Menengah', 'Skala bisnis menengah'],
-            ['Kecil', 'Skala bisnis kecil'],
+            ['Distributor Nasional', 'Distributor dengan jangkauan seluruh Indonesia'],
+            ['Distributor Regional', 'Distributor dengan jangkauan beberapa provinsi'],
+            ['Distributor Lokal', 'Distributor dengan jangkauan dalam satu kota/kabupaten'],
         ];
     }
 
     public function title(): string
     {
-        return 'business_scales';
+        return 'Skala_Bisnis';
     }
 }

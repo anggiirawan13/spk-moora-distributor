@@ -31,6 +31,29 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="code" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-hashtag text-info mr-2"></i>Kode Produk <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text"
+                                           class="form-control form-control-lg @error('code') is-invalid @enderror"
+                                           name="code"
+                                           id="code"
+                                           value="{{ old('code', $product->code) }}"
+                                           placeholder="Masukkan kode produk"
+                                           required>
+                                    @error('code')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="form-text text-muted mt-1">
+                                        <i class="fas fa-info-circle mr-1"></i>Contoh: P001, PRD-01
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="name" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-tag text-primary mr-2"></i>Nama Produk <span class="text-danger">*</span>
                                     </label>
@@ -132,13 +155,19 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <strong>Kode Produk:</strong>
+                                                <div id="codePreview" class="text-info font-weight-bold mt-1">
+                                                    {{ old('code', $product->code) ?: '-' }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <strong>Nama Produk:</strong>
                                                 <div id="namePreview" class="text-primary font-weight-bold mt-1">
                                                     {{ old('name', $product->name) ?: '-' }}
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <strong>Deskripsi:</strong>
                                                 <div id="descriptionPreview" class="text-muted mt-1 small">
                                                     {{ old('description', $product->description) ?: '-' }}
@@ -177,11 +206,15 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
+                                                <strong>Kode:</strong>
+                                                <div class="text-dark mt-1">{{ $product->code }}</div>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <strong>Nama:</strong>
                                                 <div class="text-dark mt-1">{{ $product->name }}</div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <strong>Deskripsi:</strong>
                                                 <div class="text-muted mt-1 small">{{ $product->description ?: '-' }}</div>
                                             </div>
@@ -281,13 +314,20 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const codeInput = document.getElementById('code');
     const nameInput = document.getElementById('name');
     const descriptionInput = document.getElementById('description');
+    const codePreview = document.getElementById('codePreview');
     const namePreview = document.getElementById('namePreview');
     const descriptionPreview = document.getElementById('descriptionPreview');
     const distributorsPreview = document.getElementById('distributorsPreview');
     const charCount = document.getElementById('charCount');
     const distributorCheckboxes = document.querySelectorAll('input[name="distributors[]"]');
+
+    codeInput.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+        codePreview.textContent = this.value || '-';
+    });
 
     nameInput.addEventListener('input', function() {
         namePreview.textContent = this.value || '-';
@@ -331,20 +371,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const form = document.getElementById('productForm');
     form.addEventListener('submit', function(e) {
+        const code = codeInput.value.trim();
         const name = nameInput.value.trim();
         
-        if (!name) {
+        if (!code || !name) {
             e.preventDefault();
             Swal.fire({
                 icon: 'warning',
-                title: 'Nama Produk Kosong',
-                text: 'Harap masukkan nama produk.',
+                title: 'Data Produk Belum Lengkap',
+                text: 'Harap masukkan kode dan nama produk.',
                 confirmButtonColor: '#f59e0b'
             });
-            nameInput.focus();
+            if (!code) {
+                codeInput.focus();
+            } else {
+                nameInput.focus();
+            }
         }
     });
 
+    if (codeInput.value) {
+        codeInput.dispatchEvent(new Event('input'));
+    }
     if (nameInput.value) {
         nameInput.dispatchEvent(new Event('input'));
     }
