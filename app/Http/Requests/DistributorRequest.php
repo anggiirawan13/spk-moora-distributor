@@ -18,11 +18,11 @@ class DistributorRequest extends FormRequest
         $distributorId = $this->route('distributor')?->id ?? $this->route('distributor');
 
         return [
-            'dist_code' => [
+            'code' => [
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('distributors', 'dist_code')->ignore($distributorId),
+                Rule::unique('distributors', 'code')->ignore($distributorId),
             ],
             'name' => 'required|string|max:255',
             'npwp' => 'nullable|regex:/^\\d{15}$/',
@@ -46,7 +46,7 @@ class DistributorRequest extends FormRequest
             'delivery_method_id.required' => 'Metode pengiriman harus dipilih',
             'business_scale_id.required' => 'Skala bisnis harus dipilih',
             'npwp.regex' => 'NPWP harus 15 digit angka',
-            'dist_code.unique' => 'Kode distributor sudah digunakan',
+            'code.unique' => 'Kode distributor sudah digunakan',
         ];
     }
 
@@ -69,9 +69,9 @@ class DistributorRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        if ($this->has('dist_code')) {
+        if ($this->has('code')) {
             $this->merge([
-                'dist_code' => strtoupper(trim((string) $this->input('dist_code'))),
+                'code' => strtoupper(trim((string) $this->input('code'))),
             ]);
         }
 

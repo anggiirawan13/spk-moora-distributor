@@ -78,7 +78,7 @@ class DistributorSeeder extends Seeder
         foreach (self::data() as $row) {
             $rows[] = [
                 'name' => $row['name'],
-                'dist_code' => $row['code'],
+                'code' => $row['code'],
                 'image_name' => 'Ex1y3eAnda4xT6AiP1j93VCJ9HQpTEmBMzaMLJsf.jpg',
                 'npwp' => $row['npwp'],
                 'address' => $row['address'],

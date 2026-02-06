@@ -26,7 +26,7 @@ class DistributorController extends Controller
                 'image' => '<a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage(\'' . $distributor->name . '\', \'' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '\')">
                                 <img class="default-img" src="' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '" width="60">
                             </a>',
-                'dist_code' => $distributor->dist_code,
+                'code' => $distributor->code,
                 'name' => $distributor->name,
                 'npwp' => $distributor->npwp_formatted ?: 'Tidak diisi',
                 'phone' => $distributor->phone,

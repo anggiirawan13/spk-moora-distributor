@@ -33,7 +33,7 @@
                                 </a>
                                 <div class="mt-3">
                                     <h4 class="font-weight-bold text-primary mb-1">{{ $distributor->name }}</h4>
-                                    <p class="text-muted mb-0">Kode: {{ $distributor->dist_code }}</p>
+                                    <p class="text-muted mb-0">Kode: {{ $distributor->code }}</p>
                                     <p class="text-muted mb-0">NPWP: {{ $distributor->npwp_formatted ?: 'Tidak diisi' }}</p>
                                     <span class="badge {{ $distributor->is_active ? 'badge-success' : 'badge-secondary' }} mt-2">
                                         {{ $distributor->is_active ? 'Aktif' : 'Nonaktif' }}

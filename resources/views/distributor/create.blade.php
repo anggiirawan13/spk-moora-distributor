@@ -36,17 +36,17 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="dist_code" class="font-weight-bold text-dark mb-2">
+                                    <label for="code" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-hashtag text-secondary mr-2"></i>Kode Distributor <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" 
-                                           class="form-control @error('dist_code') is-invalid @enderror" 
-                                           name="dist_code" 
-                                           id="dist_code"
-                                           value="{{ old('dist_code') }}" 
+                                           class="form-control @error('code') is-invalid @enderror" 
+                                           name="code" 
+                                           id="code"
+                                           value="{{ old('code') }}" 
                                            placeholder="Contoh: D001"
                                            required>
-                                    @error('dist_code')
+                                    @error('code')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted mt-1">
@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('image_name');
     const imageLabel = document.getElementById('image_name_label');
     const npwpInput = document.getElementById('npwp');
-    const distCodeInput = document.getElementById('dist_code');
+    const distCodeInput = document.getElementById('code');
 
     descriptionInput.addEventListener('input', function() {
         const text = this.value;
@@ -435,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('distributorForm');
     form.addEventListener('submit', function(e) {
         const requiredFields = [
-            'dist_code', 'name', 'email', 'phone', 'address',
+            'code', 'name', 'email', 'phone', 'address',
             'payment_term_id', 'delivery_method_id', 
             'business_scale_id', 'is_active'
         ];

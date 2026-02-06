@@ -41,7 +41,7 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
-            $distCode = strtoupper(trim((string) ($row['code'] ?? $row['dist_code'] ?? '')));
+            $distCode = strtoupper(trim((string) ($row['code'] ?? $row['code'] ?? '')));
             $criteriaCode = strtoupper(trim((string) ($row['criteria_code'] ?? '')));
             $subCriteriaCode = strtoupper(trim((string) ($row['sub_criteria_code'] ?? '')));
 
@@ -65,7 +65,7 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 continue;
             }
 
-            $distributor = Distributor::where('dist_code', $distCode)->first();
+            $distributor = Distributor::where('code', $distCode)->first();
             if (!$distributor) {
                 if ($this->dryRun && isset($this->context->distributors[$distCode])) {
                     $distributor = (object) ['id' => 0];

@@ -25,7 +25,7 @@
     </style>
     <x-table title="Daftar Distributor Barang Elektrikal" createRoute="distributor.create" showRoute="distributor.show" 
         editRoute="distributor.edit" deleteRoute="distributor.destroy" :data="$distributors" :columns="[
-            ['label' => 'Kode', 'field' => 'dist_code'],
+            ['label' => 'Kode', 'field' => 'code'],
             ['label' => 'Nama Distributor', 'field' => 'name'],
             ['label' => 'Logo', 'field' => 'image', 'html' => true],
             ['label' => 'NPWP', 'field' => 'npwp'],

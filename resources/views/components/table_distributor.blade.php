@@ -18,7 +18,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <h6 class="font-weight-bold text-dark mb-1">Kode Distributor</h6>
-                            <p class="mb-0 text-muted">{{ $distributor->dist_code }}</p>
+                            <p class="mb-0 text-muted">{{ $distributor->code }}</p>
                         </div>
                     </div>
                 </div>

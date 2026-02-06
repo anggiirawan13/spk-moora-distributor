@@ -39,7 +39,7 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
-            $distCodeRaw = (string) ($row['code'] ?? $row['dist_code'] ?? '');
+            $distCodeRaw = (string) ($row['code'] ?? $row['code'] ?? '');
             $distCode = strtoupper(trim($distCodeRaw));
             $name = trim((string) ($row['name'] ?? ''));
             $npwpRaw = (string) ($row['npwp'] ?? '');
@@ -103,7 +103,7 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 continue;
             }
 
-            if (Distributor::where('dist_code', $distCode)->exists()) {
+            if (Distributor::where('code', $distCode)->exists()) {
                 $this->errors->add(self::SHEET, $rowNumber, "Kode distributor sudah ada: {$distCode}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
@@ -157,7 +157,7 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             }
 
             Distributor::create([
-                'dist_code' => $distCode,
+                'code' => $distCode,
                 'name' => $name,
                 'npwp' => $npwp,
                 'email' => $email,

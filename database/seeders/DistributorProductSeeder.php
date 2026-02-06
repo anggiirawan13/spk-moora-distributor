@@ -60,7 +60,7 @@ class DistributorProductSeeder extends Seeder
 
     public function run(): void
     {
-        $distIds = DB::table('distributors')->pluck('id', 'dist_code');
+        $distIds = DB::table('distributors')->pluck('id', 'code');
         $productIds = DB::table('products')->pluck('id', 'code');
 
         $dataToInsert = [];

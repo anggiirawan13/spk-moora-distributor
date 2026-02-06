@@ -10,21 +10,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('distributors', function (Blueprint $table) {
-            $table->string('dist_code', 20)->nullable()->after('id');
+            $table->string('code', 20)->nullable()->after('id');
         });
 
-        DB::statement("UPDATE distributors SET dist_code = CONCAT('D', LPAD(id, 3, '0')) WHERE dist_code IS NULL OR dist_code = ''");
+        DB::statement("UPDATE distributors SET code = CONCAT('D', LPAD(id, 3, '0')) WHERE code IS NULL OR code = ''");
 
         Schema::table('distributors', function (Blueprint $table) {
-            $table->unique('dist_code');
+            $table->unique('code');
         });
     }
 
     public function down(): void
     {
         Schema::table('distributors', function (Blueprint $table) {
-            $table->dropUnique(['dist_code']);
-            $table->dropColumn('dist_code');
+            $table->dropUnique(['code']);
+            $table->dropColumn('code');
         });
     }
 };

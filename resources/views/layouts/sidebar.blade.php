@@ -93,7 +93,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('import.excel.index') }}">
                 <i class="fas fa-file-excel"></i>
-                <span>Import Excel</span>
+                <span>Import Data Excel</span>
             </a>
         </li>
     @endcan

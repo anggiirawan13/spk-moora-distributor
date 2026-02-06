@@ -12,7 +12,7 @@ class Distributor extends Model
     protected $table = 'distributors';
 
     protected $fillable = [
-        'dist_code',
+        'code',
         'name',
         'image_name',
         'npwp',
