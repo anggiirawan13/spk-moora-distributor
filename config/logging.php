@@ -96,6 +96,13 @@ return [
             ],
         ],
 
+        'npwp' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/npwp.log'),
+            'level' => env('NPWP_LOG_LEVEL', 'warning'),
+            'days' => 14,
+        ],
+
         'syslog' => [
             'driver' => 'syslog',
             'level' => env('LOG_LEVEL', 'debug'),

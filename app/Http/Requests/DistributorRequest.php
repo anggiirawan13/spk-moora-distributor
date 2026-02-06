@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Services\NpwpValidationService;
 
 class DistributorRequest extends FormRequest
 {
@@ -47,6 +48,23 @@ class DistributorRequest extends FormRequest
             'npwp.regex' => 'NPWP harus 15 digit angka',
             'dist_code.unique' => 'Kode distributor sudah digunakan',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $npwp = (string) $this->input('npwp');
+            if ($npwp === '' || $this->errors()->has('npwp')) {
+                return;
+            }
+
+            $service = new NpwpValidationService();
+            $result = $service->validate($npwp);
+            if (!$result['valid']) {
+                $message = $result['message'] ?? 'NPWP tidak valid';
+                $validator->errors()->add('npwp', $message);
+            }
+        });
     }
 
     protected function prepareForValidation()

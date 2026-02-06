@@ -79,8 +79,10 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 continue;
             }
 
-            if (!$npwpValidator->isValid($npwp)) {
-                $this->errors->add(self::SHEET, $rowNumber, 'NPWP tidak valid (cek ke API)');
+            $npwpResult = $npwpValidator->validate($npwp);
+            if (!$npwpResult['valid']) {
+                $reason = $npwpResult['message'] ?? 'NPWP tidak valid';
+                $this->errors->add(self::SHEET, $rowNumber, "NPWP tidak valid: {$reason}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
