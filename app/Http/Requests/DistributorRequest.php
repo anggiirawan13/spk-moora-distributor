@@ -25,7 +25,7 @@ class DistributorRequest extends FormRequest
                 Rule::unique('distributors', 'dist_code')->ignore($distributorId),
             ],
             'name' => 'required|string|max:255',
-            'npwp' => 'required|regex:/^\\d{15}$/',
+            'npwp' => 'nullable|regex:/^\\d{15}$/',
             'address' => 'required|string',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',

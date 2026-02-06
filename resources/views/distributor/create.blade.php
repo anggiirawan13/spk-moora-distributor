@@ -77,21 +77,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="npwp" class="font-weight-bold text-dark mb-2">
-                                        <i class="fas fa-id-card text-success mr-2"></i>NPWP <span class="text-danger">*</span>
+                                        <i class="fas fa-id-card text-success mr-2"></i>NPWP <span class="text-muted">(opsional)</span>
                                     </label>
                                     <input type="text" 
                                            class="form-control @error('npwp') is-invalid @enderror" 
                                            name="npwp" 
                                            id="npwp"
                                            value="{{ old('npwp') }}" 
-                                           placeholder="Masukkan 15 digit NPWP"
-                                           inputmode="numeric"
-                                           required>
+                                           placeholder="Masukkan 15 digit NPWP (opsional)"
+                                           inputmode="numeric">
                                     @error('npwp')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted mt-1">
-                                        <i class="fas fa-info-circle mr-1"></i>Hanya 15 digit angka (tanda baca akan diabaikan)
+                                        <i class="fas fa-info-circle mr-1"></i>Opsional. Jika diisi, harus 15 digit angka (tanda baca akan diabaikan)
                                     </small>
                                 </div>
                             </div>
@@ -436,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('distributorForm');
     form.addEventListener('submit', function(e) {
         const requiredFields = [
-            'dist_code', 'name', 'npwp', 'email', 'phone', 'address',
+            'dist_code', 'name', 'email', 'phone', 'address',
             'payment_term_id', 'delivery_method_id', 
             'business_scale_id', 'is_active'
         ];

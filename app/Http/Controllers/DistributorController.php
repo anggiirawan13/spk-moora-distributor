@@ -28,7 +28,7 @@ class DistributorController extends Controller
                             </a>',
                 'dist_code' => $distributor->dist_code,
                 'name' => $distributor->name,
-                'npwp' => $distributor->npwp_formatted,
+                'npwp' => $distributor->npwp_formatted ?: 'Tidak diisi',
                 'phone' => $distributor->phone,
                 'email' => $distributor->email,
                 'payment_term' => $distributor->paymentTerm?->name ?? 'N/A',

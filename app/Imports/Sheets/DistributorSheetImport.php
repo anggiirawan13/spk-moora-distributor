@@ -53,8 +53,8 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $description = trim((string) ($row['description'] ?? ''));
             $isActiveRaw = strtolower(trim((string) ($row['is_active'] ?? '1')));
 
-            if ($distCode === '' || $name === '' || $npwp === '' || $email === '' || $phone === '' || $address === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, name, npwp, email, phone, address)');
+            if ($distCode === '' || $name === '' || $email === '' || $phone === '' || $address === '') {
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, name, email, phone, address)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
@@ -67,24 +67,26 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
             $this->seenCodes[$distCode] = true;
 
-            if (preg_match('/[A-Za-z]/', $npwpRaw)) {
+            if ($npwpRaw !== '' && preg_match('/[A-Za-z]/', $npwpRaw)) {
                 $this->errors->add(self::SHEET, $rowNumber, 'NPWP hanya boleh angka/tanda baca');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
-            if (strlen($npwp) !== 15) {
+            if ($npwp !== '' && strlen($npwp) !== 15) {
                 $this->errors->add(self::SHEET, $rowNumber, 'NPWP harus 15 digit angka');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
-            $npwpResult = $npwpValidator->validate($npwp);
-            if (!$npwpResult['valid']) {
-                $reason = $npwpResult['message'] ?? 'NPWP tidak valid';
-                $this->errors->add(self::SHEET, $rowNumber, "NPWP tidak valid: {$reason}");
-                $this->stats->addSkipped(self::SHEET);
-                continue;
+            if ($npwp !== '') {
+                $npwpResult = $npwpValidator->validate($npwp);
+                if (!$npwpResult['valid']) {
+                    $reason = $npwpResult['message'] ?? 'NPWP tidak valid';
+                    $this->errors->add(self::SHEET, $rowNumber, "NPWP tidak valid: {$reason}");
+                    $this->stats->addSkipped(self::SHEET);
+                    continue;
+                }
             }
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -107,7 +109,7 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 continue;
             }
 
-            if (Distributor::where('npwp', $npwp)->exists()) {
+            if ($npwp !== '' && Distributor::where('npwp', $npwp)->exists()) {
                 $this->errors->add(self::SHEET, $rowNumber, "NPWP sudah ada: {$npwp}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
