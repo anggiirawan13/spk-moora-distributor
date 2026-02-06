@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
-    private const SHEET = 'Sub_Kriteria';
+    private const SHEET = 'Sub Kriteria';
     private array $seenCombos = [];
 
     public function __construct(

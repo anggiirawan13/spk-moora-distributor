@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class BusinessScaleSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
-    private const SHEET = 'Skala_Bisnis';
+    private const SHEET = 'Skala Bisnis';
     private array $seenNames = [];
 
     public function __construct(

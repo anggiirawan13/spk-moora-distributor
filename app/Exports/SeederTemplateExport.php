@@ -19,9 +19,9 @@ class SeederTemplateExport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            new SeederArraySheet('Skala_Bisnis', ['name', 'description'], BusinessScaleSeeder::data()),
-            new SeederArraySheet('Metode_Pengiriman', ['name', 'description'], DeliveryMethodSeeder::data()),
-            new SeederArraySheet('Termin_Pembayaran', ['name', 'description'], PaymentTermSeeder::data()),
+            new SeederArraySheet('Skala Bisnis', ['name', 'description'], BusinessScaleSeeder::data()),
+            new SeederArraySheet('Metode Pengiriman', ['name', 'description'], DeliveryMethodSeeder::data()),
+            new SeederArraySheet('Termin Pembayaran', ['name', 'description'], PaymentTermSeeder::data()),
             new SeederArraySheet('Distributor', [
                 'code',
                 'name',
@@ -36,9 +36,9 @@ class SeederTemplateExport implements WithMultipleSheets
                 'is_active',
             ], DistributorSeeder::data()),
             new SeederArraySheet('Produk', ['code', 'name', 'description'], ProductSeeder::data()),
-            new SeederArraySheet('Distributor_Produk', ['code', 'product_code'], DistributorProductSeeder::data()),
+            new SeederArraySheet('Distributor Produk', ['code', 'product_code'], DistributorProductSeeder::data()),
             new SeederArraySheet('Kriteria', ['code', 'name', 'weight', 'attribute_type'], CriteriaSeeder::data()),
-            new SeederArraySheet('Sub_Kriteria', ['criteria_code', 'code', 'name', 'value'], SubCriteriaSeeder::data()),
+            new SeederArraySheet('Sub Kriteria', ['criteria_code', 'code', 'name', 'value'], SubCriteriaSeeder::data()),
             new SeederArraySheet('Alternatif', ['code', 'criteria_code', 'sub_criteria_code'], AlternativeSeeder::data()),
         ];
     }

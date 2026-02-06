@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class PaymentTermSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
-    private const SHEET = 'Termin_Pembayaran';
+    private const SHEET = 'Termin Pembayaran';
     private array $seenNames = [];
 
     public function __construct(

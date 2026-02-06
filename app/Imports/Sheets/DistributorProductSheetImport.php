@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class DistributorProductSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
-    private const SHEET = 'Distributor_Produk';
+    private const SHEET = 'Distributor Produk';
     private array $seenCombos = [];
 
     public function __construct(

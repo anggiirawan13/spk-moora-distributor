@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class DeliveryMethodSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
-    private const SHEET = 'Metode_Pengiriman';
+    private const SHEET = 'Metode Pengiriman';
     private array $seenNames = [];
 
     public function __construct(

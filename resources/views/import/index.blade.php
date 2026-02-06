@@ -79,14 +79,14 @@
             <p class="text-muted mb-3">Gunakan 1 file Excel dengan sheet berikut:</p>
 
             <ul class="list-unstyled mb-0">
-                <li><strong>Skala_Bisnis</strong>: `name`, `description`</li>
-                <li><strong>Metode_Pengiriman</strong>: `name`, `description`</li>
-                <li><strong>Termin_Pembayaran</strong>: `name`, `description`</li>
+                <li><strong>Skala Bisnis</strong>: `name`, `description`</li>
+                <li><strong>Metode Pengiriman</strong>: `name`, `description`</li>
+                <li><strong>Termin Pembayaran</strong>: `name`, `description`</li>
                 <li><strong>Distributor</strong>: `code`, `name`, `npwp`, `email`, `phone`, `address`, `payment_term`, `delivery_method`, `business_scale`, `description`, `is_active`</li>
                 <li><strong>Produk</strong>: `code`, `name`, `description`</li>
-                <li><strong>Distributor_Produk</strong>: `code`, `product_code`</li>
+                <li><strong>Distributor Produk</strong>: `code`, `product_code`</li>
                 <li><strong>Kriteria</strong>: `code`, `name`, `weight`, `attribute_type` (Benefit/Cost)</li>
-                <li><strong>Sub_Kriteria</strong>: `criteria_code`, `code`, `name`, `value`</li>
+                <li><strong>Sub Kriteria</strong>: `criteria_code`, `code`, `name`, `value`</li>
                 <li><strong>Alternatif</strong>: `code`, `criteria_code`, `sub_criteria_code`</li>
             </ul>
 
@@ -96,7 +96,7 @@
             </div>
             <div class="alert alert-warning mt-3 mb-0">
                 <i class="fas fa-exclamation-triangle mr-1"></i>
-                Urutan sheet wajib: Skala_Bisnis, Metode_Pengiriman, Termin_Pembayaran, Distributor, Produk, Distributor_Produk, Kriteria, Sub_Kriteria, Alternatif.
+                Urutan sheet wajib: Skala Bisnis, Metode Pengiriman, Termin Pembayaran, Distributor, Produk, Distributor Produk, Kriteria, Sub Kriteria, Alternatif.
             </div>
         </div>
     </div>

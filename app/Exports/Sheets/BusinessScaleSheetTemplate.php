@@ -24,6 +24,6 @@ class BusinessScaleSheetTemplate implements FromArray, WithHeadings, WithTitle
 
     public function title(): string
     {
-        return 'Skala_Bisnis';
+        return 'Skala Bisnis';
     }
 }

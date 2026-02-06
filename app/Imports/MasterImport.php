@@ -19,14 +19,14 @@ use Maatwebsite\Excel\Events\BeforeImport;
 class MasterImport implements WithMultipleSheets, SkipsUnknownSheets, WithEvents
 {
     private const REQUIRED_SHEETS = [
-        'Skala_Bisnis',
-        'Metode_Pengiriman',
-        'Termin_Pembayaran',
+        'Skala Bisnis',
+        'Metode Pengiriman',
+        'Termin Pembayaran',
         'Distributor',
         'Produk',
-        'Distributor_Produk',
+        'Distributor Produk',
         'Kriteria',
-        'Sub_Kriteria',
+        'Sub Kriteria',
         'Alternatif',
     ];
 
@@ -42,14 +42,14 @@ class MasterImport implements WithMultipleSheets, SkipsUnknownSheets, WithEvents
     public function sheets(): array
     {
         return [
-            'Skala_Bisnis' => new BusinessScaleSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
-            'Metode_Pengiriman' => new DeliveryMethodSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
-            'Termin_Pembayaran' => new PaymentTermSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
+            'Skala Bisnis' => new BusinessScaleSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
+            'Metode Pengiriman' => new DeliveryMethodSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
+            'Termin Pembayaran' => new PaymentTermSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
             'Distributor' => new DistributorSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
             'Produk' => new ProductSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
-            'Distributor_Produk' => new DistributorProductSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
+            'Distributor Produk' => new DistributorProductSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
             'Kriteria' => new CriteriaSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
-            'Sub_Kriteria' => new SubCriteriaSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
+            'Sub Kriteria' => new SubCriteriaSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
             'Alternatif' => new AlternativeSheetImport($this->errors, $this->stats, $this->context, $this->dryRun),
         ];
     }

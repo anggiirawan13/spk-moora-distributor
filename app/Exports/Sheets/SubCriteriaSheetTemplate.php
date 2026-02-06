@@ -48,6 +48,6 @@ class SubCriteriaSheetTemplate implements FromArray, WithHeadings, WithTitle
 
     public function title(): string
     {
-        return 'Sub_Kriteria';
+        return 'Sub Kriteria';
     }
 }

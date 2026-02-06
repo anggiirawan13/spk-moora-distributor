@@ -24,6 +24,6 @@ class DeliveryMethodSheetTemplate implements FromArray, WithHeadings, WithTitle
 
     public function title(): string
     {
-        return 'Metode_Pengiriman';
+        return 'Metode Pengiriman';
     }
 }

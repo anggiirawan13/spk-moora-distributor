@@ -24,6 +24,6 @@ class PaymentTermSheetTemplate implements FromArray, WithHeadings, WithTitle
 
     public function title(): string
     {
-        return 'Termin_Pembayaran';
+        return 'Termin Pembayaran';
     }
 }

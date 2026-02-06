@@ -24,6 +24,6 @@ class DistributorProductSheetTemplate implements FromArray, WithHeadings, WithTi
 
     public function title(): string
     {
-        return 'Distributor_Produk';
+        return 'Distributor Produk';
     }
 }
