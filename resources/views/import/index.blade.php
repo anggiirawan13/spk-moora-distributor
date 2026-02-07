@@ -8,9 +8,6 @@
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-file-excel text-success mr-2"></i>Import Excel
         </h1>
-        <a href="{{ route('dashboard.index') }}" class="btn btn-secondary btn-sm">
-            <i class="fas fa-arrow-left mr-1"></i>Kembali
-        </a>
     </div>
 
     <div class="card shadow border-0">
@@ -72,25 +69,11 @@
     <div class="card shadow border-0 mt-4">
         <div class="card-header bg-light">
             <h6 class="mb-0 font-weight-bold text-primary">
-                <i class="fas fa-info-circle mr-2"></i>Format File
+                <i class="fas fa-info-circle mr-2"></i>Informasi
             </h6>
         </div>
         <div class="card-body">
-            <p class="text-muted mb-3">Gunakan 1 file Excel dengan sheet berikut:</p>
-
-            <ul class="list-unstyled mb-0">
-                <li><strong>Skala Bisnis</strong>: `name`, `description`</li>
-                <li><strong>Metode Pengiriman</strong>: `name`, `description`</li>
-                <li><strong>Termin Pembayaran</strong>: `name`, `description`</li>
-                <li><strong>Distributor</strong>: `code`, `name`, `npwp`, `email`, `phone`, `address`, `payment_term`, `delivery_method`, `business_scale`, `description`, `is_active`</li>
-                <li><strong>Produk</strong>: `code`, `name`, `description`</li>
-                <li><strong>Distributor Produk</strong>: `code`, `product_code`</li>
-                <li><strong>Kriteria</strong>: `code`, `name`, `weight`, `attribute_type` (Benefit/Cost)</li>
-                <li><strong>Sub Kriteria</strong>: `criteria_code`, `code`, `name`, `value`</li>
-                <li><strong>Alternatif</strong>: `code`, `criteria_code`, `sub_criteria_code`</li>
-            </ul>
-
-            <div class="alert alert-info mt-3 mb-0">
+            <div class="alert alert-info mb-0">
                 <i class="fas fa-info-circle mr-1"></i>
                 Data yang sudah ada tidak akan di-update dan akan dicatat di file error. Kolom `code` akan otomatis di-uppercase saat import.
             </div>

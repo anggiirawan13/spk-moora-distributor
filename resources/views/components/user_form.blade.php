@@ -230,7 +230,7 @@
                     <select class="form-control @error('role') is-invalid @enderror" name="role" required>
                         <option value="admin" {{ old('role', $role) == 'admin' ? 'selected' : '' }}>Admin</option>
                         <option value="staf" {{ old('role', $role) == 'staf' ? 'selected' : '' }}>Staf</option>
-                        <option value="owner" {{ old('role', $role) == 'owner' ? 'selected' : '' }}>Owner</option>
+                        <option value="komisaris" {{ old('role', $role) == 'komisaris' ? 'selected' : '' }}>Komisaris</option>
                         <option value="direktur_utama" {{ old('role', $role) == 'direktur_utama' ? 'selected' : '' }}>Direktur Utama</option>
                     </select>
                     @error('role')

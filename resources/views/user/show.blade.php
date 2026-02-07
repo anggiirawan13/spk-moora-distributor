@@ -85,7 +85,7 @@
                                                             if ($roleLabel === 'Admin') {
                                                                 $roleBadgeClass = 'badge-danger';
                                                                 $roleIcon = 'fa-user-shield';
-                                                            } elseif ($roleLabel === 'Owner') {
+                                                            } elseif ($roleLabel === 'Komisaris') {
                                                                 $roleBadgeClass = 'badge-warning';
                                                                 $roleIcon = 'fa-crown';
                                                             } elseif ($roleLabel === 'Direktur Utama') {

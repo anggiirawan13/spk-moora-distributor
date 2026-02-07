@@ -41,14 +41,14 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'owner',
-            'email' => 'owner@owner.com',
+            'name' => 'komisaris',
+            'email' => 'komisaris@komisaris.com',
             'image_name' => 'Ex1y3eAnda4xT6AiP1j93VCJ9HQpTEmBMzaMLJsf.jpg',
             'phone' => '08123456789',
             'address' => 'Tangerang',
-            'password' => bcrypt('owner123'),
+            'password' => bcrypt('komisaris123'),
             'is_admin' => 0,
-            'role' => 'owner',
+            'role' => 'komisaris',
             'created_at' => now(),
             'updated_at' => now(),
             'created_by' => 1,

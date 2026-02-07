@@ -86,7 +86,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string|max:15',
             'password' => 'string|min:8|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
-            'role' => 'required|in:admin,staf,owner,direktur_utama',
+            'role' => 'required|in:admin,staf,komisaris,direktur_utama',
         ]);
 
         User::create([
@@ -135,7 +135,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'phone' => 'required|string|max:15',
             'password' => 'nullable|string|min:8|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
-            'role' => 'required|in:admin,staf,owner,direktur_utama',
+            'role' => 'required|in:admin,staf,komisaris,direktur_utama',
         ]);
 
         $user = User::findOrFail($id);

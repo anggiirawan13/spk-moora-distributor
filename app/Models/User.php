@@ -63,7 +63,7 @@ class User extends Authenticatable
         }
 
         return match ($this->role) {
-            'owner' => 'Owner',
+            'komisaris' => 'Komisaris',
             'direktur_utama' => 'Direktur Utama',
             default => 'Staf',
         };
