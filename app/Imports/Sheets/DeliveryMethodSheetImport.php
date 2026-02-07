@@ -2,8 +2,8 @@
 
 namespace App\Imports\Sheets;
 
-use App\Imports\ImportContext;
 use App\Imports\ImportErrorBag;
+use App\Imports\ImportContext;
 use App\Imports\ImportStats;
 use App\Models\DeliveryMethod;
 use Illuminate\Support\Collection;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class DeliveryMethodSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     private const SHEET = 'Metode Pengiriman';
-    private array $seenNames = [];
+    private array $seenCodes = [];
 
     public function __construct(
         private readonly ImportErrorBag $errors,
@@ -33,25 +33,32 @@ class DeliveryMethodSheetImport implements ToCollection, WithHeadingRow, SkipsEm
 
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
+            $code = trim((string) ($row['code'] ?? ''));
             $name = trim((string) ($row['name'] ?? ''));
             $description = trim((string) ($row['description'] ?? ''));
 
+            if ($code === '') {
+                $this->errors->add(self::SHEET, $rowNumber, 'Kode kosong');
+                $this->stats->addSkipped(self::SHEET);
+                continue;
+            }
+            
             if ($name === '') {
                 $this->errors->add(self::SHEET, $rowNumber, 'Nama kosong');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
-            if (isset($this->seenNames[$name])) {
-                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$name}");
+            if (isset($this->seenCodes[$code])) {
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$code}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
-            $this->seenNames[$name] = true;
+            $this->seenCodes[$name] = true;
 
-            if (DeliveryMethod::where('name', $name)->exists()) {
-                $this->errors->add(self::SHEET, $rowNumber, "Nama sudah ada: {$name}");
+            if (DeliveryMethod::where('code', $code)->exists()) {
+                $this->errors->add(self::SHEET, $rowNumber, "Kode sudah ada: {$code}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
@@ -59,19 +66,21 @@ class DeliveryMethodSheetImport implements ToCollection, WithHeadingRow, SkipsEm
             if ($this->dryRun) {
                 $this->stats->addWouldCreate(self::SHEET);
                 $this->stats->addSample(self::SHEET, [
+                    'code' => $code,
                     'name' => $name,
                     'description' => $description !== '' ? $description : null,
                 ]);
-                $this->context->deliveryMethods[$name] = true;
+                $this->context->deliveryMethods[$code] = true;
                 continue;
             }
 
             DeliveryMethod::create([
+                'code' => $code,
                 'name' => $name,
                 'description' => $description !== '' ? $description : null,
             ]);
             $this->stats->addCreated(self::SHEET);
-            $this->context->deliveryMethods[$name] = true;
+            $this->context->deliveryMethods[$code] = true;
         }
     }
 }

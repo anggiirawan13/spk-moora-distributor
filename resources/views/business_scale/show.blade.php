@@ -49,6 +49,12 @@
                                         <table class="table table-borderless">
                                             <tbody>
                                                 <tr>
+                                                    <td class="font-weight-bold text-dark" style="width: 150px;">
+                                                        <i class="fas fa-hashtag text-info mr-2"></i>Kode
+                                                    </td>
+                                                    <td class="text-dark">{{ $businessScale->code }}</td>
+                                                </tr>
+                                                <tr>
                                                     <td class="font-weight-bold text-dark" style="width: 200px;">
                                                         <i class="fas fa-tag text-primary mr-2"></i>Nama Skala Bisnis
                                                     </td>

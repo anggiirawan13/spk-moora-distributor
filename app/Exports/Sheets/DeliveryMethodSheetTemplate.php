@@ -10,15 +10,15 @@ class DeliveryMethodSheetTemplate implements FromArray, WithHeadings, WithTitle
 {
     public function headings(): array
     {
-        return ['name', 'description'];
+        return ['code', 'name', 'description'];
     }
 
     public function array(): array
     {
         return [
-            ['Pengiriman Ekspres (1-2 hari)', 'Pengiriman cepat dengan estimasi 1-2 hari kerja'],
-            ['Pengiriman Reguler (3-5 hari)', 'Pengiriman standar dengan estimasi 3-5 hari kerja'],
-            ['Pickup Mandiri', 'Pelanggan mengambil barang langsung ke gudang distributor'],
+            ['MP001', 'Pengiriman Ekspres (1-2 hari)', 'Pengiriman cepat dengan estimasi 1-2 hari kerja'],
+            ['MP002', 'Pengiriman Reguler (3-5 hari)', 'Pengiriman standar dengan estimasi 3-5 hari kerja'],
+            ['MP003', 'Pickup Mandiri', 'Pelanggan mengambil barang langsung ke gudang distributor'],
         ];
     }
 

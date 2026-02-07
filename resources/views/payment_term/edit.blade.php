@@ -31,6 +31,29 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="code" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-hashtag text-info mr-2"></i>Kode Termin Pembayaran <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text"
+                                           class="form-control form-control-lg @error('code') is-invalid @enderror"
+                                           name="code"
+                                           id="code"
+                                           value="{{ old('code', $paymentTerm->code) }}"
+                                           placeholder="Masukkan kode termin pembayaran"
+                                           required>
+                                    @error('code')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="form-text text-muted mt-1">
+                                        <i class="fas fa-info-circle mr-1"></i>Contoh: TP001
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="name" class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-tag text-primary mr-2"></i>Nama Termin Pembayaran <span class="text-danger">*</span>
                                     </label>

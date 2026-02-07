@@ -10,15 +10,15 @@ class PaymentTermSheetTemplate implements FromArray, WithHeadings, WithTitle
 {
     public function headings(): array
     {
-        return ['name', 'description'];
+        return ['code', 'name', 'description'];
     }
 
     public function array(): array
     {
         return [
-            ['Cash / Tunai', 'Pembayaran secara tunai saat transaksi'],
-            ['COD (Cash on Delivery)', 'Pembayaran saat barang diterima'],
-            ['Net 30 Hari', 'Pembayaran dalam jangka waktu 30 hari setelah pengiriman'],
+            ['TP001', 'Cash / Tunai', 'Pembayaran secara tunai saat transaksi'],
+            ['TP002', 'COD (Cash on Delivery)', 'Pembayaran saat barang diterima'],
+            ['TP003', 'Net 30 Hari', 'Pembayaran dalam jangka waktu 30 hari setelah pengiriman'],
         ];
     }
 

@@ -49,6 +49,12 @@
                                         <table class="table table-borderless">
                                             <tbody>
                                                 <tr>
+                                                    <td class="font-weight-bold text-dark" style="width: 150px;">
+                                                        <i class="fas fa-hashtag text-info mr-2"></i>Kode
+                                                    </td>
+                                                    <td class="text-dark">{{ $deliveryMethod->code }}</td>
+                                                </tr>
+                                                <tr>
                                                     <td class="font-weight-bold text-dark" style="width: 200px;">
                                                         <i class="fas fa-truck text-primary mr-2"></i>Nama Metode Pengiriman
                                                     </td>
