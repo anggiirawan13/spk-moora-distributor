@@ -12,6 +12,7 @@ class BusinessScale extends Model
     protected $table = 'business_scales';
 
     protected $fillable = [
+        'code',
         'name',
         'description',
         'created_by',

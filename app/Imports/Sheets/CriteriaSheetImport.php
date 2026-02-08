@@ -39,7 +39,7 @@ class CriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRow
             $attributeType = trim((string) ($row['attribute_type'] ?? ''));
 
             if ($code === '' || $name === '' || $weight === '' || $attributeType === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, name, weight, attribute_type)');
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib tidak boleh kosong (code, name, weight, attribute_type)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }

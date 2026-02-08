@@ -12,6 +12,7 @@ class DeliveryMethod extends Model
     protected $table = 'delivery_methods';
  
     protected $fillable = [
+        'code',
         'name',
         'description',
         'created_by',

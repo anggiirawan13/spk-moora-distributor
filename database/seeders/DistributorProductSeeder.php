@@ -9,7 +9,7 @@ class DistributorProductSeeder extends Seeder
 {
     public static function data(): array
     {
-        $distCodes = array_column(\Database\Seeders\DistributorSeeder::data(), 'code');
+        $distributorCodes = array_column(\Database\Seeders\DistributorSeeder::data(), 'code');
         $productCodes = array_column(\Database\Seeders\ProductSeeder::data(), 'code');
 
         $distributorProductMapping = [
@@ -37,8 +37,8 @@ class DistributorProductSeeder extends Seeder
 
         $rows = [];
         foreach ($distributorProductMapping as $distributorId => $productIds) {
-            $distCode = $distCodes[$distributorId - 1] ?? null;
-            if (!$distCode) {
+            $distributorCode = $distributorCodes[$distributorId - 1] ?? null;
+            if (!$distributorCode) {
                 continue;
             }
 
@@ -49,7 +49,7 @@ class DistributorProductSeeder extends Seeder
                 }
 
                 $rows[] = [
-                    'code' => $distCode,
+                    'distributor_code' => $distributorCode,
                     'product_code' => $productCode,
                 ];
             }
@@ -60,12 +60,12 @@ class DistributorProductSeeder extends Seeder
 
     public function run(): void
     {
-        $distIds = DB::table('distributors')->pluck('id', 'code');
+        $distributorIds = DB::table('distributors')->pluck('id', 'code');
         $productIds = DB::table('products')->pluck('id', 'code');
 
         $dataToInsert = [];
         foreach (self::data() as $row) {
-            $distributorId = $distIds[$row['code']] ?? null;
+            $distributorId = $distributorIds[$row['distributor_code']] ?? null;
             $productId = $productIds[$row['product_code']] ?? null;
             if (!$distributorId || !$productId) {
                 continue;
@@ -74,10 +74,10 @@ class DistributorProductSeeder extends Seeder
             $dataToInsert[] = [
                 'distributor_id' => $distributorId,
                 'product_id' => $productId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                    'created_by' => 1,
-                    'updated_by' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'created_by' => 1,
+                'updated_by' => 1,
             ];
         }
 

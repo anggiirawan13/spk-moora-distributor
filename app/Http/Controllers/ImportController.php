@@ -60,7 +60,7 @@ class ImportController extends Controller
 
         $storedFile = $request->input('stored_file');
         if (!Storage::disk('local')->exists($storedFile)) {
-            return redirect()->back()->with('error', 'File import tidak ditemukan. Silakan upload ulang.');
+            return redirect()->back()->with('error', 'File import tidak ditemukan. Silakan upload ulang');
         }
 
         $errors = new ImportErrorBag();
@@ -92,7 +92,7 @@ class ImportController extends Controller
 
         return redirect()
             ->route('import.excel.index')
-            ->with('success', 'Import berhasil.')
+            ->with('success', 'Import berhasil')
             ->with('import_stats', $statsSummary);
     }
 
@@ -101,7 +101,7 @@ class ImportController extends Controller
         $path = 'import-errors/' . $file;
 
         if (!Storage::disk('local')->exists($path)) {
-            return redirect()->back()->with('error', 'File error tidak ditemukan.');
+            return redirect()->back()->with('error', 'File error tidak ditemukan');
         }
 
         return Storage::disk('local')->download($path);

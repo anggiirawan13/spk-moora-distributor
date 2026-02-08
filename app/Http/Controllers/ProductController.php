@@ -62,10 +62,10 @@ class ProductController extends Controller
             return redirect()->route('product.index')->with('success', 'Data produk berhasil disimpan');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama produk sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama produk sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -93,10 +93,10 @@ class ProductController extends Controller
             return redirect()->route('product.index')->with('success', 'Data produk berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama produk sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama produk sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 

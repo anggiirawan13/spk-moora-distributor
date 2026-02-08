@@ -19,9 +19,9 @@ class SeederTemplateExport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            new SeederArraySheet('Skala Bisnis', ['name', 'description'], BusinessScaleSeeder::data()),
-            new SeederArraySheet('Metode Pengiriman', ['name', 'description'], DeliveryMethodSeeder::data()),
-            new SeederArraySheet('Termin Pembayaran', ['name', 'description'], PaymentTermSeeder::data()),
+            new SeederArraySheet('Skala Bisnis', ['code', 'name', 'description'], BusinessScaleSeeder::data()),
+            new SeederArraySheet('Metode Pengiriman', ['code', 'name', 'description'], DeliveryMethodSeeder::data()),
+            new SeederArraySheet('Termin Pembayaran', ['code', 'name', 'description'], PaymentTermSeeder::data()),
             new SeederArraySheet('Distributor', [
                 'code',
                 'name',
@@ -29,14 +29,14 @@ class SeederTemplateExport implements WithMultipleSheets
                 'email',
                 'phone',
                 'address',
-                'payment_term',
-                'delivery_method',
-                'business_scale',
+                'payment_term_code',
+                'delivery_method_code',
+                'business_scale_code',
                 'description',
                 'is_active',
             ], DistributorSeeder::data()),
             new SeederArraySheet('Produk', ['code', 'name', 'description'], ProductSeeder::data()),
-            new SeederArraySheet('Distributor Produk', ['code', 'product_code'], DistributorProductSeeder::data()),
+            new SeederArraySheet('Distributor Produk', ['distributor_code', 'product_code'], DistributorProductSeeder::data()),
             new SeederArraySheet('Kriteria', ['code', 'name', 'weight', 'attribute_type'], CriteriaSeeder::data()),
             new SeederArraySheet('Sub Kriteria', ['criteria_code', 'code', 'name', 'value'], SubCriteriaSeeder::data()),
             new SeederArraySheet('Alternatif', ['code', 'criteria_code', 'sub_criteria_code'], AlternativeSeeder::data()),

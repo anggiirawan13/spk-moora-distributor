@@ -46,7 +46,7 @@ class AlternativeSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $subCriteriaCode = strtoupper(trim((string) ($row['sub_criteria_code'] ?? '')));
 
             if ($distCode === '' || $criteriaCode === '' || $subCriteriaCode === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, criteria_code, sub_criteria_code)');
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib tidak boleh kosong (code, criteria_code, sub_criteria_code)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }

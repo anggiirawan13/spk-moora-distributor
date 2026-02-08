@@ -55,7 +55,7 @@ class PaymentTermSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 continue;
             }
 
-            $this->seenCodes[$name] = true;
+            $this->seenCodes[$code] = true;
 
             if (PaymentTerm::where('code', $code)->exists()) {
                 $this->errors->add(self::SHEET, $rowNumber, "Kode sudah ada: {$code}");

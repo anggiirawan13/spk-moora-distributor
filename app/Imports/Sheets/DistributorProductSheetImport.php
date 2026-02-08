@@ -23,8 +23,7 @@ class DistributorProductSheetImport implements ToCollection, WithHeadingRow, Ski
         private readonly ImportStats $stats,
         private readonly ImportContext $context,
         private readonly bool $dryRun
-    )
-    {
+    ) {
     }
 
     public function collection(Collection $rows)
@@ -35,27 +34,27 @@ class DistributorProductSheetImport implements ToCollection, WithHeadingRow, Ski
 
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
-            $distCode = strtoupper(trim((string) ($row['code'] ?? $row['code'] ?? '')));
+            $distributorCode = strtoupper(trim((string) ($row['distributor_code'] ?? $row['distributor_code'] ?? '')));
             $productCode = strtoupper(trim((string) ($row['product_code'] ?? '')));
 
-            if ($distCode === '' || $productCode === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, product_code)');
+            if ($distributorCode === '' || $productCode === '') {
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib tidak boleh kosong (distributor_code, product_code)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
-            $comboKey = $distCode . '|' . $productCode;
+            $comboKey = $distributorCode . '|' . $productCode;
             if (isset($this->seenCombos[$comboKey])) {
-                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$distCode} - {$productCode}");
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$distributorCode} - {$productCode}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
             $this->seenCombos[$comboKey] = true;
 
-            $distributor = Distributor::where('code', $distCode)->first();
+            $distributor = Distributor::where('code', $distributorCode)->first();
             if (!$distributor) {
-                if (!$this->dryRun || !isset($this->context->distributors[$distCode])) {
-                    $this->errors->add(self::SHEET, $rowNumber, "Distributor code tidak ditemukan: {$distCode}");
+                if (!$this->dryRun || !isset($this->context->distributors[$distributorCode])) {
+                    $this->errors->add(self::SHEET, $rowNumber, "Distributor tidak ditemukan: {$distributorCode}");
                     $this->stats->addSkipped(self::SHEET);
                     continue;
                 }
@@ -64,7 +63,7 @@ class DistributorProductSheetImport implements ToCollection, WithHeadingRow, Ski
 
             $product = Product::where('code', $productCode)->first();
             if (!$product) {
-                if (!$this->dryRun || !isset($this->context->productCodes[$productCode])) {
+                if (!$this->dryRun || !isset($this->context->products[$productCode])) {
                     $this->errors->add(self::SHEET, $rowNumber, "Produk tidak ditemukan: {$productCode}");
                     $this->stats->addSkipped(self::SHEET);
                     continue;
@@ -79,7 +78,7 @@ class DistributorProductSheetImport implements ToCollection, WithHeadingRow, Ski
                     ->exists();
 
                 if ($exists) {
-                    $this->errors->add(self::SHEET, $rowNumber, "Mapping sudah ada: {$distCode} - {$productCode}");
+                    $this->errors->add(self::SHEET, $rowNumber, "Mapping sudah ada: {$distributorCode} - {$productCode}");
                     $this->stats->addSkipped(self::SHEET);
                     continue;
                 }
@@ -88,7 +87,7 @@ class DistributorProductSheetImport implements ToCollection, WithHeadingRow, Ski
             if ($this->dryRun) {
                 $this->stats->addWouldCreate(self::SHEET);
                 $this->stats->addSample(self::SHEET, [
-                    'code' => $distCode,
+                    'distributor_code' => $distributorCode,
                     'product_code' => $productCode,
                 ]);
                 $this->context->distributorProducts[$comboKey] = true;

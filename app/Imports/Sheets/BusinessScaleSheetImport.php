@@ -21,8 +21,7 @@ class BusinessScaleSheetImport implements ToCollection, WithHeadingRow, SkipsEmp
         private readonly ImportStats $stats,
         private readonly ImportContext $context,
         private readonly bool $dryRun
-    )
-    {
+    ) {
     }
 
     public function collection(Collection $rows)
@@ -42,7 +41,7 @@ class BusinessScaleSheetImport implements ToCollection, WithHeadingRow, SkipsEmp
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
-            
+
             if ($name === '') {
                 $this->errors->add(self::SHEET, $rowNumber, 'Nama kosong');
                 $this->stats->addSkipped(self::SHEET);
@@ -55,7 +54,7 @@ class BusinessScaleSheetImport implements ToCollection, WithHeadingRow, SkipsEmp
                 continue;
             }
 
-            $this->seenCodes[$name] = true;
+            $this->seenCodes[$code] = true;
 
             if (BusinessScale::where('code', $code)->exists()) {
                 $this->errors->add(self::SHEET, $rowNumber, "Kode sudah ada: {$code}");

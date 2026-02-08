@@ -48,10 +48,10 @@ class BusinessScaleController extends Controller
             return redirect()->route('business_scale.index')->with('success', 'Data skala bisnis berhasil disimpan');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama skala bisnis sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama skala bisnis sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -73,10 +73,10 @@ class BusinessScaleController extends Controller
             return redirect()->route('business_scale.index')->with('success', 'Data skala bisnis berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama skala bisnis sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama skala bisnis sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -86,7 +86,7 @@ class BusinessScaleController extends Controller
 
         if ($businessScale->distributors()->count() > 0) {
             return redirect()->route('business_scale.index')
-                ->with('error', 'Tidak dapat menghapus skala bisnis karena masih digunakan oleh distributor.');
+                ->with('error', 'Tidak dapat menghapus skala bisnis karena masih digunakan oleh distributor');
         }
 
         $businessScale->delete();

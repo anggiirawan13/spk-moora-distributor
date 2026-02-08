@@ -12,6 +12,7 @@ class PaymentTerm extends Model
     protected $table = 'payment_terms';
 
     protected $fillable = [
+        'code',
         'name',
         'description',
         'created_by',

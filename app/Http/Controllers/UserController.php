@@ -68,7 +68,7 @@ class UserController extends Controller
             'image_name' => $imageName,
         ]);
 
-        return redirect()->route('login')->with('success', 'Berhasil membuat akun.');
+        return redirect()->route('login')->with('success', 'Berhasil membuat akun');
     }
 
     public function store(Request $request): RedirectResponse
@@ -100,7 +100,7 @@ class UserController extends Controller
             'image_name' => $imageName,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan.');
+        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan');
     }
 
     public function show($id)
@@ -160,7 +160,7 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil diperbarui.');
+        return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
     }
 
     public function destroy(User $user): RedirectResponse
@@ -216,6 +216,6 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
+        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui');
     }
 }

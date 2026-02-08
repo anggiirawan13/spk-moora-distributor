@@ -65,10 +65,10 @@ class CriteriaController extends Controller
             return redirect()->route('criteria.index')->with('success', 'Data berhasil disimpan');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 10062) {
-                return back()->withInput()->with('error', 'Kode sudah digunakan, gunakan kode lain.');
+                return back()->withInput()->with('error', 'Kode sudah digunakan, gunakan kode lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -94,10 +94,10 @@ class CriteriaController extends Controller
             return redirect()->route('criteria.index')->with('success', 'Data berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 10062) {
-                return back()->withInput()->with('error', 'Kode sudah digunakan, gunakan kode lain.');
+                return back()->withInput()->with('error', 'Kode sudah digunakan, gunakan kode lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 

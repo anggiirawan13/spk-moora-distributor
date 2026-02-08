@@ -15,7 +15,7 @@ return new class extends Migration
 
         $rows = DB::table('payment_terms')->orderBy('id')->get();
         foreach ($rows as $row) {
-            $code = 'P' . str_pad((string) $row->id, 3, '0', STR_PAD_LEFT);
+            $code = 'TP' . str_pad((string) $row->id, 3, '0', STR_PAD_LEFT);
             DB::table('payment_terms')->where('id', $row->id)->update(['code' => $code]);
         }
 

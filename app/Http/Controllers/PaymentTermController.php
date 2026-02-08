@@ -48,10 +48,10 @@ class PaymentTermController extends Controller
             return redirect()->route('payment_term.index')->with('success', 'Data termin pembayaran berhasil disimpan');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama termin pembayaran sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama termin pembayaran sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -73,10 +73,10 @@ class PaymentTermController extends Controller
             return redirect()->route('payment_term.index')->with('success', 'Data termin pembayaran berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama termin pembayaran sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama termin pembayaran sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -85,7 +85,7 @@ class PaymentTermController extends Controller
         $paymentTerm = PaymentTerm::findOrFail($id);
         if ($paymentTerm->distributors()->count() > 0) {
             return redirect()->route('payment_term.index')
-                ->with('error', 'Tidak dapat menghapus termin pembayaran karena masih digunakan oleh distributor.');
+                ->with('error', 'Tidak dapat menghapus termin pembayaran karena masih digunakan oleh distributor');
         }
 
         $paymentTerm->delete();

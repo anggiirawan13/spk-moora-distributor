@@ -33,7 +33,7 @@ class SubCriteriaController extends Controller
 
         SubCriteria::create($request->all());
 
-        return redirect()->route('subcriteria.index')->with('success', 'Sub Kriteria berhasil ditambahkan.');
+        return redirect()->route('subcriteria.index')->with('success', 'Sub Kriteria berhasil ditambahkan');
     }
 
     public function show($id)
@@ -67,10 +67,10 @@ class SubCriteriaController extends Controller
             return redirect()->route('subcriteria.index')->with('success', 'Data berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 10062) {
-                return back()->withInput()->with('error', 'Kode sudah digunakan, gunakan kode lain.');
+                return back()->withInput()->with('error', 'Kode sudah digunakan, gunakan kode lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 

@@ -48,10 +48,10 @@ class DeliveryMethodController extends Controller
             return redirect()->route('delivery_method.index')->with('success', 'Data metode pengiriman berhasil disimpan');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama metode pengiriman sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama metode pengiriman sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -73,10 +73,10 @@ class DeliveryMethodController extends Controller
             return redirect()->route('delivery_method.index')->with('success', 'Data metode pengiriman berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama metode pengiriman sudah digunakan, gunakan nama lain.');
+                return back()->withInput()->with('error', 'Nama metode pengiriman sudah digunakan, gunakan nama lain');
             }
 
-            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
+            return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
         }
     }
 
@@ -85,7 +85,7 @@ class DeliveryMethodController extends Controller
         $deliveryMethod = DeliveryMethod::findOrFail($id);
         if ($deliveryMethod->distributors()->count() > 0) {
             return redirect()->route('delivery_method.index')
-                ->with('error', 'Tidak dapat menghapus metode pengiriman karena masih digunakan oleh distributor.');
+                ->with('error', 'Tidak dapat menghapus metode pengiriman karena masih digunakan oleh distributor');
         }
 
         $deliveryMethod->delete();

@@ -40,7 +40,7 @@ class SubCriteriaSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $value = trim((string) ($row['value'] ?? ''));
 
             if ($criteriaCode === '' || $name === '' || $value === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (criteria_code, name, value)');
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib tidak boleh kosong (criteria_code, name, value)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }

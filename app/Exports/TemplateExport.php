@@ -19,7 +19,6 @@ class TemplateExport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            new ReadmeSheetTemplate(),
             new BusinessScaleSheetTemplate(),
             new DeliveryMethodSheetTemplate(),
             new PaymentTermSheetTemplate(),

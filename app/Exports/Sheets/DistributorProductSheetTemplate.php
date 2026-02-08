@@ -10,7 +10,7 @@ class DistributorProductSheetTemplate implements FromArray, WithHeadings, WithTi
 {
     public function headings(): array
     {
-        return ['code', 'product_code'];
+        return ['distributor_code', 'product_code'];
     }
 
     public function array(): array

@@ -25,8 +25,7 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
         private readonly ImportStats $stats,
         private readonly ImportContext $context,
         private readonly bool $dryRun
-    )
-    {
+    ) {
     }
 
     public function collection(Collection $rows)
@@ -39,33 +38,33 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
 
         foreach ($rows as $index => $row) {
             $rowNumber = $index + 2;
-            $distCodeRaw = (string) ($row['code'] ?? $row['code'] ?? '');
-            $distCode = strtoupper(trim($distCodeRaw));
+            $distributorCodeRaw = (string) ($row['code'] ?? $row['code'] ?? '');
+            $distributorCode = strtoupper(trim($distributorCodeRaw));
             $name = trim((string) ($row['name'] ?? ''));
             $npwpRaw = (string) ($row['npwp'] ?? '');
             $npwp = preg_replace('/\D+/', '', $npwpRaw);
             $email = trim((string) ($row['email'] ?? ''));
             $phone = trim((string) ($row['phone'] ?? ''));
             $address = trim((string) ($row['address'] ?? ''));
-            $paymentTermName = trim((string) ($row['payment_term'] ?? ''));
-            $deliveryMethodName = trim((string) ($row['delivery_method'] ?? ''));
-            $businessScaleName = trim((string) ($row['business_scale'] ?? ''));
+            $paymentTermCode = trim((string) ($row['payment_term_code'] ?? ''));
+            $deliveryMethodCode = trim((string) ($row['delivery_method_code'] ?? ''));
+            $businessScaleCode = trim((string) ($row['business_scale_code'] ?? ''));
             $description = trim((string) ($row['description'] ?? ''));
             $isActiveRaw = strtolower(trim((string) ($row['is_active'] ?? '1')));
 
-            if ($distCode === '' || $name === '' || $email === '' || $phone === '' || $address === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, name, email, phone, address)');
+            if ($distributorCode === '' || $name === '' || $email === '' || $phone === '' || $address === '') {
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib tidak boleh kosong (code, name, email, phone, address)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
-            if (isset($this->seenCodes[$distCode])) {
-                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$distCode}");
+            if (isset($this->seenCodes[$distributorCode])) {
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$distributorCode}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
-            $this->seenCodes[$distCode] = true;
+            $this->seenCodes[$distributorCode] = true;
 
             if ($npwpRaw !== '' && preg_match('/[A-Za-z]/', $npwpRaw)) {
                 $this->errors->add(self::SHEET, $rowNumber, 'NPWP hanya boleh angka/tanda baca');
@@ -103,8 +102,8 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 continue;
             }
 
-            if (Distributor::where('code', $distCode)->exists()) {
-                $this->errors->add(self::SHEET, $rowNumber, "Kode distributor sudah ada: {$distCode}");
+            if (Distributor::where('code', $distributorCode)->exists()) {
+                $this->errors->add(self::SHEET, $rowNumber, "Kode distributor sudah ada: {$distributorCode}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
@@ -115,14 +114,21 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 continue;
             }
 
-            $paymentTerm = PaymentTerm::where('name', $paymentTermName)->first();
-            $deliveryMethod = DeliveryMethod::where('name', $deliveryMethodName)->first();
-            $businessScale = BusinessScale::where('name', $businessScaleName)->first();
-
+            $paymentTerm = PaymentTerm::where('code', $paymentTermCode)->first();
+            $deliveryMethod = DeliveryMethod::where('code', $deliveryMethodCode)->first();
+            $businessScale = BusinessScale::where('code', $businessScaleCode)->first();
+            // dd(
+            //     $this->context->paymentTerms,
+            //     $this->context->deliveryMethods,
+            //     $this->context->businessScales,
+            //     $paymentTermCode,
+            //     $deliveryMethodCode,
+            //     $businessScaleCode
+            // );
             if ($this->dryRun) {
-                $paymentTermOk = $paymentTerm || isset($this->context->paymentTerms[$paymentTermName]);
-                $deliveryMethodOk = $deliveryMethod || isset($this->context->deliveryMethods[$deliveryMethodName]);
-                $businessScaleOk = $businessScale || isset($this->context->businessScales[$businessScaleName]);
+                $paymentTermOk = $paymentTerm || isset($this->context->paymentTerms[$paymentTermCode]);
+                $deliveryMethodOk = $deliveryMethod || isset($this->context->deliveryMethods[$deliveryMethodCode]);
+                $businessScaleOk = $businessScale || isset($this->context->businessScales[$businessScaleCode]);
             } else {
                 $paymentTermOk = (bool) $paymentTerm;
                 $deliveryMethodOk = (bool) $deliveryMethod;
@@ -130,7 +136,7 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             }
 
             if (!$paymentTermOk || !$deliveryMethodOk || !$businessScaleOk) {
-                $this->errors->add(self::SHEET, $rowNumber, 'Referensi payment_term/delivery_method/business_scale tidak ditemukan');
+                $this->errors->add(self::SHEET, $rowNumber, 'Referensi payment_term_code/delivery_method_code/business_scale_code tidak ditemukan');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
@@ -140,24 +146,24 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             if ($this->dryRun) {
                 $this->stats->addWouldCreate(self::SHEET);
                 $this->stats->addSample(self::SHEET, [
-                    'code' => $distCode,
+                    'code' => $distributorCode,
                     'name' => $name,
                     'npwp' => $npwp,
                     'email' => $email,
                     'phone' => $phoneDigits,
                     'address' => $address,
-                    'payment_term' => $paymentTermName,
-                    'delivery_method' => $deliveryMethodName,
-                    'business_scale' => $businessScaleName,
+                    'payment_term_code' => $paymentTermCode,
+                    'delivery_method_code' => $deliveryMethodCode,
+                    'business_scale_code' => $businessScaleCode,
                     'description' => $description !== '' ? $description : null,
                     'is_active' => $isActive,
                 ]);
-                $this->context->distributors[$distCode] = true;
+                $this->context->distributors[$distributorCode] = true;
                 continue;
             }
 
             Distributor::create([
-                'code' => $distCode,
+                'code' => $distributorCode,
                 'name' => $name,
                 'npwp' => $npwp,
                 'email' => $email,
@@ -170,7 +176,7 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
                 'is_active' => $isActive,
             ]);
             $this->stats->addCreated(self::SHEET);
-            $this->context->distributors[$distCode] = true;
+            $this->context->distributors[$distributorCode] = true;
         }
     }
 }

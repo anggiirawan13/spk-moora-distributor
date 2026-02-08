@@ -55,7 +55,7 @@ class DeliveryMethodSheetImport implements ToCollection, WithHeadingRow, SkipsEm
                 continue;
             }
 
-            $this->seenCodes[$name] = true;
+            $this->seenCodes[$code] = true;
 
             if (DeliveryMethod::where('code', $code)->exists()) {
                 $this->errors->add(self::SHEET, $rowNumber, "Kode sudah ada: {$code}");

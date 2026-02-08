@@ -14,7 +14,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class ProductSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
 {
     private const SHEET = 'Produk';
-    private array $seenNames = [];
     private array $seenCodes = [];
 
     public function __construct(
@@ -22,8 +21,7 @@ class ProductSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
         private readonly ImportStats $stats,
         private readonly ImportContext $context,
         private readonly bool $dryRun
-    )
-    {
+    ) {
     }
 
     public function collection(Collection $rows)
@@ -39,34 +37,20 @@ class ProductSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
             $description = trim((string) ($row['description'] ?? ''));
 
             if ($code === '' || $name === '') {
-                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib kosong (code, name)');
+                $this->errors->add(self::SHEET, $rowNumber, 'Field wajib tidak boleh kosong (code, name)');
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
 
             if (isset($this->seenCodes[$code])) {
-                $this->errors->add(self::SHEET, $rowNumber, "Duplikat code di file: {$code}");
+                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$code}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
             $this->seenCodes[$code] = true;
 
-            if (isset($this->seenNames[$name])) {
-                $this->errors->add(self::SHEET, $rowNumber, "Duplikat di file: {$name}");
-                $this->stats->addSkipped(self::SHEET);
-                continue;
-            }
-
-            $this->seenNames[$name] = true;
-
             if (Product::where('code', $code)->exists()) {
                 $this->errors->add(self::SHEET, $rowNumber, "Code sudah ada: {$code}");
-                $this->stats->addSkipped(self::SHEET);
-                continue;
-            }
-
-            if (Product::where('name', $name)->exists()) {
-                $this->errors->add(self::SHEET, $rowNumber, "Nama sudah ada: {$name}");
                 $this->stats->addSkipped(self::SHEET);
                 continue;
             }
@@ -78,8 +62,7 @@ class ProductSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                     'name' => $name,
                     'description' => $description !== '' ? $description : null,
                 ]);
-                $this->context->products[$name] = true;
-                $this->context->productCodes[$code] = $name;
+                $this->context->products[$code] = $code;
                 continue;
             }
 
@@ -89,8 +72,7 @@ class ProductSheetImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
                 'description' => $description !== '' ? $description : null,
             ]);
             $this->stats->addCreated(self::SHEET);
-            $this->context->products[$name] = true;
-            $this->context->productCodes[$code] = $name;
+            $this->context->products[$code] = $code;
         }
     }
 }

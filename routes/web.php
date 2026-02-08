@@ -35,7 +35,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/distributor/compare', [DistributorController::class, 'compare'])->name('distributor.compare');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/calculation', [CalculationController::class, 'calculation'])->name('calculation');
     Route::get('/calculation', [CalculationController::class, 'calculation'])->name('moora.calculation');
     Route::get('/moora/report', [CalculationController::class, 'downloadPDF'])->name('moora.download_pdf');
 

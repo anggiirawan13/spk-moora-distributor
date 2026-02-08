@@ -9,7 +9,6 @@ class ImportContext
     public array $paymentTerms = [];
     public array $distributors = [];
     public array $products = [];
-    public array $productCodes = [];
     public array $distributorProducts = [];
     public array $criterias = [];
     public array $subCriteriaCodes = [];

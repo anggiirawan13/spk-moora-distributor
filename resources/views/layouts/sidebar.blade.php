@@ -43,7 +43,7 @@
                         <i class="fas fa-money-bill-wave mr-2"></i> Termin Pembayaran
                     </a>
                     <a class="collapse-item text-dark" href="{{ route('distributor.index') }}">
-                        <i class="fas fa-warehouse"></i> Distributor
+                        <i class="fas fa-warehouse mr-2"></i> Distributor
                     </a>
                     <a class="collapse-item text-dark" href="{{ route('product.index') }}">
                         <i class="fas fa-boxes mr-2"></i> Produk

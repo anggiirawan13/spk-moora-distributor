@@ -31,19 +31,22 @@
                                 </p>
                             </div>
                             <div class="col-md-4">
-                                <form action="{{ route('moora.calculation') }}" method="GET" class="d-flex align-items-end">
+                                <form action="{{ route('moora.calculation') }}" method="GET"
+                                    class="d-flex align-items-end">
                                     <div class="flex-grow-1 mr-3">
-                                        <select class="form-control" name="product_id" id="product_id" style="border-radius: 10px; border: 2px solid #e9ecef; transition: all 0.3s ease;">
+                                        <select class="form-control" name="product_id" id="product_id"
+                                            style="border-radius: 10px; border: 2px solid #e9ecef; transition: all 0.3s ease;">
                                             <option value="">-- Pilih Produk --</option>
-                                            @foreach($products as $product)
-                                                <option value="{{ $product->id }}" 
-                                                        {{ request('product_id') == $product->id ? 'selected' : '' }}>
+                                            @foreach ($products as $product)
+                                                <option value="{{ $product->id }}"
+                                                    {{ request('product_id') == $product->id ? 'selected' : '' }}>
                                                     {{ $product->name }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary" style="border-radius: 10px; padding: 0.5rem 1.5rem;">
+                                    <button type="submit" class="btn btn-primary"
+                                        style="border-radius: 10px; padding: 0.5rem 1.5rem;">
                                         <i class="fas fa-play mr-1"></i> Analisis
                                     </button>
                                 </form>
@@ -54,47 +57,49 @@
             </div>
         </div>
 
-        @if(isset($alternatives) && $alternatives->count() > 0)
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="position-relative">
-                    <hr style="border: none; height: 2px; background: linear-gradient(90deg, transparent 0%, #047857 50%, transparent 100%);">
-                    <div class="position-absolute top-50 start-50 translate-middle">
-                        <span class="bg-white px-3 text-primary">
-                            <i class="fas fa-arrow-down"></i>
-                        </span>
+        @if (isset($alternatives) && $alternatives->count() > 0)
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="position-relative">
+                        <hr
+                            style="border: none; height: 2px; background: linear-gradient(90deg, transparent 0%, #047857 50%, transparent 100%);">
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                            <span class="bg-white px-3 text-primary">
+                                <i class="fas fa-arrow-down"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endif
 
-        @if(isset($alternatives) && $alternatives->count() > 0)
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <div>
-                <h1 class="h3 mb-0 text-gray-800">
-                    <i class="fas fa-chart-line text-primary mr-2"></i>Hasil Analisis MOORA
-                </h1>
-                <p class="text-muted mb-0 mt-1 small">
-                    @if(isset($productSelected) && $productSelected)
-                        Menampilkan hasil untuk produk: <strong>{{ $productSelected->name }}</strong>
+        @if (isset($alternatives) && $alternatives->count() > 0)
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <div>
+                    <h1 class="h3 mb-0 text-gray-800">
+                        <i class="fas fa-chart-line text-primary mr-2"></i>Hasil Analisis MOORA
+                    </h1>
+                    <p class="text-muted mb-0 mt-1 small">
+                        @if (isset($productSelected) && $productSelected)
+                            Menampilkan hasil untuk produk: <strong>{{ $productSelected->name }}</strong>
+                        @else
+                            Menampilkan hasil untuk <strong>semua distributor</strong>
+                        @endif
+                    </p>
+                </div>
+                <div>
+                    @if (request('product_id'))
+                        <a href="{{ route('moora.download_pdf', ['product_id' => request('product_id')]) }}"
+                            class="btn btn-success" style="border-radius: 10px;">
+                            <i class="fas fa-file-pdf mr-2"></i>Download PDF
+                        </a>
                     @else
-                        Menampilkan hasil untuk <strong>semua distributor</strong>
+                        <a href="{{ route('moora.download_pdf') }}" class="btn btn-success" style="border-radius: 10px;">
+                            <i class="fas fa-file-pdf mr-2"></i>Download PDF
+                        </a>
                     @endif
-                </p>
+                </div>
             </div>
-            <div>
-                @if(request('product_id'))
-                    <a href="{{ route('moora.download_pdf', ['product_id' => request('product_id')]) }}" class="btn btn-success" style="border-radius: 10px;">
-                        <i class="fas fa-file-pdf mr-2"></i>Download PDF
-                    </a>
-                @else
-                    <a href="{{ route('moora.download_pdf') }}" class="btn btn-success" style="border-radius: 10px;">
-                        <i class="fas fa-file-pdf mr-2"></i>Download PDF
-                    </a>
-                @endif
-            </div>
-        </div>
         @endif
 
         <div class="row mb-4">
@@ -141,9 +146,15 @@
                                     Rekomendasi Distributor</div>
                                 <div class="h6 mb-0 font-weight-bold text-gray-800 text-truncate">
                                     @php
-                                        $topAlt = $alternatives->firstWhere('id', array_key_first($valueMoora));
+                                        $topAlt = null;
+
+                                        if (!empty($valueMoora) && $alternatives->isNotEmpty()) {
+                                            $topId = array_key_first($valueMoora);
+                                            $topAlt = $alternatives->firstWhere('id', $topId);
+                                        }
                                     @endphp
-                                    {{ optional($topAlt->distributor)->name ?? 'N/A' }}
+
+                                    {{ $topAlt?->distributor?->name ?? 'N/A' }}
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -162,7 +173,14 @@
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     Nilai Tertinggi</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ number_format(max($valueMoora), 5) }}
+                                    @php
+                                        $maxValue = !empty($valueMoora) ? max($valueMoora) : null;
+                                    @endphp
+
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        {{ $maxValue !== null ? number_format($maxValue, 5) : 'N/A' }}
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -184,7 +202,7 @@
             <div class="card-body">
                 <div class="alert alert-info border-0">
                     <i class="fas fa-info-circle mr-2"></i>
-                    <strong>Rumus kuadrat per kriteria:</strong> 
+                    <strong>Rumus kuadrat per kriteria:</strong>
                     <code>∑(x<sub>ij</sub>)² = x<sub>1j</sub>² + x<sub>2j</sub>² + ... + x<sub>nj</sub>²</code>
                 </div>
 
@@ -248,7 +266,7 @@
             <div class="card-body">
                 <div class="alert alert-info border-0">
                     <i class="fas fa-info-circle mr-2"></i>
-                    <strong>Rumus akar untuk normalisasi:</strong> 
+                    <strong>Rumus akar untuk normalisasi:</strong>
                     <code>√(∑(x<sub>ij</sub>)²) = √(x<sub>1j</sub>² + x<sub>2j</sub>² + ... + x<sub>nj</sub>²)</code>
                 </div>
 
@@ -304,7 +322,7 @@
             <div class="card-body">
                 <div class="alert alert-info border-0">
                     <i class="fas fa-info-circle mr-2"></i>
-                    <strong>Rumus normalisasi:</strong> 
+                    <strong>Rumus normalisasi:</strong>
                     <code>r<sub>ij</sub> = x<sub>ij</sub> / √(∑x<sub>ij</sub>²)</code>
                 </div>
 
@@ -355,11 +373,11 @@
             <div class="card-body">
                 <div class="alert alert-info border-0">
                     <i class="fas fa-info-circle mr-2"></i>
-                    <strong>Rumus nilai tertimbang:</strong> 
+                    <strong>Rumus nilai tertimbang:</strong>
                     <code>y<sub>ij</sub> = r<sub>ij</sub> × w<sub>j</sub></code>
                     <br>
                     <small class="mt-1">
-                        <code>r<sub>ij</sub></code>: nilai normalisasi • 
+                        <code>r<sub>ij</sub></code>: nilai normalisasi •
                         <code>w<sub>j</sub></code>: bobot kriteria
                     </small>
                 </div>
@@ -387,7 +405,8 @@
                                         {{ optional($a->distributor)->name ?? ($a->name ?? '—') }}
                                     </td>
                                     @foreach ($criteria as $c)
-                                        <td class="{{ ($normalization[$a->id][$c->id] ?? 0) > 0 ? 'text-success font-weight-bold' : 'text-muted' }}">
+                                        <td
+                                            class="{{ ($normalization[$a->id][$c->id] ?? 0) > 0 ? 'text-success font-weight-bold' : 'text-muted' }}">
                                             {{ number_format($normalization[$a->id][$c->id] ?? 0, 5) }}
                                         </td>
                                     @endforeach
@@ -409,7 +428,7 @@
             <div class="card-body">
                 <div class="alert alert-info border-0">
                     <i class="fas fa-info-circle mr-2"></i>
-                    <strong>Rumus nilai akhir MOORA:</strong> 
+                    <strong>Rumus nilai akhir MOORA:</strong>
                     <code>Yi = Σ(W<sub>j</sub> × r<sub>ij</sub>) (benefit) − Σ(W<sub>j</sub> × r<sub>ij</sub>) (cost)</code>
                 </div>
 
@@ -451,7 +470,7 @@
 
                                 <tr class="{{ $rank === 1 ? 'table-success font-weight-bold' : '' }}">
                                     <td>
-                                        @if($rank === 1)
+                                        @if ($rank === 1)
                                             <span class="badge badge-success badge-pill px-3 py-2">
                                                 <i class="fas fa-crown mr-1"></i>{{ $rank }}
                                             </span>
@@ -477,17 +496,44 @@
     </div>
 
     <style>
-        .bg-gradient-primary { background: linear-gradient(135deg, #047857 0%, #059669 100%) !important; }
-        .bg-gradient-success { background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; }
-        .bg-gradient-info { background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important; }
-        .bg-gradient-warning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important; }
-        .bg-gradient-danger { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important; }
-        .bg-gradient-light { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important; }
-        
-        .card { border-radius: 12px; overflow: hidden; }
-        .table { border-radius: 8px; overflow: hidden; }
-        .badge-pill { border-radius: 50rem; }
-        
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
+        }
+
+        .bg-gradient-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        }
+
+        .bg-gradient-info {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+        }
+
+        .bg-gradient-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+        }
+
+        .bg-gradient-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        }
+
+        .bg-gradient-light {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+        }
+
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .badge-pill {
+            border-radius: 50rem;
+        }
+
         .table-hover tbody tr:hover {
             background-color: rgba(5, 150, 105, 0.05);
             transform: translateY(-1px);
@@ -500,7 +546,7 @@
 
         .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
         }
 
         .form-control:focus {
@@ -534,16 +580,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const productSelect = document.getElementById('product_id');
-            
+
             productSelect.addEventListener('focus', function() {
                 this.style.borderColor = '#047857';
                 this.style.boxShadow = '0 0 0 0.2rem rgba(4, 120, 87, 0.1)';
             });
-            
+
             productSelect.addEventListener('blur', function() {
                 this.style.boxShadow = 'none';
             });
         });
-</script>
+    </script>
 
 @endsection

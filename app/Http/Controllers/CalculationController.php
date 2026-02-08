@@ -29,13 +29,53 @@ class CalculationController extends Controller
             $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
 
             if ($alternatives->isEmpty()) {
-                return redirect()->back()->with('error', 'Tidak ada data alternatif untuk distributor yang menyediakan produk ini.')->with('products', $products);
+                $alternatives = collect();
+                $criteria = collect();
+                $normalization = [];
+                $weight = [];
+                $valueMoora = [];
+                $normDivisor = [];
+                $altValues = [];
+                $error = 'Tidak ada data alternatif untuk distributor yang menyediakan produk ini';
+
+                return view('moora.calculation', compact(
+                    'alternatives',
+                    'criteria',
+                    'normalization',
+                    'weight',
+                    'valueMoora',
+                    'normDivisor',
+                    'productSelected',
+                    'altValues',
+                    'products',
+                    'error'
+                ));
             }
         } else {
             $alternatives = Alternative::all();
 
             if ($alternatives->isEmpty()) {
-                return redirect()->back()->with('error', 'Tidak ada data alternatif yang tersedia.')->with('products', $products);
+                $alternatives = collect();
+                $criteria = collect();
+                $normalization = [];
+                $weight = [];
+                $valueMoora = [];
+                $normDivisor = [];
+                $altValues = [];
+                $error = 'Tidak ada data alternatif yang tersedia.';
+
+                return view('moora.calculation', compact(
+                    'alternatives',
+                    'criteria',
+                    'normalization',
+                    'weight',
+                    'valueMoora',
+                    'normDivisor',
+                    'productSelected',
+                    'altValues',
+                    'products',
+                    'error'
+                ));
             }
         }
 
@@ -129,13 +169,53 @@ class CalculationController extends Controller
             $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
 
             if ($alternatives->isEmpty()) {
-                return redirect()->back()->with('error', 'Tidak ada data alternatif untuk distributor yang menyediakan produk ini.')->with('products', $products);
+                $alternatives = collect();
+                $criteria = collect();
+                $normalization = [];
+                $weight = [];
+                $valueMoora = [];
+                $normDivisor = [];
+                $altValues = [];
+                $error = 'Tidak ada data alternatif untuk distributor yang menyediakan produk ini';
+
+                return view('moora.calculation', compact(
+                    'alternatives',
+                    'criteria',
+                    'normalization',
+                    'weight',
+                    'valueMoora',
+                    'normDivisor',
+                    'productSelected',
+                    'altValues',
+                    'products',
+                    'error'
+                ));
             }
         } else {
             $alternatives = Alternative::all();
 
             if ($alternatives->isEmpty()) {
-                return redirect()->back()->with('error', 'Tidak ada data alternatif yang tersedia.')->with('products', $products);
+                $alternatives = collect();
+                $criteria = collect();
+                $normalization = [];
+                $weight = [];
+                $valueMoora = [];
+                $normDivisor = [];
+                $altValues = [];
+                $error = 'Tidak ada data alternatif yang tersedia.';
+
+                return view('moora.calculation', compact(
+                    'alternatives',
+                    'criteria',
+                    'normalization',
+                    'weight',
+                    'valueMoora',
+                    'normDivisor',
+                    'productSelected',
+                    'altValues',
+                    'products',
+                    'error'
+                ));
             }
         }
 

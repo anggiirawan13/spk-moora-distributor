@@ -15,7 +15,7 @@ return new class extends Migration
 
         $rows = DB::table('delivery_methods')->orderBy('id')->get();
         foreach ($rows as $row) {
-            $code = 'P' . str_pad((string) $row->id, 3, '0', STR_PAD_LEFT);
+            $code = 'MP' . str_pad((string) $row->id, 3, '0', STR_PAD_LEFT);
             DB::table('delivery_methods')->where('id', $row->id)->update(['code' => $code]);
         }
 
