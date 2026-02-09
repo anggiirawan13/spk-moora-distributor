@@ -32,7 +32,7 @@
                                 <h3 class="font-weight-bold text-primary mb-2">{{ $alternative->distributor?->name }}</h3>
                                 <div class="status-badges">
                                     <span class="badge badge-primary badge-pill mr-2">
-                                        <i class="fas fa-id-card mr-1"></i>{{ $alternative->distributor?->npwp_formatted }}
+                                        <i class="fas fa-hashtag mr-1"></i>{{ $alternative->distributor?->code }}
                                     </span>
                                     @if($alternative->score)
                                     <span class="badge badge-success badge-pill">
@@ -62,8 +62,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="info-item">
-                                                <strong class="text-dark">NPWP:</strong>
-                                                <div class="text-dark mt-1">{{ $alternative->distributor?->npwp_formatted }}</div>
+                                                <strong class="text-dark">Kode:</strong>
+                                                <div class="text-dark mt-1">{{ $alternative->distributor?->code }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -221,6 +221,24 @@
                                                 <div class="text-muted mt-1">
                                                     {{ $alternative->updated_at->format('d F Y H:i') }}
                                                     <small class="text-muted">({{ $alternative->updated_at->diffForHumans() }})</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <strong class="text-dark">Dibuat Oleh:</strong>
+                                                <div class="text-muted mt-1">
+                                                    {{ $alternative->createdBy?->name ?? '-' }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <strong class="text-dark">Diperbarui Oleh:</strong>
+                                                <div class="text-muted mt-1">
+                                                    {{ $alternative->updatedBy?->name ?? '-' }}
                                                 </div>
                                             </div>
                                         </div>

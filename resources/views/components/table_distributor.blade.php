@@ -157,21 +157,29 @@
                         </div>
                         <div class="flex-grow-1">
                             <h6 class="font-weight-bold text-dark mb-1">Informasi Sistem</h6>
-                            <div class="small text-muted">
-                                <div class="mb-1">
-                                    <i class="fas fa-calendar-plus mr-1"></i>
-                                    Dibuat: {{ $distributor->created_at->format('d M Y H:i') }}
-                                    <small class="text-muted">({{ $distributor->created_at->diffForHumans() }})</small>
-                                </div>
-                                <div>
-                                    <i class="fas fa-calendar-check mr-1"></i>
-                                    Diupdate: {{ $distributor->updated_at->format('d M Y H:i') }}
-                                    <small class="text-muted">({{ $distributor->updated_at->diffForHumans() }})</small>
+                                <div class="small text-muted">
+                                    <div class="mb-1">
+                                        <i class="fas fa-calendar-plus mr-1"></i>
+                                        Dibuat: {{ $distributor->created_at->format('d M Y H:i') }}
+                                        <small class="text-muted">({{ $distributor->created_at->diffForHumans() }})</small>
+                                    </div>
+                                    <div class="mb-1">
+                                        <i class="fas fa-user mr-1"></i>
+                                        Dibuat oleh: {{ $distributor->createdBy?->name ?? '-' }}
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-calendar-check mr-1"></i>
+                                        Diupdate: {{ $distributor->updated_at->format('d M Y H:i') }}
+                                        <small class="text-muted">({{ $distributor->updated_at->diffForHumans() }})</small>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-user-edit mr-1"></i>
+                                        Diupdate oleh: {{ $distributor->updatedBy?->name ?? '-' }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 

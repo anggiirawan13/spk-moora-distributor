@@ -47,7 +47,7 @@
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}" 
                                                 {{ old('distributor_id') == $distributor->id ? 'selected' : '' }}>
-                                                {{ $distributor->name }} - {{ $distributor->npwp_formatted }}
+                                                {{ $distributor->code }} - {{ $distributor->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -76,7 +76,7 @@
                                                 <div id="previewDistributorName" class="text-primary font-weight-bold mt-1">-</div>
                                             </div>
                                             <div class="col-md-3">
-                                                <strong>NPWP:</strong>
+                                                <strong>Kode:</strong>
                                                 <div id="previewNpwp" class="text-dark mt-1">-</div>
                                             </div>
                                             <div class="col-md-3">
@@ -285,15 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewDeliveryMethod = document.getElementById('previewDeliveryMethod');
     const previewPaymentTerm = document.getElementById('previewPaymentTerm');
     
-    const distributorsData = @json($distributors->map(function($distributor) {
-        return [
-            'id' => $distributor->id,
-            'name' => $distributor->name,
-            'npwp' => $distributor->npwp_formatted,
-            'delivery_method' => $distributor->deliveryMethod->name,
-            'payment_term' => $distributor->paymentTerm->name,
-        ];
-    }));
+    const distributorsData = @json($distributorsData);
 
     distributorSelect.addEventListener('change', function() {
         const selectedId = parseInt(this.value);
@@ -301,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (selectedDistributor) {
             previewDistributorName.textContent = selectedDistributor.name;
-            previewNpwp.textContent = selectedDistributor.npwp;
+            previewNpwp.textContent = selectedDistributor.code;
             previewDeliveryMethod.textContent = selectedDistributor.delivery_method;
             previewPaymentTerm.textContent = selectedDistributor.payment_term;
             distributorPreview.style.display = 'block';

@@ -23,7 +23,7 @@ class DeliveryMethodController extends Controller
 
     public function show($id)
     {
-        $deliveryMethod = DeliveryMethod::findOrFail($id);
+        $deliveryMethod = DeliveryMethod::with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('delivery_method.show', compact('deliveryMethod'));
     }
 

@@ -112,7 +112,7 @@ class UserController extends Controller
             return redirect()->route('user.index')->with('error', 'User tidak ditemukan');
         }
 
-        $user = User::findOrFail($id);
+        $user = User::with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('user.show', compact('user'));
     }
 

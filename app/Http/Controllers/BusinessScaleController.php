@@ -23,7 +23,7 @@ class BusinessScaleController extends Controller
 
     public function show($id)
     {
-        $businessScale = BusinessScale::findOrFail($id);
+        $businessScale = BusinessScale::with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('business_scale.show', compact('businessScale'));
     }
 

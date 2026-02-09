@@ -70,9 +70,9 @@
                                         <option value=""></option>
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}" 
-                                                    data-npwp="{{ $distributor->npwp_formatted }}"
+                                                    data-code="{{ $distributor->code }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
-                                                {{ $distributor->name }} - {{ $distributor->npwp_formatted }}
+                                                {{ $distributor->code }} - {{ $distributor->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -92,9 +92,9 @@
                                         <option value=""></option>
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}"
-                                                    data-npwp="{{ $distributor->npwp_formatted }}"
+                                                    data-code="{{ $distributor->code }}"
                                                     data-scale="{{ $distributor->businessScale?->name ?? 'N/A' }}">
-                                                {{ $distributor->name }} - {{ $distributor->npwp_formatted }}
+                                                {{ $distributor->code }} - {{ $distributor->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -201,11 +201,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const detailsElement = $(detailsId);
 
             if (selectedOption.val()) {
-                const npwp = selectedOption.data('npwp');
+                const code = selectedOption.data('code');
                 const scale = selectedOption.data('scale');
                 
                 nameElement.text(selectedOption.text());
-                detailsElement.text(`${npwp} • ${scale}`);
+                detailsElement.text(`${code} • ${scale}`);
                 preview.show();
             } else {
                 preview.hide();

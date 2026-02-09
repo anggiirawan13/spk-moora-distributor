@@ -79,11 +79,27 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="font-weight-bold text-dark">
+                                                        <i class="fas fa-user text-info mr-2"></i>Dibuat Oleh
+                                                    </td>
+                                                    <td class="text-muted">
+                                                        {{ $deliveryMethod->createdBy?->name ?? '-' }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold text-dark">
                                                         <i class="fas fa-calendar-check text-warning mr-2"></i>Diperbarui Pada
                                                     </td>
                                                     <td class="text-muted">
                                                         {{ $deliveryMethod->updated_at->format('d F Y H:i') }}
                                                         <small class="text-muted">({{ $deliveryMethod->updated_at->diffForHumans() }})</small>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold text-dark">
+                                                        <i class="fas fa-user-edit text-warning mr-2"></i>Diperbarui Oleh
+                                                    </td>
+                                                    <td class="text-muted">
+                                                        {{ $deliveryMethod->updatedBy?->name ?? '-' }}
                                                     </td>
                                                 </tr>
                                             </tbody>

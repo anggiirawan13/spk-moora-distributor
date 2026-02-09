@@ -65,7 +65,7 @@ class DistributorController extends Controller
 
     public function show($id)
     {
-        $distributor = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($id);
+        $distributor = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale', 'createdBy', 'updatedBy'])->findOrFail($id);
         return view('distributor.show', compact('distributor'));
     }
 

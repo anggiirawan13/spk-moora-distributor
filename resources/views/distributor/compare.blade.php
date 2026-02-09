@@ -19,7 +19,7 @@
                 <div class="card-header bg-gradient-primary text-white py-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 font-weight-bold">
-                            <i class="fas fa-warehouse mr-2"></i>{{ $distributor1->name }}
+                            <i class="fas fa-warehouse mr-2"></i>{{ $distributor1->code }}
                         </h5>
                         <span class="badge badge-light">Distributor 1</span>
                     </div>
@@ -35,7 +35,7 @@
                                 <i class="fas fa-check"></i>
                             </span>
                         </div>
-                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor1->npwp_formatted }}</h4>
+                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor1->name }}</h4>
                         <span class="badge badge-pill {{ $distributor1->is_active ? 'badge-success' : 'badge-secondary' }}">
                             {{ $distributor1->is_active ? 'Aktif' : 'Tidak Aktif' }}
                         </span>
@@ -77,7 +77,7 @@
                 <div class="card-header bg-gradient-info text-white py-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 font-weight-bold">
-                            <i class="fas fa-warehouse mr-2"></i>{{ $distributor2->name }}
+                            <i class="fas fa-warehouse mr-2"></i>{{ $distributor2->code }}
                         </h5>
                         <span class="badge badge-light">Distributor 2</span>
                     </div>
@@ -93,7 +93,7 @@
                                 <i class="fas fa-check"></i>
                             </span>
                         </div>
-                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor2->npwp_formatted }}</h4>
+                        <h4 class="mt-3 font-weight-bold text-dark">{{ $distributor2->name }}</h4>
                         <span class="badge badge-pill {{ $distributor2->is_active ? 'badge-success' : 'badge-secondary' }}">
                             {{ $distributor2->is_active ? 'Aktif' : 'Tidak Aktif' }}
                         </span>

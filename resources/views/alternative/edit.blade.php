@@ -48,7 +48,7 @@
                                         @foreach ($distributors as $distributor)
                                             <option value="{{ $distributor->id }}" 
                                                 {{ old('distributor_id', $alternative->distributor_id) == $distributor->id ? 'selected' : '' }}>
-                                                {{ $distributor->name }} - {{ $distributor->npwp_formatted }}
+                                                {{ $distributor->code }} - {{ $distributor->name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -77,7 +77,7 @@
                                                 <div id="previewDistributorName" class="text-primary font-weight-bold mt-1">-</div>
                                             </div>
                                             <div class="col-md-4">
-                                                <strong>NPWP:</strong>
+                                                <strong>Kode:</strong>
                                                 <div id="previewNpwp" class="text-dark mt-1">-</div>
                                             </div>
                                             <div class="col-md-4">
@@ -216,7 +216,7 @@
                                             <div class="col-md-6">
                                                 <strong>Distributor:</strong>
                                                 <div class="text-primary font-weight-bold mt-1">
-                                                    {{ $alternative->distributor->name }} - {{ $alternative->distributor->npwp_formatted }}
+                                                    {{ $alternative->distributor->code }} - {{ $alternative->distributor->name }}
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -331,14 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewNpwp = document.getElementById('previewNpwp');
     const previewProduct = document.getElementById('previewProduct');
     
-    const distributorsData = @json($distributors->map(function($distributor) {
-        return [
-            'id' => $distributor->id,
-            'name' => $distributor->name,
-            'npwp' => $distributor->npwp_formatted,
-            'product' => $distributor->product->name ?? '-'
-        ];
-    }));
+    const distributorsData = @json($distributorsData);
 
     distributorSelect.addEventListener('change', function() {
         const selectedId = parseInt(this.value);
@@ -346,7 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (selectedDistributor) {
             previewDistributorName.textContent = selectedDistributor.name;
-            previewNpwp.textContent = selectedDistributor.npwp;
+            previewNpwp.textContent = selectedDistributor.code;
             previewProduct.textContent = selectedDistributor.product;
             distributorPreview.style.display = 'block';
         } else {

@@ -23,7 +23,7 @@ class PaymentTermController extends Controller
 
     public function show($id)
     {
-        $paymentTerm = PaymentTerm::findOrFail($id);
+        $paymentTerm = PaymentTerm::with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('payment_term.show', compact('paymentTerm'));
     }
 

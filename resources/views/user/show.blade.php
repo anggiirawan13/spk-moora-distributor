@@ -156,6 +156,28 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <strong class="text-dark">
+                                                    <i class="fas fa-user text-info mr-2"></i>Dibuat Oleh:
+                                                </strong>
+                                                <div class="text-muted mt-1">
+                                                    {{ $user->createdBy?->name ?? '-' }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item">
+                                                <strong class="text-dark">
+                                                    <i class="fas fa-user-edit text-warning mr-2"></i>Diperbarui Oleh:
+                                                </strong>
+                                                <div class="text-muted mt-1">
+                                                    {{ $user->updatedBy?->name ?? '-' }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

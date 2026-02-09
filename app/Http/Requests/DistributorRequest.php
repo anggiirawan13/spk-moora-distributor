@@ -55,7 +55,7 @@ class DistributorRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $npwp = (string) $this->input('npwp');
-            if ($npwp === '' || $this->errors()->has('npwp')) {
+            if ($npwp === '' || $validator->errors()->has('npwp')) {
                 return;
             }
 

@@ -35,7 +35,7 @@ class CriteriaController extends Controller
 
     public function show($id)
     {
-        $criteria = Criteria::findOrFail($id);
+        $criteria = Criteria::with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('criteria.show', compact('criteria'));
     }
 

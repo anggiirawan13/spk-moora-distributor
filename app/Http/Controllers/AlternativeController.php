@@ -24,7 +24,7 @@ class AlternativeController extends Controller
             $data = [
                 'id' => $alt->id,
                 'name' => $alt->distributor?->name,
-                'npwp' => $alt->distributor?->npwp_formatted
+                'code' => $alt->distributor?->code
             ];
 
             foreach ($criterias as $criteria) {
@@ -50,14 +50,26 @@ class AlternativeController extends Controller
     {
         $distributors = Distributor::all();
         $criteria = Criteria::with('subCriteria')->orderBy('id', 'asc')->get();
-        return view('alternative.create', compact('criteria', 'distributors'));
+        $distributorsData = $distributors->map(function ($distributor) {
+            return [
+                'id' => $distributor->id,
+                'name' => $distributor->name,
+                'code' => $distributor->code,
+                'delivery_method' => $distributor->deliveryMethod->name ?? '-',
+                'payment_term' => $distributor->paymentTerm->name ?? '-',
+            ];
+        });
+
+        return view('alternative.create', compact('criteria', 'distributors', 'distributorsData'));
     }
 
     public function show($id)
     {
         $alternative = Alternative::with([
             'values.subCriteria.criteria',
-            'distributor'
+            'distributor',
+            'createdBy',
+            'updatedBy',
         ])->findOrFail($id);
 
         return view('alternative.show', compact('alternative'));
@@ -70,6 +82,15 @@ class AlternativeController extends Controller
 
         $criteria = Criteria::with('subCriteria')->orderBy('id', 'asc')->get();
 
+        $distributorsData = $distributors->map(function ($distributor) {
+            return [
+                'id' => $distributor->id,
+                'name' => $distributor->name,
+                'code' => $distributor->code,
+                'product' => $distributor->product->name ?? '-',
+            ];
+        });
+
         $selectedSubs = AlternativeValue::with('subCriteria')
             ->where('alternative_id', $id)
             ->get()
@@ -77,7 +98,7 @@ class AlternativeController extends Controller
                 return [$val->subCriteria->criteria_id => $val->sub_criteria_id];
             });
 
-        return view('alternative.edit', compact('alternative', 'criteria', 'selectedSubs', 'distributors'));
+        return view('alternative.edit', compact('alternative', 'criteria', 'selectedSubs', 'distributors', 'distributorsData'));
     }
 
     public function store(Request $request): RedirectResponse

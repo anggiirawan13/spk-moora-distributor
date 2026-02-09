@@ -38,7 +38,7 @@ class SubCriteriaController extends Controller
 
     public function show($id)
     {
-        $subCriteria = SubCriteria::findOrFail($id);
+        $subCriteria = SubCriteria::with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('sub_criteria.show', compact('subCriteria'));
     }
 
