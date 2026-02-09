@@ -27,7 +27,7 @@
         editRoute="distributor.edit" deleteRoute="distributor.destroy" :data="$distributors" :columns="[
             ['label' => 'Kode', 'field' => 'code'],
             ['label' => 'Nama Distributor', 'field' => 'name'],
-            ['label' => 'Logo', 'field' => 'image', 'html' => true],
+            ['label' => 'Logo', 'field' => 'image_url', 'type' => 'image_modal'],
             ['label' => 'NPWP', 'field' => 'npwp'],
             ['label' => 'Telepon', 'field' => 'phone'],
             ['label' => 'Email', 'field' => 'email'],
@@ -53,13 +53,21 @@
     </div>
 
     <script>
-        function showImage(namaDistributor, src) {
-            document.getElementById('imageModalLabel').innerText = namaDistributor;
-            document.getElementById('modalImage').src = src;
-        }
-
         document.addEventListener("DOMContentLoaded", function() {
             var modal = document.getElementById("imageModal");
+            var modalLabel = document.getElementById('imageModalLabel');
+            var modalImage = document.getElementById('modalImage');
+
+            document.addEventListener('click', function(event) {
+                var trigger = event.target.closest('.js-image-modal-trigger');
+                if (!trigger) {
+                    return;
+                }
+                var name = trigger.getAttribute('data-name') || '';
+                var src = trigger.getAttribute('data-src') || '';
+                modalLabel.textContent = name;
+                modalImage.src = isSafeImageSrc(src) ? src : '';
+            });
 
             modal.addEventListener("keydown", function(event) {
                 if (event.key === "Escape") {
@@ -73,6 +81,10 @@
                 var modalInstance = bootstrap.Modal.getInstance(modal);
                 modalInstance.hide();
             });
+
+            function isSafeImageSrc(value) {
+                return /^(https?:\/\/|\/|data:image\/)/i.test(value);
+            }
         });
     </script>
 @endsection

@@ -163,7 +163,9 @@
                         <div class="form-group">
                             <label for="password" class="font-weight-bold text-dark mb-2">
                                 <i class="fas fa-key text-success mr-2"></i>Password Baru
-                                {!! $passwordRequired ? '<span class="text-danger">*</span>' : '' !!}
+                                @if ($passwordRequired)
+                                    <span class="text-danger">*</span>
+                                @endif
                             </label>
                             <input type="password" 
                                    class="form-control @error('password') is-invalid @enderror" 
@@ -180,7 +182,9 @@
                         <div class="form-group">
                             <label for="password_confirmation" class="font-weight-bold text-dark mb-2">
                                 <i class="fas fa-key text-warning mr-2"></i>Konfirmasi Password
-                                {!! $passwordRequired ? '<span class="text-danger">*</span>' : '' !!}
+                                @if ($passwordRequired)
+                                    <span class="text-danger">*</span>
+                                @endif
                             </label>
                             <input type="password" 
                                    class="form-control @error('password_confirmation') is-invalid @enderror" 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryMethod;
+use App\Support\InputSanitizer;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -34,16 +35,18 @@ class DeliveryMethodController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'name' => InputSanitizer::clean($request->name) ?? '',
+            'description' => InputSanitizer::clean($request->description),
+        ]);
+
         $request->validate([
             'name' => 'required|unique:delivery_methods,name',
             'description' => 'nullable|string'
         ]);
 
         try {
-            DeliveryMethod::create([
-                'name' => $request->name,
-                'description' => $request->description,
-            ]);
+            DeliveryMethod::create($request->only(['name', 'description']));
 
             return redirect()->route('delivery_method.index')->with('success', 'Data metode pengiriman berhasil disimpan');
         } catch (QueryException $e) {
@@ -57,6 +60,11 @@ class DeliveryMethodController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->merge([
+            'name' => InputSanitizer::clean($request->name) ?? '',
+            'description' => InputSanitizer::clean($request->description),
+        ]);
+
         $this->validate($request, [
             'name' => 'required|unique:delivery_methods,name,' . $id,
             'description' => 'nullable|string'

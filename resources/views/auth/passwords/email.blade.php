@@ -214,29 +214,32 @@
             });
 
             @if (session('status'))
+                const statusMessage = @json(session('status'));
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil!',
-                    html: `{!! session('status') !!}`,
+                    text: statusMessage,
                     confirmButtonColor: '#047857',
                     confirmButtonText: 'Mengerti'
                 });
             @endif
 
             @if (session('error'))
+                const errorMessage = @json(session('error'));
                 Swal.fire({
                     icon: 'error',
                     title: 'Terjadi Kesalahan',
-                    text: '{{ session('error') }}',
+                    text: errorMessage,
                     confirmButtonColor: '#dc3545'
                 });
             @endif
 
             @if ($errors->any())
+                const validationErrors = @json($errors->all());
                 Swal.fire({
                     icon: 'error',
                     title: 'Validasi Gagal',
-                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                    text: validationErrors.join('\n'),
                     confirmButtonColor: '#dc3545'
                 });
             @endif

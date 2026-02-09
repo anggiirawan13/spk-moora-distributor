@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Support\InputSanitizer;
 
 class UserController extends Controller
 {
@@ -23,9 +24,7 @@ class UserController extends Controller
         $users->transform(function ($user) {
             return [
                 'id' => $user->id,
-                'image' => '<a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage(\'' . $user->name . '\', \'' . asset('storage/user/' . ($user->image_name ?? 'default-image.jpg')) . '\')">
-                                <img class="default-img" src="' . asset('storage/user/' . ($user->image_name ?? 'default-image.jpg')) . '" width="60">
-                            </a>',
+                'image_url' => asset('storage/user/' . ($user->image_name ?? 'default-image.jpg')),
                 'name' => $user->name,
                 'email' => $user->email,
                 'role_label' => $user->role_label,
@@ -42,6 +41,8 @@ class UserController extends Controller
 
     public function register(Request $request): RedirectResponse
     {
+        $this->sanitizeUserInput($request);
+
         $imageName = "";
 
         if ($request->hasFile('image_name')) {
@@ -73,6 +74,8 @@ class UserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $this->sanitizeUserInput($request);
+
         $imageName = null;
 
         if ($request->hasFile('image_name')) {
@@ -125,6 +128,8 @@ class UserController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
+        $this->sanitizeUserInput($request);
+
         if ((int) $id === 1) {
             return redirect()->route('user.index')->with('error', 'User tidak ditemukan');
         }
@@ -188,6 +193,8 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
+        $this->sanitizeUserInput($request);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -195,7 +202,6 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
         ]);
 
-        /** @var User $user */
         $user = Auth::user();
 
         if (!empty($validatedData['password'])) {
@@ -217,5 +223,13 @@ class UserController extends Controller
         $user->update($validatedData);
 
         return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui');
+    }
+
+    private function sanitizeUserInput(Request $request): void
+    {
+        $request->merge([
+            'name' => InputSanitizer::clean($request->name) ?? '',
+            'address' => InputSanitizer::clean($request->address) ?? '',
+        ]);
     }
 }

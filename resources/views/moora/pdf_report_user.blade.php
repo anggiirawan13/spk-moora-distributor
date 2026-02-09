@@ -113,7 +113,6 @@
         </ul>
     @endif
 
-    {{-- Step 1: Nilai Alternatif --}}
     <div class="section-title">Step 1: Nilai Alternatif & Kuadrat</div>
     <p class="small">Rumus: ∑(x<sub>ij</sub>)² = x<sub>1j</sub>² + x<sub>2j</sub>² + ...</p>
     <table>
@@ -154,7 +153,6 @@
         </tfoot>
     </table>
 
-    {{-- Step 2: Akar Normalisasi --}}
     <div class="section-title">Step 2: Akar Total Tiap Kriteria</div>
     <p class="small">Rumus: √(∑x<sub>ij</sub>²)</p>
     <table>
@@ -174,7 +172,6 @@
         </tbody>
     </table>
 
-    {{-- Step 3: Normalisasi --}}
     <div class="section-title">Step 3: Normalisasi Nilai Alternatif</div>
     <p class="small">Rumus: r<sub>ij</sub> = x<sub>ij</sub> / √(∑x<sub>ij</sub>²)</p>
     <table>
@@ -202,7 +199,6 @@
         </tbody>
     </table>
 
-    {{-- Step 4: Dikali Bobot --}}
     <div class="section-title">Step 4: Nilai Normalisasi × Bobot</div>
     <p class="small">Rumus: y<sub>ij</sub> = r<sub>ij</sub> × w<sub>j</sub></p>
     <table>
@@ -226,7 +222,6 @@
         </tbody>
     </table>
 
-    {{-- Step 5 & 6: MOORA --}}
     <div class="section-title">Step 5–6: Nilai Akhir Yi dan Peringkat</div>
     <p class="small">Rumus: Yi = Σ(W<sub>j</sub> × r<sub>ij</sub>) benefit − Σ(W<sub>j</sub> × r<sub>ij</sub>) cost</p>
     <table>

@@ -91,8 +91,9 @@
                                     </a>
 
                                     <button type="button" 
-                                            class="btn btn-danger btn-sm m-1"
-                                            onclick="confirmDelete('{{ route('subcriteria.destroy', $sub->id) }}', '{{ $sub->name }}')"
+                                            class="btn btn-danger btn-sm m-1 js-confirm-delete"
+                                            data-url="{{ route('subcriteria.destroy', $sub->id) }}"
+                                            data-name="{{ $sub->name }}"
                                             data-bs-toggle="tooltip"
                                             title="Hapus">
                                         <i class="fas fa-trash"></i>
@@ -154,7 +155,6 @@
     @endif
 </div>
 
-<!-- Delete Form -->
 <form id="deleteForm" method="POST" style="display: none;">
     @csrf
     @method('DELETE')
@@ -210,15 +210,7 @@
 function confirmDelete(url, name) {
     Swal.fire({
         title: 'Konfirmasi Hapus',
-        html: `
-            <div class="text-center">
-                <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-                <h5 class="font-weight-bold">Hapus Sub Kriteria?</h5>
-                <p class="mb-0">Anda akan menghapus sub kriteria:</p>
-                <p class="font-weight-bold text-danger">"${name}"</p>
-                <p class="text-muted small">Tindakan ini tidak dapat dibatalkan.</p>
-            </div>
-        `,
+        text: `Anda akan menghapus sub kriteria "${name}". Tindakan ini tidak dapat dibatalkan.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Ya, Hapus!',
@@ -243,6 +235,17 @@ document.addEventListener('DOMContentLoaded', function() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    document.addEventListener('click', function(event) {
+        var trigger = event.target.closest('.js-confirm-delete');
+        if (!trigger) {
+            return;
+        }
+        event.preventDefault();
+        var url = trigger.getAttribute('data-url') || '';
+        var name = trigger.getAttribute('data-name') || 'Data';
+        confirmDelete(url, name);
     });
 });
 </script>

@@ -238,10 +238,11 @@
             const hasSpecial = document.getElementById('special');
 
             @if ($errors->any())
+                const validationErrors = @json($errors->all());
                 Swal.fire({
                     icon: 'error',
                     title: 'Validasi Gagal',
-                    html: `{!! implode('<br>', $errors->all()) !!}`,
+                    text: validationErrors.join('\n'),
                     confirmButtonColor: '#dc3545'
                 });
             @endif
@@ -289,7 +290,7 @@
                     Swal.fire({
                         icon: 'warning',
                         title: 'Password Kurang Kuat',
-                        html: 'Gunakan minimal 8 karakter, 1 huruf besar, 1 huruf kecil, 1 angka, dan 1 karakter spesial',
+                        text: 'Gunakan minimal 8 karakter, 1 huruf besar, 1 huruf kecil, 1 angka, dan 1 karakter spesial',
                         confirmButtonColor: '#047857'
                     });
                     return;

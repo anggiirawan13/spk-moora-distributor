@@ -23,9 +23,7 @@ class DistributorController extends Controller
         $distributors->transform(function ($distributor) {
             return [
                 'id' => $distributor->id,
-                'image' => '<a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage(\'' . $distributor->name . '\', \'' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '\')">
-                                <img class="default-img" src="' . asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')) . '" width="60">
-                            </a>',
+                'image_url' => asset('storage/distributor/' . ($distributor->image_name ?? 'default-image.jpg')),
                 'code' => $distributor->code,
                 'name' => $distributor->name,
                 'npwp' => $distributor->npwp_formatted ?: 'Tidak diisi',

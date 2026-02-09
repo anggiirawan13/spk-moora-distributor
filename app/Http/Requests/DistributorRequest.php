@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Services\NpwpValidationService;
+use App\Support\InputSanitizer;
 
 class DistributorRequest extends FormRequest
 {
@@ -80,5 +81,11 @@ class DistributorRequest extends FormRequest
                 'npwp' => preg_replace('/\\D+/', '', (string) $this->input('npwp')),
             ]);
         }
+
+        $this->merge([
+            'name' => InputSanitizer::clean((string) $this->input('name')) ?? '',
+            'address' => InputSanitizer::clean((string) $this->input('address')) ?? '',
+            'description' => InputSanitizer::clean((string) $this->input('description')),
+        ]);
     }
 }

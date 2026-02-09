@@ -305,13 +305,22 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .filter(name => name !== '');
 
+        distributorsPreview.textContent = '';
+
         if (selectedDistributors.length > 0) {
-            distributorsPreview.innerHTML = selectedDistributors
-                .map(name => `<span class="badge badge-success mr-1 mb-1">${name}</span>`)
-                .join('');
-        } else {
-            distributorsPreview.innerHTML = '<span class="text-muted">-</span>';
+            selectedDistributors.forEach(name => {
+                const badge = document.createElement('span');
+                badge.className = 'badge badge-success mr-1 mb-1';
+                badge.textContent = name;
+                distributorsPreview.appendChild(badge);
+            });
+            return;
         }
+
+        const emptyText = document.createElement('span');
+        emptyText.className = 'text-muted';
+        emptyText.textContent = '-';
+        distributorsPreview.appendChild(emptyText);
     }
 
     const form = document.getElementById('productForm');

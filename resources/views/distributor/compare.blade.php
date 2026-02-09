@@ -1,4 +1,3 @@
-<!-- resources/views/admin/distributor/compare.blade.php -->
 @extends('layouts.app')
 
 @section('title', 'Bandingkan Dua Distributor')

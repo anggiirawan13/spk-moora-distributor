@@ -73,6 +73,5 @@ class MasterImport implements WithMultipleSheets, SkipsUnknownSheets, WithEvents
 
     public function onUnknownSheet($sheetName)
     {
-        // Ignore unknown sheets.
     }
 }

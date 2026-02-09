@@ -26,7 +26,6 @@ class NpwpValidationService
 
         $endpoint = trim((string) config('npwp.endpoint'));
         if ($endpoint === '') {
-            // No endpoint configured yet; allow to pass until API is ready.
             return [
                 'valid' => true,
                 'message' => null,

@@ -25,7 +25,12 @@
                     <div class="row mb-4">
                         <div class="col-md-12 text-center mb-4">
                             <div class="profile-image-container">
-                                <a href="#" data-toggle="modal" data-target="#imageModal" onclick="showImage('{{ $distributor->name }}', '{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.jpg') }}')">
+                                <a href="#" 
+                                   class="js-image-modal-trigger"
+                                   data-toggle="modal" 
+                                   data-target="#imageModal"
+                                   data-name="{{ $distributor->name }}"
+                                   data-src="{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.jpg') }}">
                                     <img src="{{ $distributor->image_name ? asset('storage/distributor/' . $distributor->image_name) : asset('img/default-image.jpg') }}"
                                     class="img-thumbnail rounded-circle shadow" 
                                     alt="{{ $distributor->name }}" 
@@ -71,7 +76,6 @@
     </div>
 </div>
 
-<!-- Modal Bootstrap -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -118,13 +122,21 @@
 </style>
 
 <script>
-    function showImage(namaDistributor, src) {
-        document.getElementById('imageModalLabel').innerText = namaDistributor;
-        document.getElementById('modalImage').src = src;
-    }
-
     document.addEventListener("DOMContentLoaded", function() {
         var modal = document.getElementById("imageModal");
+        var modalLabel = document.getElementById('imageModalLabel');
+        var modalImage = document.getElementById('modalImage');
+
+        document.addEventListener('click', function(event) {
+            var trigger = event.target.closest('.js-image-modal-trigger');
+            if (!trigger) {
+                return;
+            }
+            var name = trigger.getAttribute('data-name') || '';
+            var src = trigger.getAttribute('data-src') || '';
+            modalLabel.textContent = name;
+            modalImage.src = isSafeImageSrc(src) ? src : '';
+        });
 
         modal.addEventListener("keydown", function(event) {
             if (event.key === "Escape") {
@@ -138,6 +150,10 @@
             var modalInstance = bootstrap.Modal.getInstance(modal);
             modalInstance.hide();
         });
+
+        function isSafeImageSrc(value) {
+            return /^(https?:\/\/|\/|data:image\/)/i.test(value);
+        }
     });
 </script>
 @endsection

@@ -8,10 +8,6 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 class SeederArraySheet implements FromArray, WithHeadings, WithTitle
 {
-    /**
-     * @param array<int, string> $headings
-     * @param array<int, array<string, mixed>> $rows
-     */
     public function __construct(
         private readonly string $title,
         private readonly array $headings,

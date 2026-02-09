@@ -331,14 +331,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewNpwp = document.getElementById('previewNpwp');
     const previewProduct = document.getElementById('previewProduct');
     
-    const distributorsData = {!! json_encode($distributors->map(function($distributor) {
+    const distributorsData = @json($distributors->map(function($distributor) {
         return [
             'id' => $distributor->id,
             'name' => $distributor->name,
             'npwp' => $distributor->npwp_formatted,
             'product' => $distributor->product->name ?? '-'
         ];
-    })) !!};
+    }));
 
     distributorSelect.addEventListener('change', function() {
         const selectedId = parseInt(this.value);
@@ -365,7 +365,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(`summary_${criteriaCode}_name`).textContent = subCriteriaName;
             document.getElementById(`summary_${criteriaCode}_value`).textContent = subCriteriaValue;
             
-            const row = document.querySelector(`tr[data-criteria="${criteriaCode}"]`);
+            const safeCriteria = (window.CSS && CSS.escape) ? CSS.escape(criteriaCode) : criteriaCode.replace(/["\\]/g, '\\$&');
+            const row = document.querySelector(`tr[data-criteria="${safeCriteria}"]`);
             if (row) {
                 row.classList.add('table-success');
                 setTimeout(() => row.classList.remove('table-success'), 1000);

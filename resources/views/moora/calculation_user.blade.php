@@ -8,12 +8,10 @@
         <x-alert />
 
         <div class="d-flex justify-content-between mb-3">
-            {{-- Tombol Filter di Kiri --}}
             <button class="btn btn-outline-info" data-toggle="modal" data-target="#filterModal">
                 <i class="fas fa-filter"></i> Filter
             </button>
 
-            {{-- Tombol PDF di Kanan --}}
             @php
                 $queryString = http_build_query(request()->query());
             @endphp
@@ -23,7 +21,6 @@
             </a>
         </div>
 
-        {{-- Tabel Hasil Ringkas --}}
         <div class="card shadow mb-4">
             <div class="card-header bg-primary text-white">
                 <h4 class="font-weight-bold text-white">Hasil Rekomendasi MOORA</h4>
@@ -67,14 +64,12 @@
             </div>
         </div>
 
-        {{-- Tombol Detail --}}
         <div class="text-right mb-4">
             <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#detailSection">
                 <i class="fas fa-info-circle"></i> Lihat Detail Perhitungan
             </button>
         </div>
 
-        {{-- Detail Collapse --}}
         <div id="detailSection" class="collapse">
             @include('moora.calculation_user_detail', [
                 'criteria' => $criteria,
@@ -201,7 +196,6 @@
         </div>
     </div>
 
-    {{-- Script: Tampilkan Modal Otomatis --}}
     @push('scripts')
         <script>
             $('#bookingModal').on('show.bs.modal', function(event) {

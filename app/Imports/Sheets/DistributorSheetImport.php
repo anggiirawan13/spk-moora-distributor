@@ -117,14 +117,6 @@ class DistributorSheetImport implements ToCollection, WithHeadingRow, SkipsEmpty
             $paymentTerm = PaymentTerm::where('code', $paymentTermCode)->first();
             $deliveryMethod = DeliveryMethod::where('code', $deliveryMethodCode)->first();
             $businessScale = BusinessScale::where('code', $businessScaleCode)->first();
-            // dd(
-            //     $this->context->paymentTerms,
-            //     $this->context->deliveryMethods,
-            //     $this->context->businessScales,
-            //     $paymentTermCode,
-            //     $deliveryMethodCode,
-            //     $businessScaleCode
-            // );
             if ($this->dryRun) {
                 $paymentTermOk = $paymentTerm || isset($this->context->paymentTerms[$paymentTermCode]);
                 $deliveryMethodOk = $deliveryMethod || isset($this->context->deliveryMethods[$deliveryMethodCode]);

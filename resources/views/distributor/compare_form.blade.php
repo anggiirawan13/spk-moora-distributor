@@ -1,4 +1,3 @@
-<!-- resources/views/admin/distributor/compare_form.blade.php -->
 @extends('layouts.app')
 
 @section('title', 'Pilih Distributor untuk Dibandingkan')

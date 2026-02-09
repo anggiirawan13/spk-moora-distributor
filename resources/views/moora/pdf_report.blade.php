@@ -206,17 +206,14 @@
             page-break-before: always;
         }
 
-        /* Zebra striping for tables */
         tbody tr:nth-child(even) {
             background: #f9fafb;
         }
 
-        /* Header for multi-page tables */
         thead {
             display: table-header-group;
         }
 
-        /* Ensure tables break properly across pages */
         tr {
             page-break-inside: avoid;
             page-break-after: auto;
@@ -279,7 +276,6 @@
         <div>Peringkat: <strong>1 dari {{ count($alternatives) }} alternatif</strong></div>
     </div>
 
-    {{-- Step 1: Nilai Alternatif --}}
     <div class="section-title">📈 STEP 1: NILAI ALTERNATIF & KUADRAT</div>
     <div class="formula">
         <strong>Rumus:</strong> ∑(x<sub>ij</sub>)² = x<sub>1j</sub>² + x<sub>2j</sub>² + ... + x<sub>nj</sub>²
@@ -322,7 +318,6 @@
         </tfoot>
     </table>
 
-    {{-- Step 2: Akar Normalisasi --}}
     <div class="section-title">🧮 STEP 2: AKAR TOTAL TIAP KRITERIA</div>
     <div class="formula">
         <strong>Rumus:</strong> √(∑x<sub>ij</sub>²)
@@ -344,7 +339,6 @@
         </tbody>
     </table>
 
-    {{-- Step 3: Normalisasi --}}
     <div class="section-title">📊 STEP 3: NORMALISASI NILAI ALTERNATIF</div>
     <div class="formula">
         <strong>Rumus:</strong> r<sub>ij</sub> = x<sub>ij</sub> / √(∑x<sub>ij</sub>²)
@@ -374,7 +368,6 @@
         </tbody>
     </table>
 
-    {{-- Step 4: Dikali Bobot --}}
     <div class="section-title">⚖️ STEP 4: NILAI NORMALISASI × BOBOT</div>
     <div class="formula">
         <strong>Rumus:</strong> y<sub>ij</sub> = r<sub>ij</sub> × w<sub>j</sub>
@@ -400,7 +393,6 @@
         </tbody>
     </table>
 
-    {{-- Step 5 & 6: MOORA --}}
     <div class="section-title">🏆 STEP 5–6: NILAI AKHIR Y<sub>i</sub> DAN PERINGKAT</div>
     <div class="formula">
         <strong>Rumus:</strong> Y<sub>i</sub> = Σ(W<sub>j</sub> × r<sub>ij</sub>) benefit − Σ(W<sub>j</sub> × r<sub>ij</sub>) cost

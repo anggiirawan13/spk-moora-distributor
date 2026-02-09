@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\PaymentTerm;
+use App\Support\InputSanitizer;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -34,16 +35,18 @@ class PaymentTermController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'name' => InputSanitizer::clean($request->name) ?? '',
+            'description' => InputSanitizer::clean($request->description),
+        ]);
+
         $request->validate([
             'name' => 'required|unique:payment_terms,name',
             'description' => 'nullable|string'
         ]);
 
         try {
-            PaymentTerm::create([
-                'name' => $request->name,
-                'description' => $request->description,
-            ]);
+            PaymentTerm::create($request->only(['name', 'description']));
 
             return redirect()->route('payment_term.index')->with('success', 'Data termin pembayaran berhasil disimpan');
         } catch (QueryException $e) {
@@ -57,6 +60,11 @@ class PaymentTermController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->merge([
+            'name' => InputSanitizer::clean($request->name) ?? '',
+            'description' => InputSanitizer::clean($request->description),
+        ]);
+
         $this->validate($request, [
             'name' => 'required|unique:payment_terms,name,' . $id,
             'description' => 'nullable|string'

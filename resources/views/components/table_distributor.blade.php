@@ -277,7 +277,6 @@
     border-color: #e3e6f0 !important;
 }
 
-/* Hover effects */
 .info-item:hover {
     background-color: #f8f9fa;
     border-radius: 6px;
@@ -285,7 +284,6 @@
     margin: 0 -0.5rem;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .border-right {
         border-right: none !important;

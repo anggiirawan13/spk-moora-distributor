@@ -34,7 +34,19 @@
                             <td class="text-center text-muted">{{ $key + 1 }}</td>
                             @foreach ($columns as $column)
                                 <td>
-                                    @if ($column['field'] === 'role_label')
+                                    @if (!empty($column['type']) && $column['type'] === 'image_modal')
+                                        <a href="#" 
+                                           class="js-image-modal-trigger"
+                                           data-toggle="modal" 
+                                           data-target="#imageModal"
+                                           data-name="{{ $item['name'] ?? '' }}"
+                                           data-src="{{ $item[$column['field']] ?? '' }}">
+                                            <img class="default-img" 
+                                                 src="{{ $item[$column['field']] ?? '' }}" 
+                                                 width="60" 
+                                                 alt="{{ $item['name'] ?? 'Gambar' }}">
+                                        </a>
+                                    @elseif ($column['field'] === 'role_label')
                                         @php
                                             $roleLabel = $item['role_label'] ?? '';
                                             $roleBadgeClass = 'badge-primary';
@@ -84,13 +96,7 @@
                                             <span class="badge badge-light">{{ $item[$column['field']] }}</span>
                                         </div>
                                     @else
-                                        @if (!empty($column['html']) && $column['html'])
-                                            {!! $item[$column['field']] !!}
-                                        @elseif (!empty($column['php']) && $column['php'])
-                                            {{ $column['field'] }}
-                                        @else
-                                            {{ $item[$column['field']] ?? '-' }}
-                                        @endif
+                                        {{ $item[$column['field']] ?? '-' }}
                                     @endif
                                 </td>
                             @endforeach
@@ -115,8 +121,9 @@
                                             @endphp
 
                                             <button type="button" 
-                                                    class="btn btn-danger btn-sm btn-action m-1"
-                                                    onclick="confirmDelete('{{ route($deleteRoute, $item['id']) }}', '{{ $item[$columns[$nameColumnIndex]['field']] ?? $item['name'] ?? 'Data' }}')"
+                                                    class="btn btn-danger btn-sm btn-action m-1 js-confirm-delete"
+                                                    data-url="{{ route($deleteRoute, $item['id']) }}"
+                                                    data-name="{{ $item[$columns[$nameColumnIndex]['field']] ?? $item['name'] ?? 'Data' }}"
                                                     data-toggle="tooltip" title="Hapus Data">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -145,7 +152,7 @@
     function confirmDelete(url, name) {
         Swal.fire({
             title: 'Konfirmasi Hapus',
-            html: `Apakah Anda yakin ingin menghapus <strong>"${name}"</strong>?`,
+            text: `Apakah Anda yakin ingin menghapus "${name}"?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: '<i class="fas fa-trash mr-1"></i>Ya, Hapus',
@@ -185,6 +192,17 @@
 
     $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
+
+        document.addEventListener('click', function(event) {
+            const trigger = event.target.closest('.js-confirm-delete');
+            if (!trigger) {
+                return;
+            }
+            event.preventDefault();
+            const url = trigger.getAttribute('data-url') || '';
+            const name = trigger.getAttribute('data-name') || 'Data';
+            confirmDelete(url, name);
+        });
         
         $('.btn-action').hover(
             function() {

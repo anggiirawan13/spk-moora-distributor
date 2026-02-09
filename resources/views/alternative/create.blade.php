@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewDeliveryMethod = document.getElementById('previewDeliveryMethod');
     const previewPaymentTerm = document.getElementById('previewPaymentTerm');
     
-    const distributorsData = {!! json_encode($distributors->map(function($distributor) {
+    const distributorsData = @json($distributors->map(function($distributor) {
         return [
             'id' => $distributor->id,
             'name' => $distributor->name,
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'delivery_method' => $distributor->deliveryMethod->name,
             'payment_term' => $distributor->paymentTerm->name,
         ];
-    })) !!};
+    }));
 
     distributorSelect.addEventListener('change', function() {
         const selectedId = parseInt(this.value);
@@ -321,7 +321,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(`summary_${criteriaCode}_name`).textContent = subCriteriaName;
             document.getElementById(`summary_${criteriaCode}_value`).textContent = subCriteriaValue;
             
-            const row = document.querySelector(`tr[data-criteria="${criteriaCode}"]`);
+            const safeCriteria = (window.CSS && CSS.escape) ? CSS.escape(criteriaCode) : criteriaCode.replace(/["\\]/g, '\\$&');
+            const row = document.querySelector(`tr[data-criteria="${safeCriteria}"]`);
             if (row) {
                 row.classList.add('table-success');
                 setTimeout(() => row.classList.remove('table-success'), 1000);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Distributor;
+use App\Support\InputSanitizer;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,11 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'name' => InputSanitizer::clean($request->name) ?? '',
+            'description' => InputSanitizer::clean($request->description),
+        ]);
+
         $request->validate([
             'code' => 'required|string|max:20|unique:products,code',
             'name' => 'required|unique:products,name',
@@ -71,6 +77,11 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->merge([
+            'name' => InputSanitizer::clean($request->name) ?? '',
+            'description' => InputSanitizer::clean($request->description),
+        ]);
+
         $this->validate($request, [
             'code' => 'required|string|max:20|unique:products,code,' . $id,
             'name' => 'required|unique:products,name,' . $id,

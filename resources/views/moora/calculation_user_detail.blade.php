@@ -1,4 +1,3 @@
-{{-- Step 1: Masukkan Data Alternatif --}}
 @php
     $getValue = function ($alternative, $criteriaId) {
         foreach ($alternative->values as $val) {
@@ -58,7 +57,6 @@
     </div>
 </div>
 
-{{-- Step 2: Normalisasi Akar --}}
 <div class="card shadow mb-4">
     <div class="card-header bg-primary text-white">
         <strong>Step 2: Perhitungan Akar Total untuk Normalisasi</strong>
@@ -78,7 +76,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- Baris jumlah kuadrat --}}
                 <tr>
                     @foreach ($criteria as $c)
                         @php
@@ -91,7 +88,6 @@
                     @endforeach
                 </tr>
 
-                {{-- Baris hasil akar --}}
                 <tr class="font-weight-bold bg-light">
                     @foreach ($criteria as $c)
                         <td>
@@ -104,7 +100,6 @@
     </div>
 </div>
 
-{{-- Step 3: Normalisasi Nilai Alternatif --}}
 <div class="card shadow mb-4">
     <div class="card-header bg-primary text-white">
         <strong>Step 3: Normalisasi Nilai Alternatif</strong>
@@ -141,7 +136,6 @@
     </div>
 </div>
 
-{{-- Step 4: Nilai Normalisasi x Bobot --}}
 <div class="card shadow mb-4">
     <div class="card-header bg-primary text-white">
         <strong>Step 4: Nilai Normalisasi × Bobot Kriteria</strong>
@@ -180,7 +174,6 @@
     </div>
 </div>
 
-{{-- Step 5 & 6: Hitung MOORA dan Ranking --}}
 <div class="card shadow mb-4">
     <div class="card-header bg-info text-white">
         <strong>Step 5-6: Perhitungan Nilai Akhir MOORA dan Peringkat</strong>

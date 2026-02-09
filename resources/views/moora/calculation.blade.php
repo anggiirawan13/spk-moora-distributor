@@ -192,7 +192,6 @@
             </div>
         </div>
 
-        {{-- Step 1: Masukkan Data Alternatif --}}
         <div class="card shadow mb-4 border-0">
             <div class="card-header bg-gradient-primary text-white py-3">
                 <h5 class="mb-0 font-weight-bold">
@@ -256,7 +255,6 @@
             </div>
         </div>
 
-        {{-- Step 2: Normalisasi Akar --}}
         <div class="card shadow mb-4 border-0">
             <div class="card-header bg-gradient-success text-white py-3">
                 <h5 class="mb-0 font-weight-bold">
@@ -312,7 +310,6 @@
             </div>
         </div>
 
-        {{-- Step 3: Normalisasi Nilai Alternatif --}}
         <div class="card shadow mb-4 border-0">
             <div class="card-header bg-gradient-info text-white py-3">
                 <h5 class="mb-0 font-weight-bold">
@@ -363,7 +360,6 @@
             </div>
         </div>
 
-        {{-- Step 4: Nilai Normalisasi x Bobot --}}
         <div class="card shadow mb-4 border-0">
             <div class="card-header bg-gradient-warning text-white py-3">
                 <h5 class="mb-0 font-weight-bold">
@@ -418,7 +414,6 @@
             </div>
         </div>
 
-        {{-- Step 5 & 6: Hitung MOORA dan Ranking --}}
         <div class="card shadow mb-4 border-0">
             <div class="card-header bg-gradient-danger text-white py-3">
                 <h5 class="mb-0 font-weight-bold">
