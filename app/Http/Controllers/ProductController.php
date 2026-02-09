@@ -41,6 +41,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->merge([
+            'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
             'description' => InputSanitizer::clean($request->description),
         ]);
@@ -54,9 +55,8 @@ class ProductController extends Controller
         ]);
 
         try {
-            $code = strtoupper(trim((string) $request->code));
             $product = Product::create([
-                'code' => $code,
+                'code' => $request->code,
                 'name' => $request->name,
                 'description' => $request->description,
             ]);
@@ -78,6 +78,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->merge([
+            'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
             'description' => InputSanitizer::clean($request->description),
         ]);
@@ -94,7 +95,7 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
 
             $product->update([
-                'code' => strtoupper(trim((string) $request->code)),
+                'code' => $request->code,
                 'name' => $request->name,
                 'description' => $request->description,
             ]);

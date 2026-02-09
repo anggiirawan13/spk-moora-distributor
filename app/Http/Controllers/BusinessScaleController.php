@@ -36,22 +36,24 @@ class BusinessScaleController extends Controller
     public function store(Request $request)
     {
         $request->merge([
+            'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
             'description' => InputSanitizer::clean($request->description),
         ]);
 
         $request->validate([
-            'name' => 'required|unique:business_scales,name',
+            'code' => 'required|string|max:20|unique:business_scales,code',
+            'name' => 'required',
             'description' => 'nullable|string'
         ]);
 
         try {
-            BusinessScale::create($request->only(['name', 'description']));
+            BusinessScale::create($request->only(['code', 'name', 'description']));
 
             return redirect()->route('business_scale.index')->with('success', 'Data skala bisnis berhasil disimpan');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama skala bisnis sudah digunakan, gunakan nama lain');
+                return back()->withInput()->with('error', 'Kode skala bisnis sudah digunakan, gunakan kode lain');
             }
 
             return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');
@@ -61,17 +63,20 @@ class BusinessScaleController extends Controller
     public function update(Request $request, $id)
     {
         $request->merge([
+            'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
             'description' => InputSanitizer::clean($request->description),
         ]);
 
         $this->validate($request, [
-            'name' => 'required|unique:business_scales,name,' . $id,
+            'code' => 'required|string|max:20|unique:business_scales,code,' . $id,
+            'name' => 'required',
             'description' => 'nullable|string'
         ]);
 
         try {
             $businessScale = [
+                'code' => $request->code,
                 'name' => $request->name,
                 'description' => $request->description,
             ];
@@ -81,7 +86,7 @@ class BusinessScaleController extends Controller
             return redirect()->route('business_scale.index')->with('success', 'Data skala bisnis berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
-                return back()->withInput()->with('error', 'Nama skala bisnis sudah digunakan, gunakan nama lain');
+                return back()->withInput()->with('error', 'Kode skala bisnis sudah digunakan, gunakan kode lain');
             }
 
             return back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi');

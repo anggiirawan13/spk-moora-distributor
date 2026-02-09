@@ -8,6 +8,7 @@ use App\Models\Criteria;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Database\QueryException;
+use App\Support\InputSanitizer;
 
 class CriteriaController extends Controller
 {
@@ -47,6 +48,10 @@ class CriteriaController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
+        ]);
+
         $request->validate([
             'code' => 'required|unique:criterias,code',
             'name' => 'required',
@@ -74,6 +79,10 @@ class CriteriaController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
+        $request->merge([
+            'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
+        ]);
+
         $this->validate($request, [
             'code' => 'required',
             'name' => 'required',

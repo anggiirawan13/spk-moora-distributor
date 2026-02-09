@@ -150,48 +150,61 @@
 
 <script>
     function confirmDelete(url, name) {
-        Swal.fire({
-            title: 'Konfirmasi Hapus',
-            text: `Apakah Anda yakin ingin menghapus "${name}"?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fas fa-trash mr-1"></i>Ya, Hapus',
-            cancelButtonText: '<i class="fas fa-times mr-1"></i>Batal',
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
-            reverseButtons: true,
-            customClass: {
-                confirmButton: 'btn btn-danger',
-                cancelButton: 'btn btn-secondary'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = url;
+        const submitDelete = () => {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = url;
 
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                const csrfInput = document.createElement('input');
-                csrfInput.type = 'hidden';
-                csrfInput.name = '_token';
-                csrfInput.value = csrfToken;
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = csrfToken;
 
-                const methodInput = document.createElement('input');
-                methodInput.type = 'hidden';
-                methodInput.name = '_method';
-                methodInput.value = 'DELETE';
+            const methodInput = document.createElement('input');
+            methodInput.type = 'hidden';
+            methodInput.name = '_method';
+            methodInput.value = 'DELETE';
 
-                form.appendChild(csrfInput);
-                form.appendChild(methodInput);
-                document.body.appendChild(form);
-                form.submit();
-            }
-        });
+            form.appendChild(csrfInput);
+            form.appendChild(methodInput);
+            document.body.appendChild(form);
+            form.submit();
+        };
+
+        if (window.Swal && typeof Swal.fire === 'function') {
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: `Apakah Anda yakin ingin menghapus "${name}"?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '<i class="fas fa-trash mr-1"></i>Ya, Hapus',
+                cancelButtonText: '<i class="fas fa-times mr-1"></i>Batal',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                reverseButtons: true,
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-secondary'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    submitDelete();
+                }
+            });
+            return;
+        }
+
+        if (confirm(`Apakah Anda yakin ingin menghapus "${name}"?`)) {
+            submitDelete();
+        }
     }
 
-    $(document).ready(function() {
-        $('[data-toggle="tooltip"]').tooltip();
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.$ && $.fn && typeof $.fn.tooltip === 'function') {
+            $('[data-toggle="tooltip"]').tooltip();
+        }
 
         document.addEventListener('click', function(event) {
             const trigger = event.target.closest('.js-confirm-delete');
@@ -203,15 +216,15 @@
             const name = trigger.getAttribute('data-name') || 'Data';
             confirmDelete(url, name);
         });
-        
-        $('.btn-action').hover(
-            function() {
-                $(this).css('transform', 'scale(1.1)');
-            },
-            function() {
-                $(this).css('transform', 'scale(1)');
-            }
-        );
+
+        document.querySelectorAll('.btn-action').forEach((button) => {
+            button.addEventListener('mouseenter', function() {
+                button.style.transform = 'scale(1.1)';
+            });
+            button.addEventListener('mouseleave', function() {
+                button.style.transform = 'scale(1)';
+            });
+        });
     });
 </script>
 

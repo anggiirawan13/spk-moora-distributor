@@ -208,27 +208,38 @@
 @push('scripts')
 <script>
 function confirmDelete(url, name) {
-    Swal.fire({
-        title: 'Konfirmasi Hapus',
-        text: `Anda akan menghapus sub kriteria "${name}". Tindakan ini tidak dapat dibatalkan.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, Hapus!',
-        cancelButtonText: 'Batal',
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#6c757d',
-        reverseButtons: true,
-        customClass: {
-            confirmButton: 'btn btn-danger btn-lg',
-            cancelButton: 'btn btn-secondary btn-lg'
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const form = document.getElementById('deleteForm');
-            form.action = url;
-            form.submit();
-        }
-    });
+    const submitDelete = () => {
+        const form = document.getElementById('deleteForm');
+        form.action = url;
+        form.submit();
+    };
+
+    if (window.Swal && typeof Swal.fire === 'function') {
+        Swal.fire({
+            title: 'Konfirmasi Hapus',
+            text: `Anda akan menghapus sub kriteria "${name}". Tindakan ini tidak dapat dibatalkan.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'btn btn-danger btn-lg',
+                cancelButton: 'btn btn-secondary btn-lg'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                submitDelete();
+            }
+        });
+        return;
+    }
+
+    if (confirm(`Anda akan menghapus sub kriteria "${name}". Tindakan ini tidak dapat dibatalkan.`)) {
+        submitDelete();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {

@@ -71,8 +71,9 @@ class DistributorRequest extends FormRequest
     protected function prepareForValidation()
     {
         if ($this->has('code')) {
+            $cleanCode = InputSanitizer::clean((string) $this->input('code'));
             $this->merge([
-                'code' => strtoupper(trim((string) $this->input('code'))),
+                'code' => strtoupper(trim((string) ($cleanCode ?? ''))),
             ]);
         }
 

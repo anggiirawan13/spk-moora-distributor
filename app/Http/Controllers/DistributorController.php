@@ -146,6 +146,16 @@ class DistributorController extends Controller
 
     public function destroy(Distributor $distributor): RedirectResponse
     {
+        if ($distributor->products()->exists()) {
+            return redirect()->route('distributor.index')
+                ->with('error', 'Distributor tidak dapat dihapus karena masih digunakan pada produk');
+        }
+
+        if ($distributor->alternative()->exists()) {
+            return redirect()->route('distributor.index')
+                ->with('error', 'Distributor tidak dapat dihapus karena masih digunakan pada alternatif');
+        }
+
         if ($distributor->image_name) {
             Storage::delete('public/distributor/' . $distributor->image_name);
         }
