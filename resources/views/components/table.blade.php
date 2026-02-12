@@ -117,7 +117,7 @@
                                             </a>
 
                                             @php
-                                                $nameColumnIndex = $columns[0]['html'] ?? false ? 1 : 0;
+                                                $nameColumnIndex = $columns[0]['html'] ?? true ? 1 : 0;
                                             @endphp
 
                                             <button type="button" 

@@ -18,7 +18,7 @@
             <div class="card shadow border-0">
                 <div class="card-header bg-gradient-primary text-white py-3">
                     <h5 class="mb-0 font-weight-bold">
-                        <i class="fas fa-plus-circle mr-2"></i>Tambah Termin Pembayaran Baru
+                        <i class="fas fa-plus-circle mr-2"></i>Tambah Termin Pembayaran
                     </h5>
                 </div>
                 <div class="card-body p-4">

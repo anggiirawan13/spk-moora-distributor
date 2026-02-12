@@ -124,7 +124,7 @@
                                                accept="image/*"
                                                onchange="previewImage(event)">
                                         <label class="custom-file-label" for="image_name" id="image_name_label">
-                                            Pilih file logo baru...
+                                            Pilih file logo...
                                         </label>
                                         @error('image_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
