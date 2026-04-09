@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\TracksImportBatchVisibility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class BusinessScale extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksImportBatchVisibility;
 
     protected $table = 'business_scales';
 
@@ -16,6 +17,7 @@ class BusinessScale extends Model
         'code',
         'name',
         'description',
+        'import_batch_id',
         'created_by',
         'updated_by',
     ];

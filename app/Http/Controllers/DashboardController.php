@@ -17,14 +17,16 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $distributors = Distributor::count();
+        $user = auth()->user();
+
+        $distributors = Distributor::visibleTo($user)->count();
         $users = User::count();
-        $paymentTerms = PaymentTerm::count();
-        $product = Product::count();
-        $deliveryMethods = DeliveryMethod::count();
-        $businessScales = BusinessScale::count();
-        $criteria = Criteria::count();
-        $alternative = Alternative::count();
+        $paymentTerms = PaymentTerm::visibleTo($user)->count();
+        $product = Product::visibleTo($user)->count();
+        $deliveryMethods = DeliveryMethod::visibleTo($user)->count();
+        $businessScales = BusinessScale::visibleTo($user)->count();
+        $criteria = Criteria::visibleTo($user)->count();
+        $alternative = Alternative::visibleTo($user)->count();
 
         $data = (object) [
             'businessScales' => $businessScales,

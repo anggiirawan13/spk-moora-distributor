@@ -8,7 +8,7 @@
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-layer-group text-primary mr-2"></i>Sub Kriteria
         </h1>
-        <a href="{{ route('subcriteria.index') }}" class="btn btn-secondary btn-sm">
+        <a href="{{ $subCriteria->import_batch_id ? route('import.excel.history') : route('subcriteria.index') }}" class="btn btn-secondary btn-sm">
             <i class="fas fa-arrow-left mr-1"></i>Kembali
         </a>
     </div>
@@ -160,14 +160,14 @@
                             </div>
                         </div>
 
-                        @if($subCriteria->criteria->subCriterias && $subCriteria->criteria->subCriterias->count() > 0)
+                        @if($subCriteria->criteria->subCriteria && $subCriteria->criteria->subCriteria->count() > 1)
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="card border-left-warning">
                                     <div class="card-header bg-light py-2">
                                         <h6 class="mb-0 font-weight-bold text-warning">
                                             <i class="fas fa-list mr-2"></i>Sub Kriteria Lainnya
-                                            <span class="badge badge-warning ml-2">{{ $subCriteria->criteria->subCriterias->count() - 1 }}</span>
+                                            <span class="badge badge-warning ml-2">{{ $subCriteria->criteria->subCriteria->count() - 1 }}</span>
                                         </h6>
                                     </div>
                                     <div class="card-body">
@@ -182,7 +182,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($subCriteria->criteria->subCriterias as $index => $sub)
+                                                    @foreach($subCriteria->criteria->subCriteria as $index => $sub)
                                                         @if($sub->id != $subCriteria->id)
                                                         <tr>
                                                             <td class="text-center">{{ $index + 1 }}</td>
@@ -191,12 +191,7 @@
                                                                 <span class="badge badge-success">{{ $sub->value }}</span>
                                                             </td>
                                                             <td class="small text-muted">
-                                                                {{ $sub->description ?: '-' }}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <span class="badge {{ $sub->is_active ? 'badge-success' : 'badge-secondary' }}">
-                                                                    {{ $sub->is_active ? 'Aktif' : 'Nonaktif' }}
-                                                                </span>
+                                                                {{ $sub->code ?: '-' }}
                                                             </td>
                                                         </tr>
                                                         @endif
@@ -213,7 +208,7 @@
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="{{ route('subcriteria.index') }}" class="btn btn-secondary btn-lg">
+                                    <a href="{{ $subCriteria->import_batch_id ? route('import.excel.history') : route('subcriteria.index') }}" class="btn btn-secondary btn-lg">
                                         <i class="fas fa-arrow-left mr-2"></i>Kembali
                                     </a>
                                     <div>
@@ -291,11 +286,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.getElementById('name');
     const valueInput = document.getElementById('value');
-    const descriptionInput = document.getElementById('description');
     
     const namePreview = document.getElementById('namePreview');
     const valuePreview = document.getElementById('valuePreview');
-    const descriptionPreview = document.getElementById('descriptionPreview');
 
     nameInput.addEventListener('input', function() {
         namePreview.textContent = this.value || '-';
@@ -303,10 +296,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     valueInput.addEventListener('input', function() {
         valuePreview.textContent = this.value || '-';
-    });
-
-    descriptionInput.addEventListener('input', function() {
-        descriptionPreview.textContent = this.value || '-';
     });
 
     const form = document.getElementById('subcriteriaForm');
@@ -321,9 +310,9 @@ document.addEventListener('DOMContentLoaded', function() {
             isValid = false;
             errorMessage = 'Nama sub kriteria harus diisi!';
             nameInput.focus();
-        } else if (!value || value < 1 || value > 100) {
+        } else if (!value || value < 1 || value > 10) {
             isValid = false;
-            errorMessage = 'Nilai harus antara 1 - 100!';
+            errorMessage = 'Nilai harus antara 1 - 10!';
             valueInput.focus();
         }
 
@@ -342,7 +331,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (nameInput.value) nameInput.dispatchEvent(new Event('input'));
     if (valueInput.value) valueInput.dispatchEvent(new Event('input'));
-    if (descriptionInput.value) descriptionInput.dispatchEvent(new Event('input'));
 });
 </script>
 @endsection

@@ -12,7 +12,7 @@ class DeliveryMethodController extends Controller
 {
     public function index()
     {
-        $deliveryMethods = DeliveryMethod::all();
+        $deliveryMethods = DeliveryMethod::visibleTo(auth()->user())->get();
         return view('delivery_method.index', compact('deliveryMethods'));
     }
 
@@ -23,13 +23,14 @@ class DeliveryMethodController extends Controller
 
     public function show($id)
     {
-        $deliveryMethod = DeliveryMethod::with(['createdBy', 'updatedBy'])->findOrFail($id);
+        $deliveryMethod = DeliveryMethod::visibleTo(auth()->user())->with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('delivery_method.show', compact('deliveryMethod'));
     }
 
     public function edit($id)
     {
-        $deliveryMethod = DeliveryMethod::findOrFail($id);
+        $deliveryMethod = DeliveryMethod::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($deliveryMethod->can_be_edited_by_current_user, 403);
         return view('delivery_method.edit', compact('deliveryMethod'));
     }
 
@@ -62,6 +63,9 @@ class DeliveryMethodController extends Controller
 
     public function update(Request $request, $id)
     {
+        $deliveryMethodModel = DeliveryMethod::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($deliveryMethodModel->can_be_edited_by_current_user, 403);
+
         $request->merge([
             'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
@@ -81,7 +85,7 @@ class DeliveryMethodController extends Controller
                 'description' => $request->description,
             ];
 
-            DeliveryMethod::whereId($id)->update($deliveryMethod);
+            $deliveryMethodModel->update($deliveryMethod);
 
             return redirect()->route('delivery_method.index')->with('success', 'Data metode pengiriman berhasil diubah');
         } catch (QueryException $e) {
@@ -95,7 +99,8 @@ class DeliveryMethodController extends Controller
 
     public function destroy($id)
     {
-        $deliveryMethod = DeliveryMethod::findOrFail($id);
+        $deliveryMethod = DeliveryMethod::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($deliveryMethod->can_be_deleted_by_current_user, 403);
         if ($deliveryMethod->distributors()->count() > 0) {
             return redirect()->route('delivery_method.index')
                 ->with('error', 'Tidak dapat menghapus metode pengiriman karena masih digunakan oleh distributor');

@@ -14,7 +14,7 @@ class CriteriaController extends Controller
 {
     public function index(): View
     {
-        $criterias = Criteria::orderby('code', 'asc')->get();
+        $criterias = Criteria::visibleTo(auth()->user())->orderby('code', 'asc')->get();
 
         $criterias->transform(function ($c) {
             return [
@@ -23,6 +23,10 @@ class CriteriaController extends Controller
                 'name' => $c->name,
                 'weight' => $c->weight,
                 'attribute_type' => ucwords(str_replace('_', ' ', $c->attribute_type)),
+                'approval_status_label' => $c->approval_status_label,
+                'approval_reason' => $c->approval_reason,
+                'can_edit' => $c->can_be_edited_by_current_user,
+                'can_delete' => $c->can_be_deleted_by_current_user,
             ];
         });
 
@@ -36,13 +40,14 @@ class CriteriaController extends Controller
 
     public function show($id)
     {
-        $criteria = Criteria::with(['createdBy', 'updatedBy'])->findOrFail($id);
+        $criteria = Criteria::visibleTo(auth()->user())->with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('criteria.show', compact('criteria'));
     }
 
     public function edit($id)
     {
-        $criteria = Criteria::findorfail($id);
+        $criteria = Criteria::manageableBy(auth()->user())->findorfail($id);
+        abort_unless($criteria->can_be_edited_by_current_user, 403);
         return view('criteria.edit', compact('criteria'));
     }
 
@@ -79,6 +84,9 @@ class CriteriaController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
+        $criteriaModel = Criteria::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($criteriaModel->can_be_edited_by_current_user, 403);
+
         $request->merge([
             'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
         ]);
@@ -91,16 +99,18 @@ class CriteriaController extends Controller
         ]);
 
         try {
-            $criteria = [
+            $criteriaData = [
                 'code' => $request->code,
                 'name' => $request->name,
                 'weight' => $request->weight,
                 'attribute_type' => $request->attribute_type,
             ];
 
-            Criteria::whereId($id)->update($criteria);
+            $criteriaModel->update($criteriaData);
 
-            return redirect()->route('criteria.index')->with('success', 'Data berhasil diubah');
+            return redirect()
+                ->route($criteriaModel->import_batch_id ? 'import.excel.history' : 'criteria.index')
+                ->with('success', 'Data berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 10062) {
                 return back()->withInput()->with('error', 'Kode sudah digunakan, gunakan kode lain');
@@ -112,7 +122,8 @@ class CriteriaController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        $criteria = Criteria::findorfail($id);
+        $criteria = Criteria::manageableBy(auth()->user())->findorfail($id);
+        abort_unless($criteria->can_be_deleted_by_current_user, 403);
         $criteria->delete();
 
         return redirect()->route('criteria.index')->with('success', 'Data berhasil dihapus');

@@ -90,7 +90,8 @@
                                                    title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-
+                                            @endif
+                                            @if (auth()->user()->is_admin == 1)
                                                 <button type="button" 
                                                         class="btn btn-danger btn-sm m-1 js-confirm-delete"
                                                         data-url="{{ route('alternative.destroy', $item['id']) }}"

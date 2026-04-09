@@ -97,6 +97,11 @@ class DistributorProductSheetImport implements ToCollection, WithHeadingRow, Ski
             DB::table('distributor_product')->insert([
                 'distributor_id' => $distributor->id,
                 'product_id' => $product->id,
+                'import_batch_id' => $this->context->importBatchId,
+                'admin_approval_status' => auth()->user()->is_admin == 1 ? 'approved' : 'pending',
+                'admin_approved_at' => auth()->user()->is_admin == 1 ? now() : null,
+                'admin_approved_by' => auth()->user()->is_admin == 1 ? auth()->id() : null,
+                'director_approval_status' => 'pending',
                 'created_at' => now(),
                 'updated_at' => now(),
                 'created_by' => auth()->id(),

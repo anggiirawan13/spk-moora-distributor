@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\TracksImportBatchVisibility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DistributorProduct extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksImportBatchVisibility;
 
     protected $table = 'distributor_product';
 
     protected $fillable = [
         'distributor_id',
         'product_id',
+        'import_batch_id',
         'created_by',
         'updated_by',
     ];
@@ -38,11 +40,17 @@ class DistributorProduct extends Model
 
     public function distributor()
     {
-        return $this->belongsTo(Distributor::class);
+        $relation = $this->belongsTo(Distributor::class);
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        $relation = $this->belongsTo(Product::class);
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 }

@@ -12,7 +12,7 @@ class PaymentTermController extends Controller
 {
     public function index()
     {
-        $paymentTerms = PaymentTerm::all();
+        $paymentTerms = PaymentTerm::visibleTo(auth()->user())->get();
         return view('payment_term.index', compact('paymentTerms'));
     }
 
@@ -23,13 +23,14 @@ class PaymentTermController extends Controller
 
     public function show($id)
     {
-        $paymentTerm = PaymentTerm::with(['createdBy', 'updatedBy'])->findOrFail($id);
+        $paymentTerm = PaymentTerm::visibleTo(auth()->user())->with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('payment_term.show', compact('paymentTerm'));
     }
 
     public function edit($id)
     {
-        $paymentTerm = PaymentTerm::findOrFail($id);
+        $paymentTerm = PaymentTerm::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($paymentTerm->can_be_edited_by_current_user, 403);
         return view('payment_term.edit', compact('paymentTerm'));
     }
 
@@ -62,6 +63,9 @@ class PaymentTermController extends Controller
 
     public function update(Request $request, $id)
     {
+        $paymentTermModel = PaymentTerm::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($paymentTermModel->can_be_edited_by_current_user, 403);
+
         $request->merge([
             'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
@@ -81,7 +85,7 @@ class PaymentTermController extends Controller
                 'description' => $request->description,
             ];
 
-            PaymentTerm::whereId($id)->update($paymentTerm);
+            $paymentTermModel->update($paymentTerm);
 
             return redirect()->route('payment_term.index')->with('success', 'Data termin pembayaran berhasil diubah');
         } catch (QueryException $e) {
@@ -95,7 +99,8 @@ class PaymentTermController extends Controller
 
     public function destroy($id)
     {
-        $paymentTerm = PaymentTerm::findOrFail($id);
+        $paymentTerm = PaymentTerm::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($paymentTerm->can_be_deleted_by_current_user, 403);
         if ($paymentTerm->distributors()->count() > 0) {
             return redirect()->route('payment_term.index')
                 ->with('error', 'Tidak dapat menghapus termin pembayaran karena masih digunakan oleh distributor');

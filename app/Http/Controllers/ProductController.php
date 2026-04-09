@@ -13,26 +13,27 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('distributors')->get();
+        $products = Product::visibleTo(auth()->user())->with('distributors')->get();
         return view('product.index', compact('products'));
     }
 
     public function create()
     {
-        $distributors = Distributor::all();
+        $distributors = Distributor::visibleTo(auth()->user())->get();
         return view('product.create', compact('distributors'));
     }
 
     public function show($id)
     {
-        $product = Product::with(['distributors', 'createdBy', 'updatedBy'])->findOrFail($id);
+        $product = Product::visibleTo(auth()->user())->with(['distributors', 'createdBy', 'updatedBy'])->findOrFail($id);
         return view('product.show', compact('product'));
     }
 
     public function edit($id)
     {
-        $product = Product::with('distributors')->findOrFail($id);
-        $distributors = Distributor::all();
+        $product = Product::manageableBy(auth()->user())->with('distributors')->findOrFail($id);
+        abort_unless($product->can_be_edited_by_current_user, 403);
+        $distributors = Distributor::manageableBy(auth()->user())->get();
         $selectedDistributors = $product->distributors->pluck('id')->toArray();
 
         return view('product.edit', compact('product', 'distributors', 'selectedDistributors'));
@@ -77,6 +78,9 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        $productModel = Product::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($productModel->can_be_edited_by_current_user, 403);
+
         $request->merge([
             'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
@@ -92,7 +96,7 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product = Product::findOrFail($id);
+            $product = $productModel;
 
             $product->update([
                 'code' => $request->code,
@@ -100,7 +104,29 @@ class ProductController extends Controller
                 'description' => $request->description,
             ]);
 
-            $product->distributors()->sync($request->distributors ?? []);
+            if ($product->import_batch_id) {
+                $pivotData = collect($request->distributors ?? [])->mapWithKeys(function ($distributorId) use ($product) {
+                    return [
+                        $distributorId => [
+                            'import_batch_id' => $product->import_batch_id,
+                            'admin_approval_status' => auth()->user()->is_admin == 1 ? 'approved' : 'pending',
+                            'admin_approval_note' => null,
+                            'admin_approved_at' => auth()->user()->is_admin == 1 ? now() : null,
+                            'admin_approved_by' => auth()->user()->is_admin == 1 ? auth()->id() : null,
+                            'director_approval_status' => 'pending',
+                            'director_approval_note' => null,
+                            'director_approved_at' => null,
+                            'director_approved_by' => null,
+                            'updated_by' => auth()->id(),
+                            'created_by' => auth()->id(),
+                        ],
+                    ];
+                })->toArray();
+
+                $product->distributors()->sync($pivotData);
+            } else {
+                $product->distributors()->sync($request->distributors ?? []);
+            }
 
             return redirect()->route('product.index')->with('success', 'Data produk berhasil diubah');
         } catch (QueryException $e) {
@@ -114,7 +140,8 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($product->can_be_deleted_by_current_user, 403);
 
         $product->distributors()->detach();
 

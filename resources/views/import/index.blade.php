@@ -8,6 +8,9 @@
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-file-excel text-success mr-2"></i>Import Excel
         </h1>
+        <a href="{{ route('import.excel.history') }}" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-history mr-1"></i>History
+        </a>
     </div>
 
     <div class="card shadow border-0">
@@ -25,24 +28,7 @@
                 </a>
             </div>
 
-            @if (session('import_stats'))
-                <div class="alert alert-info">
-                    <div class="mb-2 font-weight-bold">
-                        <i class="fas fa-info-circle mr-1"></i>Ringkasan Import Terakhir
-                    </div>
-                    <ul class="list-unstyled mb-0">
-                        @foreach (session('import_stats') as $sheet => $stat)
-                            <li>
-                                <strong>{{ $sheet }}</strong>:
-                                created {{ $stat['created'] ?? 0 }},
-                                skipped {{ $stat['skipped'] ?? 0 }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form action="{{ route('import.excel.preview') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('import.excel.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="file" class="font-weight-bold text-dark mb-2">
@@ -60,7 +46,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-success">
-                    <i class="fas fa-search mr-2"></i>Preview Import
+                    <i class="fas fa-file-import mr-2"></i>Import Data
                 </button>
             </form>
         </div>
@@ -80,6 +66,10 @@
             <div class="alert alert-warning mt-3 mb-0">
                 <i class="fas fa-exclamation-triangle mr-1"></i>
                 Urutan sheet wajib: Skala Bisnis, Metode Pengiriman, Termin Pembayaran, Distributor, Produk, Distributor Produk, Kriteria, Sub Kriteria, Alternatif.
+            </div>
+            <div class="alert alert-secondary mt-3 mb-0">
+                <i class="fas fa-user-check mr-1"></i>
+                Import oleh staf harus disetujui admin dulu. Setelah itu data baru terlihat oleh Direktur Utama, dan setelah disetujui Direktur Utama data baru terlihat oleh Komisaris.
             </div>
         </div>
     </div>

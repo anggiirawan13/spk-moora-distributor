@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DeliveryMethodController;
 use App\Http\Controllers\BusinessScaleController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ImportApprovalController;
 
 Auth::routes(['register' => false]);
 
@@ -47,12 +48,29 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/sub-criteria', SubCriteriaController::class)->names('subcriteria');
     Route::resource('/alternative', AlternativeController::class)->names('alternative');
 
-    Route::middleware(['can:admin'])->group(function () {
+    Route::middleware(['can:import-excel'])->group(function () {
         Route::get('/import/excel', [ImportController::class, 'index'])->name('import.excel.index');
-        Route::post('/import/excel/preview', [ImportController::class, 'preview'])->name('import.excel.preview');
+        Route::get('/import/excel/history', [ImportController::class, 'history'])->name('import.excel.history');
         Route::post('/import/excel', [ImportController::class, 'store'])->name('import.excel.store');
         Route::get('/import/excel/errors/{file}', [ImportController::class, 'downloadErrors'])->name('import.excel.errors');
         Route::get('/import/excel/template', [ImportController::class, 'downloadTemplate'])->name('import.excel.template');
         Route::get('/import/excel/template-seeder', [ImportController::class, 'downloadSeederTemplate'])->name('import.excel.template_seeder');
+    });
+
+    Route::middleware(['can:view-import-approval'])->group(function () {
+        Route::get('/import/approvals', [ImportApprovalController::class, 'index'])->name('import.approvals.index');
+    });
+
+    Route::middleware(['can:approve-import-admin'])->group(function () {
+        Route::post('/import/approvals/{batch}/batch-admin', [ImportApprovalController::class, 'approveBatchAdmin'])->name('import.approvals.batch_admin');
+    });
+
+    Route::middleware(['can:approve-import-director'])->group(function () {
+        Route::post('/import/approvals/{batch}/batch-director', [ImportApprovalController::class, 'approveBatchDirector'])->name('import.approvals.batch_director');
+    });
+
+    Route::middleware(['can:view-import-approval'])->group(function () {
+        Route::post('/import/approvals/item/{type}/{id}/approve', [ImportApprovalController::class, 'approveItem'])->name('import.approvals.item_approve');
+        Route::post('/import/approvals/item/{type}/{id}/reject', [ImportApprovalController::class, 'rejectItem'])->name('import.approvals.item_reject');
     });
 });

@@ -12,7 +12,7 @@ class BusinessScaleController extends Controller
 {
     public function index()
     {
-        $businessScales = BusinessScale::all();
+        $businessScales = BusinessScale::visibleTo(auth()->user())->get();
         return view('business_scale.index', compact('businessScales'));
     }
 
@@ -23,13 +23,14 @@ class BusinessScaleController extends Controller
 
     public function show($id)
     {
-        $businessScale = BusinessScale::with(['createdBy', 'updatedBy'])->findOrFail($id);
+        $businessScale = BusinessScale::visibleTo(auth()->user())->with(['createdBy', 'updatedBy'])->findOrFail($id);
         return view('business_scale.show', compact('businessScale'));
     }
 
     public function edit($id)
     {
-        $businessScale = BusinessScale::findOrFail($id);
+        $businessScale = BusinessScale::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($businessScale->can_be_edited_by_current_user, 403);
         return view('business_scale.edit', compact('businessScale'));
     }
 
@@ -62,6 +63,9 @@ class BusinessScaleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $businessScaleModel = BusinessScale::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($businessScaleModel->can_be_edited_by_current_user, 403);
+
         $request->merge([
             'code' => ($code = InputSanitizer::clean($request->code)) ? strtoupper($code) : '',
             'name' => InputSanitizer::clean($request->name) ?? '',
@@ -81,7 +85,7 @@ class BusinessScaleController extends Controller
                 'description' => $request->description,
             ];
 
-            BusinessScale::whereId($id)->update($businessScale);
+            $businessScaleModel->update($businessScale);
 
             return redirect()->route('business_scale.index')->with('success', 'Data skala bisnis berhasil diubah');
         } catch (QueryException $e) {
@@ -95,7 +99,8 @@ class BusinessScaleController extends Controller
 
     public function destroy($id)
     {
-        $businessScale = BusinessScale::findOrFail($id);
+        $businessScale = BusinessScale::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($businessScale->can_be_deleted_by_current_user, 403);
 
         if ($businessScale->distributors()->count() > 0) {
             return redirect()->route('business_scale.index')

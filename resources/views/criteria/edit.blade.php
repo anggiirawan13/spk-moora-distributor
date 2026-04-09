@@ -8,7 +8,7 @@
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-list-alt text-primary mr-2"></i>Kriteria
         </h1>
-        <a href="{{ route('criteria.index') }}" class="btn btn-secondary btn-sm">
+        <a href="{{ $criteria->import_batch_id ? route('import.excel.history') : route('criteria.index') }}" class="btn btn-secondary btn-sm">
             <i class="fas fa-arrow-left mr-1"></i>Kembali
         </a>
     </div>
@@ -231,7 +231,7 @@
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="{{ route('criteria.index') }}" class="btn btn-secondary btn-lg">
+                                    <a href="{{ $criteria->import_batch_id ? route('import.excel.history') : route('criteria.index') }}" class="btn btn-secondary btn-lg">
                                         <i class="fas fa-arrow-left mr-2"></i>Kembali
                                     </a>
                                     <div>

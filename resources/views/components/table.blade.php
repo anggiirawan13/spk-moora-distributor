@@ -77,6 +77,14 @@
                                             <i class="fas {{ $item[$column['field']] ? 'fa-check' : 'fa-times' }} mr-1"></i>
                                             {{ $item[$column['field']] ? 'Aktif' : 'Nonaktif' }}
                                         </span>
+                                    @elseif ($column['field'] === 'approval_status_label')
+                                        <x-approval_badge :status="$item['approval_status_label'] ?? '-'" />
+                                    @elseif ($column['field'] === 'approval_reason')
+                                        @if (!empty($item['approval_reason']))
+                                            <span class="text-danger small">{{ $item['approval_reason'] }}</span>
+                                        @else
+                                            <span class="text-muted small">-</span>
+                                        @endif
                                     @elseif (in_array($column['field'], ['created_at', 'updated_at']))
                                         <span class="text-muted small">
                                             <i class="far fa-clock mr-1"></i>
@@ -115,7 +123,8 @@
                                                data-toggle="tooltip" title="Edit Data">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-
+                                        @endif
+                                        @if (auth()->user()->is_admin == 1)
                                             @php
                                                 $nameColumnIndex = $columns[0]['html'] ?? true ? 1 : 0;
                                             @endphp

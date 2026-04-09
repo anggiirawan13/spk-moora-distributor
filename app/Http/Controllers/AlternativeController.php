@@ -16,15 +16,19 @@ class AlternativeController extends Controller
 {
     public function index(): View
     {
-        $criterias = Criteria::with('subCriteria')->orderBy('id')->get();
+        $criterias = Criteria::visibleTo(auth()->user())->with('subCriteria')->orderBy('id')->get();
 
-        $alternatives = Alternative::with(['values.subCriteria.criteria', 'distributor'])->get();
+        $alternatives = Alternative::visibleTo(auth()->user())->with(['values.subCriteria.criteria', 'distributor'])->get();
 
         $dataAlternatives = $alternatives->map(function ($alt) use ($criterias) {
             $data = [
                 'id' => $alt->id,
                 'name' => $alt->distributor?->name,
-                'code' => $alt->distributor?->code
+                'code' => $alt->distributor?->code,
+                'approval_status_label' => $alt->approval_status_label,
+                'approval_reason' => $alt->approval_reason,
+                'can_edit' => $alt->can_be_edited_by_current_user,
+                'can_delete' => $alt->can_be_deleted_by_current_user,
             ];
 
             foreach ($criterias as $criteria) {
@@ -48,8 +52,8 @@ class AlternativeController extends Controller
 
     public function create(): View
     {
-        $distributors = Distributor::all();
-        $criteria = Criteria::with('subCriteria')->orderBy('id', 'asc')->get();
+        $distributors = Distributor::visibleTo(auth()->user())->get();
+        $criteria = Criteria::visibleTo(auth()->user())->with('subCriteria')->orderBy('id', 'asc')->get();
         $distributorsData = $distributors->map(function ($distributor) {
             return [
                 'id' => $distributor->id,
@@ -65,7 +69,7 @@ class AlternativeController extends Controller
 
     public function show($id)
     {
-        $alternative = Alternative::with([
+        $alternative = Alternative::visibleTo(auth()->user())->with([
             'values.subCriteria.criteria',
             'distributor',
             'createdBy',
@@ -77,10 +81,24 @@ class AlternativeController extends Controller
 
     public function edit($id): View
     {
-        $distributors = Distributor::all();
-        $alternative = Alternative::findOrFail($id);
+        $user = auth()->user();
+        $distributors = Distributor::manageableBy($user)->get();
+        $alternative = Alternative::manageableBy($user)->findOrFail($id);
+        abort_unless($alternative->can_be_edited_by_current_user, 403);
 
-        $criteria = Criteria::with('subCriteria')->orderBy('id', 'asc')->get();
+        $criteria = Criteria::manageableBy($user)->orderBy('id', 'asc')->get();
+        $criteria->each(function ($criterion) use ($user) {
+            $criterion->setRelation(
+                'subCriteria',
+                SubCriteria::manageableBy($user)->where('criteria_id', $criterion->id)->orderBy('value')->get()
+            );
+        });
+
+        $selectedDistributor = Distributor::manageableBy($user)->find($alternative->distributor_id)
+            ?? Distributor::query()->find($alternative->distributor_id);
+        if ($selectedDistributor) {
+            $alternative->setRelation('distributor', $selectedDistributor);
+        }
 
         $distributorsData = $distributors->map(function ($distributor) {
             return [
@@ -91,11 +109,13 @@ class AlternativeController extends Controller
             ];
         });
 
-        $selectedSubs = AlternativeValue::with('subCriteria')
+        $selectedSubs = AlternativeValue::query()
             ->where('alternative_id', $id)
             ->get()
             ->mapWithKeys(function ($val) {
-                return [$val->subCriteria->criteria_id => $val->sub_criteria_id];
+                $subCriteria = SubCriteria::query()->find($val->sub_criteria_id);
+
+                return $subCriteria ? [$subCriteria->criteria_id => $val->sub_criteria_id] : [];
             });
 
         return view('alternative.edit', compact('alternative', 'criteria', 'selectedSubs', 'distributors', 'distributorsData'));
@@ -116,11 +136,17 @@ class AlternativeController extends Controller
         foreach ($request->criteria as $subCriteriaId) {
             $sub = SubCriteria::with('criteria')->find($subCriteriaId);
 
-            AlternativeValue::create([
+            $payload = [
                 'alternative_id' => $alternative->id,
                 'sub_criteria_id' => $subCriteriaId,
                 'value' => $sub->value ?? 0,
-            ]);
+            ];
+
+            if ($alternative->import_batch_id) {
+                $payload['import_batch_id'] = $alternative->import_batch_id;
+            }
+
+            AlternativeValue::create($payload);
         }
 
         return redirect()->route('alternative.index')->with('success', 'Data berhasil disimpan');
@@ -128,7 +154,8 @@ class AlternativeController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-        $alternative = Alternative::findOrFail($id);
+        $alternative = Alternative::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($alternative->can_be_edited_by_current_user, 403);
 
         $request->validate([
             'distributor_id' => 'required|exists:distributors,id|unique:alternatives,distributor_id,' . $id,
@@ -143,23 +170,34 @@ class AlternativeController extends Controller
         foreach ($request->criteria as $subCriteriaId) {
             $sub = SubCriteria::with('criteria')->find($subCriteriaId);
 
-            AlternativeValue::create([
+            $payload = [
                 'alternative_id' => $alternative->id,
                 'sub_criteria_id' => $subCriteriaId,
                 'value' => $sub->value ?? 0,
-            ]);
+            ];
+
+            if ($alternative->import_batch_id) {
+                $payload['import_batch_id'] = $alternative->import_batch_id;
+            }
+
+            AlternativeValue::create($payload);
         }
 
-        return redirect()->route('alternative.index')->with('success', 'Data berhasil diubah');
+        return redirect()
+            ->route($alternative->import_batch_id ? 'import.excel.history' : 'alternative.index')
+            ->with('success', 'Data berhasil diubah');
     }
 
     public function destroy($id): RedirectResponse
     {
-        $alternative = Alternative::findOrFail($id);
+        $alternative = Alternative::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($alternative->can_be_deleted_by_current_user, 403);
 
         AlternativeValue::where('alternative_id', $id)->delete();
         $alternative->delete();
 
-        return redirect()->route('alternative.index')->with('success', 'Data berhasil dihapus');
+        return redirect()
+            ->route($alternative->import_batch_id ? 'import.excel.history' : 'alternative.index')
+            ->with('success', 'Data berhasil dihapus');
     }
 }

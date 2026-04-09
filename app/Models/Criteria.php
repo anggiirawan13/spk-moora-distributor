@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\TracksImportBatchVisibility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class Criteria extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksImportBatchVisibility;
 
     protected $table = 'criterias';
 
@@ -17,6 +18,7 @@ class Criteria extends Model
         'name',
         'weight',
         'attribute_type',
+        'import_batch_id',
         'created_by',
         'updated_by',
     ];
@@ -50,7 +52,10 @@ class Criteria extends Model
 
     public function subCriteria()
     {
-        return $this->hasMany(SubCriteria::class);
+        $relation = $this->hasMany(SubCriteria::class);
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 
     public function createdBy()

@@ -4,6 +4,7 @@ namespace App\Imports;
 
 class ImportContext
 {
+    public ?int $importBatchId = null;
     public array $businessScales = [];
     public array $deliveryMethods = [];
     public array $paymentTerms = [];

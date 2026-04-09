@@ -195,6 +195,13 @@
                                 </a>
                                 <div>
                                     @if (auth()->user()->is_admin == 1)
+                                    <button type="button" class="btn btn-danger btn-lg mr-2 js-confirm-delete"
+                                        data-url="{{ route('subcriteria.destroy', $subCriteria->id) }}"
+                                        data-name="{{ $subCriteria->name }}">
+                                        <i class="fas fa-trash mr-2"></i>Hapus
+                                    </button>
+                                    @endif
+                                    @if (auth()->user()->is_admin == 1)
                                     <a href="{{ route('subcriteria.edit', $subCriteria->id) }}" class="btn btn-primary btn-lg mr-2">
                                         <i class="fas fa-edit mr-2"></i>Edit
                                     </a>
@@ -285,4 +292,45 @@
     font-size: 0.875rem;
 }
 </style>
+<script>
+document.addEventListener('click', function(event) {
+    const trigger = event.target.closest('.js-confirm-delete');
+    if (!trigger) return;
+    event.preventDefault();
+
+    const submitDelete = () => {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = trigger.getAttribute('data-url');
+        form.innerHTML = '<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="hidden" name="_method" value="DELETE">';
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+    if (window.Swal && typeof Swal.fire === 'function') {
+        Swal.fire({
+            title: 'Konfirmasi Hapus',
+            text: `Apakah Anda yakin ingin menghapus "${trigger.getAttribute('data-name')}"?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '<i class="fas fa-trash mr-1"></i>Ya, Hapus',
+            cancelButtonText: '<i class="fas fa-times mr-1"></i>Batal',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'btn btn-danger',
+                cancelButton: 'btn btn-secondary'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                submitDelete();
+            }
+        });
+        return;
+    }
+
+    submitDelete();
+});
+</script>
 @endsection

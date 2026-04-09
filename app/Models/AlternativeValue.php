@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\TracksImportBatchVisibility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AlternativeValue extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksImportBatchVisibility;
 
     protected $table = 'alternative_values';
 
@@ -15,6 +16,7 @@ class AlternativeValue extends Model
         'alternative_id',
         'sub_criteria_id',
         'value',
+        'import_batch_id',
         'created_by',
         'updated_by',
     ];
@@ -39,11 +41,17 @@ class AlternativeValue extends Model
 
     public function alternative()
     {
-        return $this->belongsTo(Alternative::class, 'alternative_id');
+        $relation = $this->belongsTo(Alternative::class, 'alternative_id');
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 
     public function subCriteria()
     {
-        return $this->belongsTo(SubCriteria::class, 'sub_criteria_id');
+        $relation = $this->belongsTo(SubCriteria::class, 'sub_criteria_id');
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 }

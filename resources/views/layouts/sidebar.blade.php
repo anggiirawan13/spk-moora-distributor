@@ -88,11 +88,20 @@
         </a>
     </li>
 
-    @can('admin')
+    @can('import-excel')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('import.excel.index') }}">
                 <i class="fas fa-file-excel"></i>
                 <span>Import Data Excel</span>
+            </a>
+        </li>
+    @endcan
+
+    @can('view-import-approval')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('import.approvals.index') }}">
+                <i class="fas fa-check-double"></i>
+                <span>Approval Import</span>
             </a>
         </li>
     @endcan

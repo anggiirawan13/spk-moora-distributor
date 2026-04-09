@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\TracksImportBatchVisibility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksImportBatchVisibility;
 
     protected $table = 'products';
 
@@ -16,6 +17,7 @@ class Product extends Model
         'code',
         'name',
         'description',
+        'import_batch_id',
         'created_by',
         'updated_by',
     ];
@@ -40,7 +42,26 @@ class Product extends Model
 
     public function distributors()
     {
-        return $this->belongsToMany(Distributor::class, 'distributor_product');
+        $relation = $this->belongsToMany(Distributor::class, 'distributor_product')->withPivot('import_batch_id');
+        $user = auth()->user();
+
+        if (!$user || (int) $user->is_admin === 1 || $user->role === 'staf') {
+            return $relation;
+        }
+
+        return $relation
+            ->visibleTo($user)
+            ->where(function ($query) use ($user) {
+                $query->whereNull('distributor_product.import_batch_id')
+                    ->orWhere(function ($nested) use ($user) {
+                        if ($user->role === 'direktur_utama') {
+                            $nested->where('distributor_product.admin_approval_status', 'approved');
+                            return;
+                        }
+
+                        $nested->where('distributor_product.director_approval_status', 'approved');
+                    });
+            });
     }
 
     public function createdBy()

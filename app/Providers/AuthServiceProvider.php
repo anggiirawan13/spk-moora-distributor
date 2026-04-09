@@ -28,5 +28,21 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin', function ($user) {
             return $user->is_admin == 1;
         });
+
+        Gate::define('import-excel', function ($user) {
+            return $user->is_admin == 1 || $user->role === 'staf';
+        });
+
+        Gate::define('approve-import-admin', function ($user) {
+            return $user->is_admin == 1;
+        });
+
+        Gate::define('approve-import-director', function ($user) {
+            return $user->role === 'direktur_utama';
+        });
+
+        Gate::define('view-import-approval', function ($user) {
+            return $user->is_admin == 1 || $user->role === 'direktur_utama';
+        });
     }
 }

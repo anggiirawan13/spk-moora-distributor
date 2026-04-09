@@ -12,7 +12,7 @@ class CalculationController extends Controller
 {
     public function calculation(Request $request)
     {
-        $products = Product::withCount('distributors')->get();
+        $products = $this->visibleProducts();
 
         $alternatives = null;
         $productSelected = null;
@@ -23,10 +23,12 @@ class CalculationController extends Controller
             ]);
 
             $productId = $request->product_id;
-            $productSelected = Product::findOrFail($productId);
+            $productSelected = Product::visibleTo(auth()->user())->findOrFail($productId);
 
             $distributors = $productSelected->distributors;
-            $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
+            $alternatives = Alternative::visibleTo(auth()->user())
+                ->whereIn('distributor_id', $distributors->pluck('id'))
+                ->get();
 
             if ($alternatives->isEmpty()) {
                 $alternatives = collect();
@@ -52,7 +54,7 @@ class CalculationController extends Controller
                 ));
             }
         } else {
-            $alternatives = Alternative::all();
+            $alternatives = Alternative::visibleTo(auth()->user())->get();
 
             if ($alternatives->isEmpty()) {
                 $alternatives = collect();
@@ -79,7 +81,7 @@ class CalculationController extends Controller
             }
         }
 
-        $criteria = Criteria::with(['subCriteria'])->get();
+        $criteria = Criteria::visibleTo(auth()->user())->with(['subCriteria'])->get();
 
         $alternatives->load(['values.subCriteria', 'distributor']);
 
@@ -152,7 +154,7 @@ class CalculationController extends Controller
 
     public function downloadPDF(Request $request)
     {
-        $products = Product::withCount('distributors')->get();
+        $products = $this->visibleProducts();
 
         $alternatives = null;
         $productSelected = null;
@@ -163,10 +165,12 @@ class CalculationController extends Controller
             ]);
 
             $productId = $request->product_id;
-            $productSelected = Product::findOrFail($productId);
+            $productSelected = Product::visibleTo(auth()->user())->findOrFail($productId);
 
             $distributors = $productSelected->distributors;
-            $alternatives = Alternative::whereIn('distributor_id', $distributors->pluck('id'))->get();
+            $alternatives = Alternative::visibleTo(auth()->user())
+                ->whereIn('distributor_id', $distributors->pluck('id'))
+                ->get();
 
             if ($alternatives->isEmpty()) {
                 $alternatives = collect();
@@ -192,7 +196,7 @@ class CalculationController extends Controller
                 ));
             }
         } else {
-            $alternatives = Alternative::all();
+            $alternatives = Alternative::visibleTo(auth()->user())->get();
 
             if ($alternatives->isEmpty()) {
                 $alternatives = collect();
@@ -219,7 +223,7 @@ class CalculationController extends Controller
             }
         }
 
-        $criteria = Criteria::with(['subCriteria'])->get();
+        $criteria = Criteria::visibleTo(auth()->user())->with(['subCriteria'])->get();
 
         $alternatives->load(['values.subCriteria', 'distributor']);
 
@@ -291,5 +295,14 @@ class CalculationController extends Controller
         ));
 
         return $pdf->download('laporan-moora.pdf');
+    }
+
+    private function visibleProducts()
+    {
+        return Product::visibleTo(auth()->user())
+            ->get()
+            ->each(function ($product) {
+                $product->distributors_count = $product->distributors()->count();
+            });
     }
 }

@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\TracksImportBatchVisibility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class Alternative extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksImportBatchVisibility;
 
     protected $table = 'alternatives';
 
     protected $fillable = [
         'distributor_id',
+        'import_batch_id',
         'created_by',
         'updated_by',
     ];
@@ -38,12 +40,18 @@ class Alternative extends Model
 
     public function values()
     {
-        return $this->hasMany(AlternativeValue::class, 'alternative_id');
+        $relation = $this->hasMany(AlternativeValue::class, 'alternative_id');
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 
     public function distributor()
     {
-        return $this->belongsTo(Distributor::class, 'distributor_id');
+        $relation = $this->belongsTo(Distributor::class, 'distributor_id');
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 
     public function createdBy()

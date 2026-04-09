@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\TracksImportBatchVisibility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
 class SubCriteria extends Model
 {
-    use HasFactory;
+    use HasFactory, TracksImportBatchVisibility;
 
     protected $table = 'sub_criterias';
 
@@ -17,6 +18,7 @@ class SubCriteria extends Model
         'code',
         'name',
         'value',
+        'import_batch_id',
         'created_by',
         'updated_by',
     ];
@@ -45,7 +47,10 @@ class SubCriteria extends Model
 
     public function criteria()
     {
-        return $this->belongsTo(Criteria::class);
+        $relation = $this->belongsTo(Criteria::class);
+        $user = auth()->user();
+
+        return $user ? $relation->visibleTo($user) : $relation;
     }
 
     private static function generateCode(int $criteriaId): string

@@ -18,7 +18,7 @@ class DistributorController extends Controller
 {
     public function index(): View
     {
-        $distributors = Distributor::latest()->get();
+        $distributors = Distributor::visibleTo(auth()->user())->latest()->get();
 
         $distributors->transform(function ($distributor) {
             return [
@@ -33,6 +33,10 @@ class DistributorController extends Controller
                 'delivery_method' => $distributor->deliveryMethod?->name ?? 'N/A',
                 'business_scale' => $distributor->businessScale?->name ?? 'N/A',
                 'is_active' => $distributor->is_active,
+                'approval_status_label' => $distributor->approval_status_label,
+                'approval_reason' => $distributor->approval_reason,
+                'can_edit' => $distributor->can_be_edited_by_current_user,
+                'can_delete' => $distributor->can_be_deleted_by_current_user,
             ];
         });
 
@@ -41,9 +45,9 @@ class DistributorController extends Controller
 
     public function create(): View
     {
-        $paymentTerms = PaymentTerm::all();
-        $deliveryMethods = DeliveryMethod::all();
-        $businessScales = BusinessScale::all();
+        $paymentTerms = PaymentTerm::visibleTo(auth()->user())->get();
+        $deliveryMethods = DeliveryMethod::visibleTo(auth()->user())->get();
+        $businessScales = BusinessScale::visibleTo(auth()->user())->get();
 
         return view('distributor.create', compact('paymentTerms', 'deliveryMethods', 'businessScales'));
     }
@@ -65,27 +69,26 @@ class DistributorController extends Controller
 
     public function show($id)
     {
-        $distributor = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale', 'createdBy', 'updatedBy'])->findOrFail($id);
+        $distributor = Distributor::visibleTo(auth()->user())->with(['paymentTerm', 'deliveryMethod', 'businessScale', 'createdBy', 'updatedBy'])->findOrFail($id);
         return view('distributor.show', compact('distributor'));
     }
 
     public function showComparisonForm(Request $request)
     {
-        $products = Product::all();
+        $products = Product::visibleTo(auth()->user())->get();
 
         $selectedProductId = $request->input('product_id');
         $distributors = collect();
 
         if ($selectedProductId) {
-            $distributors = Distributor::whereHas('products', function ($query) use ($selectedProductId) {
-                $query->where('product_id', $selectedProductId);
-            })->with([
-                        'products' => function ($query) use ($selectedProductId) {
-                            $query->where('product_id', $selectedProductId);
-                        }
-                    ])->get();
+            $productSelected = Product::visibleTo(auth()->user())->findOrFail($selectedProductId);
+            $distributors = $productSelected->distributors()->with([
+                'products' => function ($query) use ($selectedProductId) {
+                    $query->where('product_id', $selectedProductId);
+                }
+            ])->get();
         } else {
-            $distributors = Distributor::with('products')->get();
+            $distributors = Distributor::visibleTo(auth()->user())->with('products')->get();
         }
 
         return view('distributor.compare_form', compact('products', 'distributors', 'selectedProductId'));
@@ -106,24 +109,28 @@ class DistributorController extends Controller
             'distributor2' => 'required|exists:distributors,id',
         ]);
 
-        $distributor1 = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor1);
-        $distributor2 = Distributor::with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor2);
+        $distributor1 = Distributor::visibleTo(auth()->user())->with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor1);
+        $distributor2 = Distributor::visibleTo(auth()->user())->with(['paymentTerm', 'deliveryMethod', 'businessScale'])->findOrFail($request->distributor2);
 
         return view('distributor.compare', compact('distributor1', 'distributor2'));
     }
 
     public function edit($id)
     {
-        $distributor = Distributor::findOrFail($id);
-        $paymentTerms = PaymentTerm::all();
-        $deliveryMethods = DeliveryMethod::all();
-        $businessScales = BusinessScale::all();
+        $distributor = Distributor::manageableBy(auth()->user())->findOrFail($id);
+        abort_unless($distributor->can_be_edited_by_current_user, 403);
+        $paymentTerms = PaymentTerm::manageableBy(auth()->user())->get();
+        $deliveryMethods = DeliveryMethod::manageableBy(auth()->user())->get();
+        $businessScales = BusinessScale::manageableBy(auth()->user())->get();
 
         return view('distributor.edit', compact('distributor', 'paymentTerms', 'deliveryMethods', 'businessScales'));
     }
 
     public function update(DistributorRequest $request, Distributor $distributor): RedirectResponse
     {
+        $distributor->loadMissing('importBatch');
+        abort_unless($distributor->can_be_edited_by_current_user, 403);
+
         if ($request->validated()) {
             $dataUpdate = $request->except('image_name');
 
@@ -146,6 +153,8 @@ class DistributorController extends Controller
 
     public function destroy(Distributor $distributor): RedirectResponse
     {
+        abort_unless($distributor->can_be_deleted_by_current_user, 403);
+
         if ($distributor->products()->exists()) {
             return redirect()->route('distributor.index')
                 ->with('error', 'Distributor tidak dapat dihapus karena masih digunakan pada produk');
