@@ -10,6 +10,26 @@ use Illuminate\Http\Request;
 
 class BusinessScaleController extends Controller
 {
+    private function historyRedirectUrl(): string
+    {
+        return route('import.excel.history', array_filter([
+            'page' => request()->query('history_page'),
+            'search' => request()->query('history_search'),
+            'batch' => request()->query('history_batch'),
+            'item' => request()->query('history_item'),
+            'item_page' => request()->query('history_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
+    private function approvalRedirectUrl(): string
+    {
+        return route('import.approvals.index', array_filter([
+            'batch' => request()->query('approval_batch'),
+            'item' => request()->query('approval_item'),
+            'item_page' => request()->query('approval_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
     public function index()
     {
         $businessScales = BusinessScale::visibleTo(auth()->user())->get();
@@ -86,6 +106,15 @@ class BusinessScaleController extends Controller
             ];
 
             $businessScaleModel->update($businessScale);
+            $businessScaleModel->resetApprovalForRevision();
+
+            if (request()->query('return_to') === 'import-history') {
+                return redirect($this->historyRedirectUrl())->with('success', 'Data skala bisnis berhasil diubah');
+            }
+
+            if (request()->query('return_to') === 'import-approval') {
+                return redirect($this->approvalRedirectUrl())->with('success', 'Data skala bisnis berhasil diubah');
+            }
 
             return redirect()->route('business_scale.index')->with('success', 'Data skala bisnis berhasil diubah');
         } catch (QueryException $e) {
@@ -108,6 +137,14 @@ class BusinessScaleController extends Controller
         }
 
         $businessScale->delete();
+
+        if (request()->query('return_to') === 'import-history') {
+            return redirect($this->historyRedirectUrl())->with('success', 'Data skala bisnis berhasil dihapus');
+        }
+
+        if (request()->query('return_to') === 'import-approval') {
+            return redirect($this->approvalRedirectUrl())->with('success', 'Data skala bisnis berhasil dihapus');
+        }
 
         return redirect()->route('business_scale.index')->with('success', 'Data skala bisnis berhasil dihapus');
     }

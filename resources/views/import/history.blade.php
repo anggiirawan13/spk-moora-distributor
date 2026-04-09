@@ -9,7 +9,7 @@
             <i class="fas fa-history text-success mr-2"></i>History Import
         </h1>
         <a href="{{ route('import.excel.index') }}" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-arrow-left mr-1"></i>Kembali ke Import
+            <i class="fas fa-arrow-left mr-1"></i>Kembali
         </a>
     </div>
 
@@ -19,7 +19,7 @@
         <div class="card-body p-4">
             <form method="GET" action="{{ route('import.excel.history') }}">
                 <div class="row align-items-end">
-                    <div class="col-md-8 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3">
                         <label for="search" class="font-weight-bold text-dark">Cari Batch</label>
                         <input
                             type="text"
@@ -27,11 +27,44 @@
                             name="search"
                             value="{{ $search }}"
                             class="form-control"
-                            placeholder="Cari nomor batch, nama file, atau importer">
+                            placeholder="Cari nomor batch atau file">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3 mb-3">
+                        <label for="status" class="font-weight-bold text-dark">Status</label>
+                        <select id="status" name="status" class="form-control">
+                            <option value="">Semua</option>
+                            @foreach ($statusOptions as $option)
+                                <option value="{{ $option['value'] }}" {{ $selectedStatus === $option['value'] ? 'selected' : '' }}>
+                                    {{ $option['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="type" class="font-weight-bold text-dark">Tipe</label>
+                        <select id="type" name="type" class="form-control">
+                            <option value="">Semua</option>
+                            @foreach ($typeOptions as $option)
+                                <option value="{{ $option['value'] }}" {{ $selectedType === $option['value'] ? 'selected' : '' }}>
+                                    {{ $option['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="approval_status" class="font-weight-bold text-dark">Status Approval</label>
+                        <select id="approval_status" name="approval_status" class="form-control">
+                            <option value="">Semua</option>
+                            @foreach ($approvalStatusOptions as $option)
+                                <option value="{{ $option['value'] }}" {{ $selectedApprovalStatus === $option['value'] ? 'selected' : '' }}>
+                                    {{ $option['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12">
                         <button type="submit" class="btn btn-success mr-2">
-                            <i class="fas fa-search mr-1"></i>Cari
+                            <i class="fas fa-filter mr-1"></i>Filter
                         </button>
                         <a href="{{ route('import.excel.history') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-sync-alt mr-1"></i>Reset
@@ -48,7 +81,8 @@
             $items = $entry['items'];
             $summary = $entry['summary'];
             $collapseId = 'batchHistory' . $batch->id;
-            $isExpanded = $index === 0;
+            $targetBatch = request('batch');
+            $isExpanded = (string) $targetBatch === (string) $batch->id || ($index === 0 && !$targetBatch);
         @endphp
 
         <div class="card shadow-sm border-0 mb-4 history-batch-card">
@@ -88,6 +122,7 @@
                         <table class="table table-hover mb-0 js-batch-table" data-batch-id="{{ $batch->id }}">
                             <thead class="bg-light">
                                 <tr>
+                                    <th style="width: 70px;">No</th>
                                     <th>Tipe</th>
                                     <th>Code</th>
                                     <th>Name</th>
@@ -98,7 +133,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
-                                    <tr class="js-batch-row" data-batch-id="{{ $batch->id }}">
+                                    <tr class="js-batch-row" data-batch-id="{{ $batch->id }}" data-row-index="{{ $loop->index + 1 }}">
+                                        <td class="text-center font-weight-bold js-history-number">{{ $loop->index + 1 }}</td>
                                         <td>{{ $item['type_label'] }}</td>
                                         <td>{{ $item['code'] }}</td>
                                         <td class="font-weight-bold">{{ $item['name'] }}</td>
@@ -138,7 +174,8 @@
                     @if ($items->count() > 5)
                         <div class="d-flex flex-wrap justify-content-between align-items-center px-3 py-3 border-top bg-light js-batch-pagination"
                             data-batch-id="{{ $batch->id }}"
-                            data-per-page="5">
+                            data-per-page="5"
+                            data-initial-page="{{ request('batch') == $batch->id ? request('item_page', 1) : 1 }}">
                             <div class="d-flex flex-wrap align-items-center">
                                 <small class="text-muted js-batch-pagination-info mr-3 mb-2 mb-md-0"></small>
                                 <div class="d-flex align-items-center mb-2 mb-md-0">
@@ -267,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const nextButton = container.querySelector('.js-batch-next');
         const pageNumbers = container.querySelector('.js-batch-page-numbers');
         const perPageSelect = container.querySelector('.js-batch-per-page');
-        let currentPage = 1;
+        let currentPage = parseInt(container.getAttribute('data-initial-page') || '1', 10);
         let perPage = parseInt(container.getAttribute('data-per-page') || '5', 10);
 
         const totalPages = function() {
@@ -330,6 +367,11 @@ document.addEventListener('DOMContentLoaded', function() {
             rows.forEach(function(row, index) {
                 const rowPage = Math.floor(index / perPage) + 1;
                 row.style.display = rowPage === currentPage ? '' : 'none';
+
+                const numberCell = row.querySelector('.js-history-number');
+                if (numberCell) {
+                    numberCell.textContent = index + 1;
+                }
             });
 
             const start = rows.length === 0 ? 0 : ((currentPage - 1) * perPage) + 1;
@@ -359,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderPage(1);
         });
 
-        renderPage(1);
+        renderPage(currentPage);
     });
 });
 </script>

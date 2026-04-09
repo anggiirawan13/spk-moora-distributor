@@ -16,6 +16,26 @@ use Illuminate\View\View;
 
 class DistributorController extends Controller
 {
+    private function historyRedirectUrl(): string
+    {
+        return route('import.excel.history', array_filter([
+            'page' => request()->query('history_page'),
+            'search' => request()->query('history_search'),
+            'batch' => request()->query('history_batch'),
+            'item' => request()->query('history_item'),
+            'item_page' => request()->query('history_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
+    private function approvalRedirectUrl(): string
+    {
+        return route('import.approvals.index', array_filter([
+            'batch' => request()->query('approval_batch'),
+            'item' => request()->query('approval_item'),
+            'item_page' => request()->query('approval_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
     public function index(): View
     {
         $distributors = Distributor::visibleTo(auth()->user())->latest()->get();
@@ -146,6 +166,15 @@ class DistributorController extends Controller
             }
 
             $distributor->update($dataUpdate);
+            $distributor->resetApprovalForRevision();
+        }
+
+        if (request()->query('return_to') === 'import-history') {
+            return redirect($this->historyRedirectUrl())->with('success', 'Data distributor berhasil diubah');
+        }
+
+        if (request()->query('return_to') === 'import-approval') {
+            return redirect($this->approvalRedirectUrl())->with('success', 'Data distributor berhasil diubah');
         }
 
         return redirect()->route('distributor.index')->with('success', 'Data distributor berhasil diubah');
@@ -171,6 +200,14 @@ class DistributorController extends Controller
 
         $distributor->delete();
         
+        if (request()->query('return_to') === 'import-history') {
+            return redirect($this->historyRedirectUrl())->with('success', 'Data distributor berhasil dihapus');
+        }
+
+        if (request()->query('return_to') === 'import-approval') {
+            return redirect($this->approvalRedirectUrl())->with('success', 'Data distributor berhasil dihapus');
+        }
+
         return redirect()->route('distributor.index')->with('success', 'Data distributor berhasil dihapus');
     }
 }

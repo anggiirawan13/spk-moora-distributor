@@ -11,6 +11,26 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    private function historyRedirectUrl(): string
+    {
+        return route('import.excel.history', array_filter([
+            'page' => request()->query('history_page'),
+            'search' => request()->query('history_search'),
+            'batch' => request()->query('history_batch'),
+            'item' => request()->query('history_item'),
+            'item_page' => request()->query('history_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
+    private function approvalRedirectUrl(): string
+    {
+        return route('import.approvals.index', array_filter([
+            'batch' => request()->query('approval_batch'),
+            'item' => request()->query('approval_item'),
+            'item_page' => request()->query('approval_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
     public function index()
     {
         $products = Product::visibleTo(auth()->user())->with('distributors')->get();
@@ -103,6 +123,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
             ]);
+            $product->resetApprovalForRevision();
 
             if ($product->import_batch_id) {
                 $pivotData = collect($request->distributors ?? [])->mapWithKeys(function ($distributorId) use ($product) {
@@ -128,6 +149,14 @@ class ProductController extends Controller
                 $product->distributors()->sync($request->distributors ?? []);
             }
 
+            if (request()->query('return_to') === 'import-history') {
+                return redirect($this->historyRedirectUrl())->with('success', 'Data produk berhasil diubah');
+            }
+
+            if (request()->query('return_to') === 'import-approval') {
+                return redirect($this->approvalRedirectUrl())->with('success', 'Data produk berhasil diubah');
+            }
+
             return redirect()->route('product.index')->with('success', 'Data produk berhasil diubah');
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
@@ -146,6 +175,14 @@ class ProductController extends Controller
         $product->distributors()->detach();
 
         $product->delete();
+
+        if (request()->query('return_to') === 'import-history') {
+            return redirect($this->historyRedirectUrl())->with('success', 'Data produk berhasil dihapus');
+        }
+
+        if (request()->query('return_to') === 'import-approval') {
+            return redirect($this->approvalRedirectUrl())->with('success', 'Data produk berhasil dihapus');
+        }
 
         return redirect()->route('product.index')->with('success', 'Data produk berhasil dihapus');
     }

@@ -63,10 +63,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['can:approve-import-admin'])->group(function () {
         Route::post('/import/approvals/{batch}/batch-admin', [ImportApprovalController::class, 'approveBatchAdmin'])->name('import.approvals.batch_admin');
+        Route::post('/import/approvals/{batch}/batch-admin-reject', [ImportApprovalController::class, 'rejectBatchAdmin'])->name('import.approvals.batch_admin_reject');
     });
 
     Route::middleware(['can:approve-import-director'])->group(function () {
         Route::post('/import/approvals/{batch}/batch-director', [ImportApprovalController::class, 'approveBatchDirector'])->name('import.approvals.batch_director');
+        Route::post('/import/approvals/{batch}/batch-director-reject', [ImportApprovalController::class, 'rejectBatchDirector'])->name('import.approvals.batch_director_reject');
     });
 
     Route::middleware(['can:view-import-approval'])->group(function () {

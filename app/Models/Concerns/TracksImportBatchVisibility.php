@@ -2,6 +2,7 @@
 
 namespace App\Models\Concerns;
 
+use App\Models\ImportBatch;
 use App\Models\User;
 use App\Support\ImportBatchState;
 use Illuminate\Database\Eloquent\Builder;
@@ -161,12 +162,11 @@ trait TracksImportBatchVisibility
             return false;
         }
 
-        if ((int) $user->is_admin === 1) {
-            return true;
+        if (!$this->import_batch_id) {
+            return (int) $user->is_admin === 1;
         }
 
         return $user->role === 'staf'
-            && $this->import_batch_id
             && (int) $this->created_by === (int) $user->id;
     }
 
@@ -230,5 +230,42 @@ trait TracksImportBatchVisibility
             'director_approved_at' => now(),
             'director_approved_by' => $userId,
         ])->save();
+    }
+
+    public function resetApprovalForRevision(): void
+    {
+        if (!$this->import_batch_id || !auth()->check()) {
+            return;
+        }
+
+        if ((int) auth()->user()->is_admin === 1) {
+            $this->forceFill([
+                'admin_approval_status' => 'approved',
+                'admin_approval_note' => null,
+                'admin_approved_at' => now(),
+                'admin_approved_by' => auth()->id(),
+                'director_approval_status' => 'pending',
+                'director_approval_note' => null,
+                'director_approved_at' => null,
+                'director_approved_by' => null,
+            ])->saveQuietly();
+
+            return;
+        }
+
+        if (auth()->user()->role !== 'staf') {
+            return;
+        }
+
+        $this->forceFill([
+            'admin_approval_status' => 'pending',
+            'admin_approval_note' => null,
+            'admin_approved_at' => null,
+            'admin_approved_by' => null,
+            'director_approval_status' => 'pending',
+            'director_approval_note' => null,
+            'director_approved_at' => null,
+            'director_approved_by' => null,
+        ])->saveQuietly();
     }
 }

@@ -50,23 +50,19 @@ class ImportController extends Controller
     {
         $user = auth()->user();
         $search = trim((string) $request->query('search', ''));
+        $selectedStatus = (string) $request->query('status', '');
+        $selectedType = (string) $request->query('type', '');
+        $selectedApprovalStatus = (string) $request->query('approval_status', '');
 
-        $batchQuery = ImportBatch::with('importedBy')->latest();
-
-        if ((int) $user->is_admin !== 1) {
-            $batchQuery->where('imported_by', $user->id);
-        }
+        $batchQuery = ImportBatch::with('importedBy')
+            ->where('imported_by', $user->id)
+            ->latest();
 
         if ($search !== '') {
             $batchQuery->where(function ($query) use ($search, $user) {
                 $query->where('original_file_name', 'like', '%' . $search . '%')
                     ->orWhere('id', 'like', '%' . $search . '%');
 
-                if ((int) $user->is_admin === 1) {
-                    $query->orWhereHas('importedBy', function ($userQuery) use ($search) {
-                        $userQuery->where('name', 'like', '%' . $search . '%');
-                    });
-                }
             });
         }
 
@@ -74,20 +70,61 @@ class ImportController extends Controller
 
         $importBatches->setCollection(
             $importBatches->getCollection()
-                ->map(function (ImportBatch $batch) use ($user) {
+                ->map(function (ImportBatch $batch) use ($user, $selectedStatus, $selectedType, $selectedApprovalStatus) {
                     $items = $this->batchItems($batch, $user);
+                    if ($selectedType !== '') {
+                        $items = $items->where('type', $selectedType)->values();
+                    }
+
+                    if ($selectedApprovalStatus !== '') {
+                        $items = $items->where('approval_status_key', $selectedApprovalStatus)->values();
+                    }
+
+                    if ($items->isEmpty()) {
+                        return null;
+                    }
+
+                    $summary = $this->batchSummary($items);
+                    if ($selectedStatus !== '' && $summary['status_key'] !== $selectedStatus) {
+                        return null;
+                    }
 
                     return [
                         'batch' => $batch,
                         'items' => $items,
-                        'summary' => $this->batchSummary($items),
+                        'summary' => $summary,
                     ];
                 })
                 ->filter(fn ($entry) => $entry['items']->isNotEmpty())
                 ->values()
         );
 
-        return view('import.history', compact('importBatches', 'search'));
+        $typeOptions = collect(self::TYPES)
+            ->map(fn (array $config, string $key) => ['value' => $key, 'label' => $config['label']])
+            ->values();
+        $statusOptions = [
+            ['value' => 'pending', 'label' => 'Pending'],
+            ['value' => 'approved', 'label' => 'Approved'],
+            ['value' => 'rejected', 'label' => 'Reject'],
+        ];
+        $approvalStatusOptions = [
+            ['value' => 'pending_admin', 'label' => 'Menunggu Admin'],
+            ['value' => 'pending_director', 'label' => 'Menunggu Direktur Utama'],
+            ['value' => 'approved', 'label' => 'Disetujui Direktur Utama'],
+            ['value' => 'rejected_admin', 'label' => 'Ditolak Admin'],
+            ['value' => 'rejected_director', 'label' => 'Ditolak Direktur Utama'],
+        ];
+
+        return view('import.history', compact(
+            'importBatches',
+            'search',
+            'selectedStatus',
+            'selectedType',
+            'selectedApprovalStatus',
+            'typeOptions',
+            'statusOptions',
+            'approvalStatusOptions'
+        ));
     }
 
     public function preview(Request $request): View
@@ -198,8 +235,9 @@ class ImportController extends Controller
                     'display_name' => $this->displayName($type, $record),
                     'description' => $this->displayDescription($type, $record),
                     'approval_status_label' => $record->approval_status_label,
+                    'approval_status_key' => $this->approvalStatusKey($record),
                     'approval_reason' => $record->approval_reason,
-                    'edit_url' => $record->can_be_edited_by_current_user ? $this->editUrl($type, $record) : null,
+                    'edit_url' => null,
                     'delete_url' => $record->can_be_deleted_by_current_user ? $this->deleteUrl($type, $record) : null,
                     'can_edit' => $record->can_be_edited_by_current_user,
                     'can_delete' => $record->can_be_deleted_by_current_user,
@@ -207,7 +245,22 @@ class ImportController extends Controller
             }
         }
 
-        return $items->sortBy(['type_label', 'display_name'])->values();
+        $items = $items->sortBy(['type_label', 'display_name'])->values();
+
+        return $items->map(function (array $item, int $index) use ($batch, $user) {
+            $record = $this->findRecord($item['type'], $item['id']);
+            $item['edit_url'] = $record && $record->can_be_edited_by_current_user
+                ? $this->editUrl($item['type'], $record, [
+                    'page' => request()->query('page', 1),
+                    'search' => request()->query('search'),
+                    'batch' => $batch->id,
+                    'item' => $item['id'],
+                    'item_page' => (int) floor($index / 5) + 1,
+                ])
+                : null;
+
+            return $item;
+        })->values();
     }
 
     private function itemCode(string $type, $record): string
@@ -234,13 +287,39 @@ class ImportController extends Controller
 
     private function batchSummary(Collection $items): array
     {
+        $pending = $items->where('approval_status_label', 'Menunggu Admin')->count()
+            + $items->where('approval_status_label', 'Menunggu Direktur Utama')->count();
+        $approved = $items->where('approval_status_label', 'Disetujui Direktur Utama')->count();
+        $rejected = $items->filter(fn ($item) => str_contains($item['approval_status_label'], 'Ditolak'))->count();
+
         return [
             'total' => $items->count(),
-            'pending' => $items->where('approval_status_label', 'Menunggu Admin')->count()
-                + $items->where('approval_status_label', 'Menunggu Direktur Utama')->count(),
-            'approved' => $items->where('approval_status_label', 'Disetujui Direktur Utama')->count(),
-            'rejected' => $items->filter(fn ($item) => str_contains($item['approval_status_label'], 'Ditolak'))->count(),
+            'pending' => $pending,
+            'approved' => $approved,
+            'rejected' => $rejected,
+            'status_key' => $pending > 0 ? 'pending' : ($rejected > 0 ? 'rejected' : 'approved'),
         ];
+    }
+
+    private function approvalStatusKey($record): string
+    {
+        if ($record->director_approval_status === 'approved') {
+            return 'approved';
+        }
+
+        if ($record->director_approval_status === 'rejected') {
+            return 'rejected_director';
+        }
+
+        if ($record->admin_approval_status === 'rejected') {
+            return 'rejected_admin';
+        }
+
+        if ($record->admin_approval_status === 'approved') {
+            return 'pending_director';
+        }
+
+        return 'pending_admin';
     }
 
     private function displayName(string $type, $record): string
@@ -288,9 +367,9 @@ class ImportController extends Controller
         return $id ? Alternative::query()->find($id) : null;
     }
 
-    private function editUrl(string $type, $record): ?string
+    private function editUrl(string $type, $record, array $historyContext = []): ?string
     {
-        return match ($type) {
+        $baseUrl = match ($type) {
             'business_scale' => route('business_scale.edit', $record->id),
             'delivery_method' => route('delivery_method.edit', $record->id),
             'payment_term' => route('payment_term.edit', $record->id),
@@ -303,6 +382,25 @@ class ImportController extends Controller
             'alternative_value' => $record->alternative_id ? route('alternative.edit', $record->alternative_id) : null,
             default => null,
         };
+
+        if (!$baseUrl) {
+            return null;
+        }
+
+        if ($historyContext === []) {
+            return $baseUrl;
+        }
+
+        $query = array_filter([
+            'return_to' => 'import-history',
+            'history_page' => $historyContext['page'] ?? null,
+            'history_search' => $historyContext['search'] ?? null,
+            'history_batch' => $historyContext['batch'] ?? null,
+            'history_item' => $historyContext['item'] ?? null,
+            'history_item_page' => $historyContext['item_page'] ?? null,
+        ], fn ($value) => $value !== null && $value !== '');
+
+        return $baseUrl . (str_contains($baseUrl, '?') ? '&' : '?') . http_build_query($query);
     }
 
     private function deleteUrl(string $type, $record): ?string
@@ -318,5 +416,16 @@ class ImportController extends Controller
             'alternative' => route('alternative.destroy', $record->id),
             default => null,
         };
+    }
+
+    private function findRecord(string $type, int $id)
+    {
+        if (!isset(self::TYPES[$type])) {
+            return null;
+        }
+
+        $modelClass = self::TYPES[$type]['model'];
+
+        return $modelClass::query()->find($id);
     }
 }

@@ -3,12 +3,34 @@
 @section('title', 'Edit Metode Pengiriman')
 
 @section('content')
+@php
+    $backUrl = request('return_to') === 'import-approval'
+        ? route('import.approvals.index', array_filter([
+            'batch' => request('approval_batch'),
+            'item' => request('approval_item'),
+            'item_page' => request('approval_item_page'),
+        ]))
+        : (request('return_to') === 'import-history'
+            ? route('import.excel.history', array_filter([
+                'page' => request('history_page'),
+                'search' => request('history_search'),
+                'batch' => request('history_batch'),
+                'item' => request('history_item'),
+                'item_page' => request('history_item_page'),
+            ]))
+            : ($deliveryMethod->import_batch_id ? route('import.excel.history') : route('delivery_method.index')));
+    $formAction = route('delivery_method.update', $deliveryMethod->id);
+    $queryString = request()->getQueryString();
+    if ($queryString) {
+        $formAction .= '?' . $queryString;
+    }
+@endphp
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">
             <i class="fas fa-shipping-fast text-primary mr-2"></i>Metode Pengiriman
         </h1>
-        <a href="{{ route('delivery_method.index') }}" class="btn btn-secondary btn-sm">
+        <a href="{{ $backUrl }}" class="btn btn-secondary btn-sm">
             <i class="fas fa-arrow-left mr-1"></i>Kembali
         </a>
     </div>
@@ -24,7 +46,7 @@
                 <div class="card-body p-4">
                     <x-alert />
 
-                    <form action="{{ route('delivery_method.update', $deliveryMethod->id) }}" method="POST" id="deliveryMethodForm">
+                    <form action="{{ $formAction }}" method="POST" id="deliveryMethodForm">
                         @csrf
                         @method('PUT')
 
@@ -154,7 +176,7 @@
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a href="{{ route('delivery_method.index') }}" class="btn btn-secondary btn-lg">
+                                    <a href="{{ $backUrl }}" class="btn btn-secondary btn-lg">
                                         <i class="fas fa-arrow-left mr-2"></i>Kembali
                                     </a>
                                     <div>

@@ -14,6 +14,26 @@ use Illuminate\View\View;
 
 class AlternativeController extends Controller
 {
+    private function historyRedirectUrl(): string
+    {
+        return route('import.excel.history', array_filter([
+            'page' => request()->query('history_page'),
+            'search' => request()->query('history_search'),
+            'batch' => request()->query('history_batch'),
+            'item' => request()->query('history_item'),
+            'item_page' => request()->query('history_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
+    private function approvalRedirectUrl(): string
+    {
+        return route('import.approvals.index', array_filter([
+            'batch' => request()->query('approval_batch'),
+            'item' => request()->query('approval_item'),
+            'item_page' => request()->query('approval_item_page'),
+        ], fn ($value) => $value !== null && $value !== ''));
+    }
+
     public function index(): View
     {
         $criterias = Criteria::visibleTo(auth()->user())->with('subCriteria')->orderBy('id')->get();
@@ -183,9 +203,17 @@ class AlternativeController extends Controller
             AlternativeValue::create($payload);
         }
 
-        return redirect()
-            ->route($alternative->import_batch_id ? 'import.excel.history' : 'alternative.index')
-            ->with('success', 'Data berhasil diubah');
+        $alternative->resetApprovalForRevision();
+
+        if (request()->query('return_to') === 'import-history') {
+            return redirect($this->historyRedirectUrl())->with('success', 'Data berhasil diubah');
+        }
+
+        if (request()->query('return_to') === 'import-approval') {
+            return redirect($this->approvalRedirectUrl())->with('success', 'Data berhasil diubah');
+        }
+
+        return redirect()->route($alternative->import_batch_id ? 'import.excel.history' : 'alternative.index')->with('success', 'Data berhasil diubah');
     }
 
     public function destroy($id): RedirectResponse
@@ -196,8 +224,14 @@ class AlternativeController extends Controller
         AlternativeValue::where('alternative_id', $id)->delete();
         $alternative->delete();
 
-        return redirect()
-            ->route($alternative->import_batch_id ? 'import.excel.history' : 'alternative.index')
-            ->with('success', 'Data berhasil dihapus');
+        if (request()->query('return_to') === 'import-history') {
+            return redirect($this->historyRedirectUrl())->with('success', 'Data berhasil dihapus');
+        }
+
+        if (request()->query('return_to') === 'import-approval') {
+            return redirect($this->approvalRedirectUrl())->with('success', 'Data berhasil dihapus');
+        }
+
+        return redirect()->route($alternative->import_batch_id ? 'import.excel.history' : 'alternative.index')->with('success', 'Data berhasil dihapus');
     }
 }
