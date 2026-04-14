@@ -34,7 +34,9 @@ trait TracksImportBatchVisibility
                     $model->admin_approval_status = 'approved';
                     $model->admin_approved_at = now();
                     $model->admin_approved_by = auth()->id();
-                    $model->director_approval_status = 'pending';
+                    $model->director_approval_status = 'approved';
+                    $model->director_approved_at = now();
+                    $model->director_approved_by = auth()->id();
                 } else {
                     $model->admin_approval_status = 'pending';
                     $model->director_approval_status = 'pending';
@@ -57,17 +59,21 @@ trait TracksImportBatchVisibility
                 $model->admin_approval_note = null;
                 $model->admin_approved_at = now();
                 $model->admin_approved_by = auth()->id();
+                $model->director_approval_status = 'approved';
+                $model->director_approval_note = null;
+                $model->director_approved_at = now();
+                $model->director_approved_by = auth()->id();
             } else {
                 $model->admin_approval_status = 'pending';
                 $model->admin_approval_note = null;
                 $model->admin_approved_at = null;
                 $model->admin_approved_by = null;
-            }
 
-            $model->director_approval_status = 'pending';
-            $model->director_approval_note = null;
-            $model->director_approved_at = null;
-            $model->director_approved_by = null;
+                $model->director_approval_status = 'pending';
+                $model->director_approval_note = null;
+                $model->director_approved_at = null;
+                $model->director_approved_by = null;
+            }
         });
     }
 
@@ -135,6 +141,10 @@ trait TracksImportBatchVisibility
         }
 
         if ($this->director_approval_status === 'approved') {
+            if ($this->importBatch?->importedBy && (int) $this->importBatch->importedBy->is_admin === 1) {
+                return 'Data Aktif';
+            }
+
             return 'Disetujui Direktur Utama';
         }
 
@@ -244,10 +254,10 @@ trait TracksImportBatchVisibility
                 'admin_approval_note' => null,
                 'admin_approved_at' => now(),
                 'admin_approved_by' => auth()->id(),
-                'director_approval_status' => 'pending',
+                'director_approval_status' => 'approved',
                 'director_approval_note' => null,
-                'director_approved_at' => null,
-                'director_approved_by' => null,
+                'director_approved_at' => now(),
+                'director_approved_by' => auth()->id(),
             ])->saveQuietly();
 
             return;

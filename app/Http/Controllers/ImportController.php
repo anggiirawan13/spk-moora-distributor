@@ -110,7 +110,7 @@ class ImportController extends Controller
         $approvalStatusOptions = [
             ['value' => 'pending_admin', 'label' => 'Menunggu Admin'],
             ['value' => 'pending_director', 'label' => 'Menunggu Direktur Utama'],
-            ['value' => 'approved', 'label' => 'Disetujui Direktur Utama'],
+            ['value' => 'approved', 'label' => 'Approved / Data Aktif'],
             ['value' => 'rejected_admin', 'label' => 'Ditolak Admin'],
             ['value' => 'rejected_director', 'label' => 'Ditolak Direktur Utama'],
         ];
@@ -147,6 +147,8 @@ class ImportController extends Controller
             'imported_by' => auth()->id(),
             'admin_approved_at' => auth()->user()->is_admin == 1 ? now() : null,
             'admin_approved_by' => auth()->user()->is_admin == 1 ? auth()->id() : null,
+            'director_approved_at' => auth()->user()->is_admin == 1 ? now() : null,
+            'director_approved_by' => auth()->user()->is_admin == 1 ? auth()->id() : null,
         ]);
         $context->importBatchId = $importBatch->id;
         $import = new MasterImport($errors, $stats, $context, false);
@@ -164,7 +166,7 @@ class ImportController extends Controller
             'stats' => $statsSummary,
         ]);
         $successMessage = auth()->user()->is_admin == 1
-            ? 'Import berhasil. Batch otomatis disetujui admin dan menunggu persetujuan Direktur Utama.'
+            ? 'Import berhasil. Data langsung aktif tanpa proses approval.'
             : 'Import berhasil dan menunggu persetujuan admin.';
 
         if ($errors->has()) {
@@ -289,7 +291,7 @@ class ImportController extends Controller
     {
         $pending = $items->where('approval_status_label', 'Menunggu Admin')->count()
             + $items->where('approval_status_label', 'Menunggu Direktur Utama')->count();
-        $approved = $items->where('approval_status_label', 'Disetujui Direktur Utama')->count();
+        $approved = $items->whereIn('approval_status_label', ['Disetujui Direktur Utama', 'Data Aktif'])->count();
         $rejected = $items->filter(fn ($item) => str_contains($item['approval_status_label'], 'Ditolak'))->count();
 
         return [

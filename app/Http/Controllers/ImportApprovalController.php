@@ -252,6 +252,10 @@ class ImportApprovalController extends Controller
 
     private function batchItems(ImportBatch $batch, $user): Collection
     {
+        if ($batch->importedBy && (int) $batch->importedBy->is_admin === 1) {
+            return collect();
+        }
+
         $items = collect();
 
         foreach (self::TYPES as $type => $config) {

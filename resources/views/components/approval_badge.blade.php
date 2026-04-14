@@ -14,7 +14,7 @@
     } elseif (str_contains($statusLabel, 'Menunggu')) {
         $statusClass = 'badge-warning';
         $icon = 'fa-clock';
-    } elseif ($statusLabel === 'Data Manual') {
+    } elseif ($statusLabel === 'Data Manual' || $statusLabel === 'Data Aktif') {
         $statusClass = 'badge-info';
         $icon = 'fa-database';
     }
