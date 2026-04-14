@@ -105,13 +105,6 @@ class ImportApprovalController extends Controller
 
         foreach ($items as $item) {
             $record = $this->findRecord($item['type'], $item['id']);
-            if ($error = $this->approvalDependencyError($item['type'], $record, 'admin')) {
-                return redirect($this->approvalRedirectUrl($batch->id))->with('error', $error);
-            }
-        }
-
-        foreach ($items as $item) {
-            $record = $this->findRecord($item['type'], $item['id']);
             $record->approveByAdmin(auth()->id());
         }
 
@@ -126,13 +119,6 @@ class ImportApprovalController extends Controller
 
         if ($items->isEmpty()) {
             return redirect($this->approvalRedirectUrl($batch->id))->with('error', 'Batch ini tidak punya data yang bisa di-approve Direktur Utama.');
-        }
-
-        foreach ($items as $item) {
-            $record = $this->findRecord($item['type'], $item['id']);
-            if ($error = $this->approvalDependencyError($item['type'], $record, 'director')) {
-                return redirect($this->approvalRedirectUrl($batch->id))->with('error', $error);
-            }
         }
 
         foreach ($items as $item) {

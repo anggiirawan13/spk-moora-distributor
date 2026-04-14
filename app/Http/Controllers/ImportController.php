@@ -110,7 +110,7 @@ class ImportController extends Controller
         $approvalStatusOptions = [
             ['value' => 'pending_admin', 'label' => 'Menunggu Admin'],
             ['value' => 'pending_director', 'label' => 'Menunggu Direktur Utama'],
-            ['value' => 'approved', 'label' => 'Approved / Data Aktif'],
+            ['value' => 'approved', 'label' => 'Data Aktif'],
             ['value' => 'rejected_admin', 'label' => 'Ditolak Admin'],
             ['value' => 'rejected_director', 'label' => 'Ditolak Direktur Utama'],
         ];
@@ -240,9 +240,9 @@ class ImportController extends Controller
                     'approval_status_key' => $this->approvalStatusKey($record),
                     'approval_reason' => $record->approval_reason,
                     'edit_url' => null,
-                    'delete_url' => $record->can_be_deleted_by_current_user ? $this->deleteUrl($type, $record) : null,
+                    'delete_url' => $this->canDeleteFromHistory($record) ? $this->deleteUrl($type, $record) : null,
                     'can_edit' => $record->can_be_edited_by_current_user,
-                    'can_delete' => $record->can_be_deleted_by_current_user,
+                    'can_delete' => $this->canDeleteFromHistory($record),
                 ]);
             }
         }
@@ -251,7 +251,7 @@ class ImportController extends Controller
 
         return $items->map(function (array $item, int $index) use ($batch, $user) {
             $record = $this->findRecord($item['type'], $item['id']);
-            $item['edit_url'] = $record && $record->can_be_edited_by_current_user
+            $item['edit_url'] = $record && $this->canEditFromHistory($record, $user)
                 ? $this->editUrl($item['type'], $record, [
                     'page' => request()->query('page', 1),
                     'search' => request()->query('search'),
@@ -291,7 +291,7 @@ class ImportController extends Controller
     {
         $pending = $items->where('approval_status_label', 'Menunggu Admin')->count()
             + $items->where('approval_status_label', 'Menunggu Direktur Utama')->count();
-        $approved = $items->whereIn('approval_status_label', ['Disetujui Direktur Utama', 'Data Aktif'])->count();
+        $approved = $items->where('approval_status_label', 'Data Aktif')->count();
         $rejected = $items->filter(fn ($item) => str_contains($item['approval_status_label'], 'Ditolak'))->count();
 
         return [
@@ -418,6 +418,38 @@ class ImportController extends Controller
             'alternative' => route('alternative.destroy', $record->id),
             default => null,
         };
+    }
+
+    private function canDeleteFromHistory($record): bool
+    {
+        if (!$record->can_be_deleted_by_current_user) {
+            return false;
+        }
+
+        if (auth()->user()?->role === 'staf' && !$this->isRejectedImportRecord($record)) {
+            return false;
+        }
+
+        return $record->director_approval_status !== 'approved';
+    }
+
+    private function canEditFromHistory($record, $user): bool
+    {
+        if (!$record->can_be_edited_by_current_user) {
+            return false;
+        }
+
+        if ($user->role === 'staf') {
+            return $this->isRejectedImportRecord($record);
+        }
+
+        return true;
+    }
+
+    private function isRejectedImportRecord($record): bool
+    {
+        return $record->admin_approval_status === 'rejected'
+            || $record->director_approval_status === 'rejected';
     }
 
     private function findRecord(string $type, int $id)

@@ -141,11 +141,7 @@ trait TracksImportBatchVisibility
         }
 
         if ($this->director_approval_status === 'approved') {
-            if ($this->importBatch?->importedBy && (int) $this->importBatch->importedBy->is_admin === 1) {
-                return 'Data Aktif';
-            }
-
-            return 'Disetujui Direktur Utama';
+            return 'Data Aktif';
         }
 
         if ($this->admin_approval_status === 'rejected') {
