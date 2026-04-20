@@ -10,26 +10,26 @@ class AlternativeSeeder extends Seeder
     private static function seedMatrix(): array
     {
         return [
-            ['name' => 'PT Arvanta Prima', 'C1' => 2, 'C2' => 3, 'C3' => 1, 'C4' => 5, 'C5' => 3, 'C6' => 3],
-            ['name' => 'PT Kaluna Mandira', 'C1' => 5, 'C2' => 3, 'C3' => 1, 'C4' => 2, 'C5' => 3, 'C6' => 4],
-            ['name' => 'PT Soreva Nusantara', 'C1' => 4, 'C2' => 1, 'C3' => 1, 'C4' => 2, 'C5' => 2, 'C6' => 5],
-            ['name' => 'PT Talora Cipta', 'C1' => 3, 'C2' => 4, 'C3' => 1, 'C4' => 1, 'C5' => 1, 'C6' => 5],
-            ['name' => 'PT Nuvexa Raya', 'C1' => 5, 'C2' => 5, 'C3' => 1, 'C4' => 3, 'C5' => 1, 'C6' => 2],
-            ['name' => 'PT Laksora Abadi', 'C1' => 3, 'C2' => 3, 'C3' => 1, 'C4' => 4, 'C5' => 1, 'C6' => 5],
-            ['name' => 'PT Velora Sentra', 'C1' => 4, 'C2' => 3, 'C3' => 1, 'C4' => 5, 'C5' => 1, 'C6' => 5],
-            ['name' => 'PT Armeta Global', 'C1' => 5, 'C2' => 1, 'C3' => 1, 'C4' => 5, 'C5' => 1, 'C6' => 5],
-            ['name' => 'PT Zafira Mandala', 'C1' => 4, 'C2' => 5, 'C3' => 1, 'C4' => 5, 'C5' => 1, 'C6' => 5],
-            ['name' => 'PT Kireva Persada', 'C1' => 4, 'C2' => 2, 'C3' => 1, 'C4' => 2, 'C5' => 2, 'C6' => 3],
-            ['name' => 'PT Solvanta Utama', 'C1' => 3, 'C2' => 2, 'C3' => 1, 'C4' => 4, 'C5' => 1, 'C6' => 5],
-            ['name' => 'PT Nerava Lestari', 'C1' => 4, 'C2' => 2, 'C3' => 1, 'C4' => 1, 'C5' => 5, 'C6' => 1],
-            ['name' => 'PT Trivora Jaya', 'C1' => 5, 'C2' => 5, 'C3' => 1, 'C4' => 3, 'C5' => 5, 'C6' => 2],
-            ['name' => 'PT Alvion Sentosa', 'C1' => 3, 'C2' => 2, 'C3' => 1, 'C4' => 2, 'C5' => 1, 'C6' => 4],
-            ['name' => 'PT Vireza Nusantara', 'C1' => 3, 'C2' => 4, 'C3' => 1, 'C4' => 1, 'C5' => 4, 'C6' => 5],
-            ['name' => 'PT Karsena Prima', 'C1' => 2, 'C2' => 1, 'C3' => 1, 'C4' => 5, 'C5' => 3, 'C6' => 2],
-            ['name' => 'PT Elvara Mandiri', 'C1' => 2, 'C2' => 2, 'C3' => 1, 'C4' => 4, 'C5' => 1, 'C6' => 1],
-            ['name' => 'PT Ravento Cipta', 'C1' => 1, 'C2' => 3, 'C3' => 1, 'C4' => 4, 'C5' => 5, 'C6' => 5],
-            ['name' => 'PT Nexara Abadi', 'C1' => 5, 'C2' => 1, 'C3' => 1, 'C4' => 4, 'C5' => 1, 'C6' => 3],
-            ['name' => 'PT Arxena Global', 'C1' => 5, 'C2' => 1, 'C3' => 1, 'C4' => 1, 'C5' => 4, 'C6' => 1],
+            ['name' => 'PT Arvanta Prima', 'C1' => 2, 'C2' => 3, 'C3' => 5, 'C4' => 3, 'C5' => 3],
+            ['name' => 'PT Kaluna Mandira', 'C1' => 5, 'C2' => 3, 'C3' => 2, 'C4' => 3, 'C5' => 4],
+            ['name' => 'PT Soreva Nusantara', 'C1' => 4, 'C2' => 1, 'C3' => 2, 'C4' => 2, 'C5' => 5],
+            ['name' => 'PT Talora Cipta', 'C1' => 3, 'C2' => 4, 'C3' => 1, 'C4' => 1, 'C5' => 5],
+            ['name' => 'PT Nuvexa Raya', 'C1' => 5, 'C2' => 5, 'C3' => 3, 'C4' => 1, 'C5' => 2],
+            ['name' => 'PT Laksora Abadi', 'C1' => 3, 'C2' => 3, 'C3' => 4, 'C4' => 1, 'C5' => 5],
+            ['name' => 'PT Velora Sentra', 'C1' => 4, 'C2' => 3, 'C3' => 5, 'C4' => 1, 'C5' => 5],
+            ['name' => 'PT Armeta Global', 'C1' => 5, 'C2' => 1, 'C3' => 5, 'C4' => 1, 'C5' => 5],
+            ['name' => 'PT Zafira Mandala', 'C1' => 4, 'C2' => 5, 'C3' => 5, 'C4' => 1, 'C5' => 5],
+            ['name' => 'PT Kireva Persada', 'C1' => 4, 'C2' => 2, 'C3' => 2, 'C4' => 2, 'C5' => 3],
+            ['name' => 'PT Solvanta Utama', 'C1' => 3, 'C2' => 2, 'C3' => 4, 'C4' => 1, 'C5' => 5],
+            ['name' => 'PT Nerava Lestari', 'C1' => 4, 'C2' => 2, 'C3' => 1, 'C4' => 5, 'C5' => 1],
+            ['name' => 'PT Trivora Jaya', 'C1' => 5, 'C2' => 5, 'C3' => 3, 'C4' => 5, 'C5' => 2],
+            ['name' => 'PT Alvion Sentosa', 'C1' => 3, 'C2' => 2, 'C3' => 2, 'C4' => 1, 'C5' => 4],
+            ['name' => 'PT Vireza Nusantara', 'C1' => 3, 'C2' => 4, 'C3' => 1, 'C4' => 4, 'C5' => 5],
+            ['name' => 'PT Karsena Prima', 'C1' => 2, 'C2' => 1, 'C3' => 5, 'C4' => 3, 'C5' => 2],
+            ['name' => 'PT Elvara Mandiri', 'C1' => 2, 'C2' => 2, 'C3' => 4, 'C4' => 1, 'C5' => 1],
+            ['name' => 'PT Ravento Cipta', 'C1' => 1, 'C2' => 3, 'C3' => 4, 'C4' => 5, 'C5' => 5],
+            ['name' => 'PT Nexara Abadi', 'C1' => 5, 'C2' => 1, 'C3' => 4, 'C4' => 1, 'C5' => 3],
+            ['name' => 'PT Arxena Global', 'C1' => 5, 'C2' => 1, 'C3' => 1, 'C4' => 4, 'C5' => 1],
         ];
     }
 
@@ -52,7 +52,7 @@ class AlternativeSeeder extends Seeder
                 continue;
             }
 
-            foreach (['C1', 'C2', 'C3', 'C4', 'C5', 'C6'] as $criteriaCode) {
+            foreach (['C1', 'C2', 'C3', 'C4', 'C5'] as $criteriaCode) {
                 $subCode = $subMap[$criteriaCode . '|' . $alt[$criteriaCode]] ?? null;
                 if (!$subCode) {
                     continue;
@@ -88,7 +88,7 @@ class AlternativeSeeder extends Seeder
                 'updated_by' => 1,
             ]);
 
-            foreach (['C1', 'C2', 'C3', 'C4', 'C5', 'C6'] as $code) {
+            foreach (['C1', 'C2', 'C3', 'C4', 'C5'] as $code) {
                 $criteria = $criteriaList[$code] ?? null;
                 if (!$criteria)
                     continue;
