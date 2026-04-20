@@ -20,7 +20,30 @@
             </h5>
         </div>
         <div class="card-body p-4">
-            <x-alert />
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if (session('error_download_url'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+                        <div class="mb-2 mb-md-0">
+                            Terdapat beberapa error saat import. Silakan download file error untuk detailnya.
+                        </div>
+                        <a href="{{ session('error_download_url') }}" class="btn btn-sm btn-outline-dark">
+                            <i class="fas fa-download mr-1"></i>Download File Error
+                        </a>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
             <div class="mb-3">
                 <a class="btn btn-outline-success" href="{{ route('import.excel.template') }}">
@@ -28,7 +51,7 @@
                 </a>
             </div>
 
-            <form action="{{ route('import.excel.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('import.excel.store') }}" method="POST" enctype="multipart/form-data" id="importForm">
                 @csrf
                 <div class="form-group">
                     <label for="file" class="font-weight-bold text-dark mb-2">
@@ -45,8 +68,13 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-success">
-                    <i class="fas fa-file-import mr-2"></i>Import Data
+                <button type="submit" class="btn btn-success" id="importSubmitButton">
+                    <span class="js-import-idle">
+                        <i class="fas fa-file-import mr-2"></i>Import Data
+                    </span>
+                    <span class="js-import-loading d-none">
+                        <i class="fas fa-spinner fa-spin mr-2"></i>Loading...
+                    </span>
                 </button>
             </form>
         </div>
@@ -61,19 +89,48 @@
         <div class="card-body">
             <div class="alert alert-info mb-0">
                 <i class="fas fa-info-circle mr-1"></i>
-                Data yang sudah ada tidak akan di-update dan akan dicatat di file error. Kolom `code` akan otomatis di-uppercase saat import.
+                Data yang sudah ada tidak akan di-update dan akan dicatat di file error `.txt`. Kolom `code` akan otomatis di-uppercase saat import.
             </div>
             <div class="alert alert-warning mt-3 mb-0">
                 <i class="fas fa-exclamation-triangle mr-1"></i>
                 Urutan sheet wajib: Skala Bisnis, Metode Pengiriman, Termin Pembayaran, Distributor, Produk, Distributor Produk, Kriteria, Sub Kriteria, Alternatif.
             </div>
-            <div class="alert alert-secondary mt-3 mb-0">
-                <i class="fas fa-user-check mr-1"></i>
-                Import oleh staf harus disetujui admin dulu. Setelah itu data baru terlihat oleh Direktur Utama, dan setelah disetujui Direktur Utama data baru terlihat oleh Komisaris.
-            </div>
+            @if ((int) auth()->user()->is_admin !== 1)
+                <div class="alert alert-secondary mt-3 mb-0">
+                    <i class="fas fa-user-check mr-1"></i>
+                    Import staf harus disetujui admin dan direktur terlebih dulu.
+                </div>
+            @endif
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('importForm');
+    const submitButton = document.getElementById('importSubmitButton');
+
+    if (!form || !submitButton) {
+        return;
+    }
+
+    form.addEventListener('submit', function () {
+        submitButton.disabled = true;
+        submitButton.classList.add('disabled');
+
+        const idleState = submitButton.querySelector('.js-import-idle');
+        const loadingState = submitButton.querySelector('.js-import-loading');
+
+        if (idleState) {
+            idleState.classList.add('d-none');
+        }
+
+        if (loadingState) {
+            loadingState.classList.remove('d-none');
+        }
+    });
+});
+</script>
 
 <style>
 .bg-gradient-primary {

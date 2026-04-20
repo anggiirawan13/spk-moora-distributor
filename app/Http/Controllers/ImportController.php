@@ -20,11 +20,13 @@ use App\Models\PaymentTerm;
 use App\Models\Product;
 use App\Models\SubCriteria;
 use App\Support\ImportBatchState;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
+use Throwable;
 
 class ImportController extends Controller
 {
@@ -95,7 +97,7 @@ class ImportController extends Controller
                         'summary' => $summary,
                     ];
                 })
-                ->filter(fn ($entry) => $entry['items']->isNotEmpty())
+                ->filter(fn ($entry) => $entry !== null)
                 ->values()
         );
 
@@ -132,7 +134,7 @@ class ImportController extends Controller
         abort(404);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx,xls',
@@ -157,6 +159,8 @@ class ImportController extends Controller
 
         try {
             Excel::import($import, $file);
+        } catch (Throwable $exception) {
+            $errors->add('SYSTEM', 0, 'Import gagal diproses: ' . $exception->getMessage());
         } finally {
             ImportBatchState::clear();
         }
@@ -172,6 +176,7 @@ class ImportController extends Controller
         if ($errors->has()) {
             $errorList = $errors->all();
             $message = $errorList[0] ?? 'Terjadi error saat import.';
+            $errorFileName = $this->storeErrorFile($errors, $file->getClientOriginalName());
 
             if (count($errorList) > 1) {
                 $message .= ' Dan ' . (count($errorList) - 1) . ' error lainnya.';
@@ -179,7 +184,9 @@ class ImportController extends Controller
 
             return redirect()
                 ->route('import.excel.index')
-                ->with('error', $message);
+                ->with('error', $message)
+                ->with('error_download_url', route('import.excel.errors', ['file' => $errorFileName]))
+                ->with('error_download_name', $errorFileName);
         }
 
         return redirect()
@@ -196,6 +203,17 @@ class ImportController extends Controller
         }
 
         return Storage::disk('local')->download($path);
+    }
+
+    private function storeErrorFile(ImportErrorBag $errors, string $originalFileName): string
+    {
+        $baseName = pathinfo($originalFileName, PATHINFO_FILENAME);
+        $sanitizedBaseName = preg_replace('/[^A-Za-z0-9\-_]/', '-', $baseName) ?: 'import';
+        $fileName = $sanitizedBaseName . '-errors-' . now()->format('Ymd-His') . '.txt';
+
+        Storage::disk('local')->put('import-errors/' . $fileName, $errors->toText());
+
+        return $fileName;
     }
 
     public function downloadTemplate()
