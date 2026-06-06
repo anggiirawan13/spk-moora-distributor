@@ -12,8 +12,14 @@
     </div>
 </div>
 
+@php
+    $colClass = auth()->user()->can('admin')
+        ? 'col-xl-3 col-md-6 mb-4'
+        : 'col-xl-4 col-md-6 mb-4';
+@endphp
+
 <div class="row mb-4">
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="{{ $colClass }}">
         <div class="card border-left-primary shadow h-100 py-2" style="border-left: 4px solid #059669 !important;">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -33,7 +39,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="{{ $colClass }}">
         <div class="card border-left-success shadow h-100 py-2" style="border-left: 4px solid #10b981 !important;">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -53,7 +59,7 @@
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="{{ $colClass }}">
         <div class="card border-left-info shadow h-100 py-2" style="border-left: 4px solid #3b82f6 !important;">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -74,7 +80,7 @@
     </div>
 
     @can('admin')
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="{{ $colClass }}">
         <div class="card border-left-warning shadow h-100 py-2" style="border-left: 4px solid #f59e0b !important;">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">

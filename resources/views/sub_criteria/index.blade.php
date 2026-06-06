@@ -100,7 +100,6 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                     @endif
-                                    @if (auth()->user()->is_admin == 1)
                                     @endauth
                                 </div>
                             </td>

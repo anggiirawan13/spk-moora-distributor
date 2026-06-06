@@ -23,7 +23,7 @@
             transform: scale(1);
         }
     </style>
-    <x-table title="Daftar Distributor Barang Elektrikal" createRoute="distributor.create" showRoute="distributor.show" 
+    <x-table title="Daftar Distributor" createRoute="distributor.create" showRoute="distributor.show" 
         editRoute="distributor.edit" deleteRoute="distributor.destroy" :data="$distributors" :columns="[
             ['label' => 'Kode', 'field' => 'code'],
             ['label' => 'Nama Distributor', 'field' => 'name'],

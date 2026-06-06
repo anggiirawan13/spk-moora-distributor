@@ -95,12 +95,6 @@
                 <i class="fas fa-exclamation-triangle mr-1"></i>
                 Urutan sheet wajib: Skala Bisnis, Metode Pengiriman, Termin Pembayaran, Distributor, Produk, Distributor Produk, Kriteria, Sub Kriteria, Alternatif.
             </div>
-            @if ((int) auth()->user()->is_admin !== 1)
-                <div class="alert alert-secondary mt-3 mb-0">
-                    <i class="fas fa-user-check mr-1"></i>
-                    Import staf harus disetujui admin dan direktur terlebih dulu.
-                </div>
-            @endif
         </div>
     </div>
 </div>
